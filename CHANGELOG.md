@@ -14,6 +14,6 @@ First release as `batuta-ai/skills`, extracted from `franciscpd/batuta` with its
 ### Added
 
 - `batuta-loop`: unattended execution of an approved plan through the `batuta` binary (`batuta-ai/core`).
-- Adapters for `cursor-agent` and `gemini`; machine-readable YAML frontmatter on every adapter.
+- Adapters for `cursor-agent` and `agy` (Antigravity CLI); machine-readable YAML frontmatter on every adapter.
 - Four mechanical verification gates, scoped-write contract for scouts and reviewers, findings-file cross-review, staleness stamps, learnings ledger.
 - `tests/skills/check.sh`: lint and token budget, run in CI.

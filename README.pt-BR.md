@@ -8,7 +8,7 @@ As skills do Batuta: um ciclo de regência para agentes de código. O agente
 com quem você conversa vira o **maestro** — classifica a tarefa, roteia
 para o executor mais barato que dá conta, escreve o brief, delega,
 verifica o diff e commita. Quem escreve o código são os **instrumentistas**:
-`codex`, `opencode` (Kimi, DeepSeek, GLM…), `cursor-agent`, `gemini`, um
+`codex`, `opencode` (Kimi, DeepSeek, GLM…), `cursor-agent`, `agy` (Antigravity), um
 `claude` em background, ou o próprio maestro só no trabalho crítico.
 
 Este repositório é markdown puro no formato [agentskills.io](https://agentskills.io).
@@ -77,7 +77,7 @@ adicione uma linha.
 ```
 skills/
   batuta/            SKILL.md + references/ (brief, verification, routing, state, scout, worktree, method/)
-                     adapters/ (self, claude, codex, opencode, cursor-agent, gemini) · templates/ (por stack)
+                     adapters/ (self, claude, codex, opencode, cursor-agent, agy) · templates/ (por stack)
   batuta-<comando>/  um diretório por skill de comando, agents/openai.yaml para o Codex
 tests/skills/check.sh   lint e orçamento de tokens — gate de CI
 docs/qa-retro.md        o protocolo de dogfooding
