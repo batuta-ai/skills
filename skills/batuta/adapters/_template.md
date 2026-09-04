@@ -1,49 +1,51 @@
-# Adapter: <executor name>
+---
+name: <executor>            # matches the routing table's Executor column
+executable: <cli>           # what `command -v` must find
+run: <cli> <exec-subcommand> {model_flags} "{brief}"
+run_file: <cli> <exec-subcommand> {model_flags} "Follow the instructions in {brief_file}"
+model_flags: --model {model}
+readonly: <cli> <exec-subcommand> --read-only-flag --model {model} "{prompt}"
+available: command -v <cli> && <cli> <auth-status>
+models: <cli> <list-models>        # or `declared` when the CLI cannot list
+finished: exit_code                # or: last_result_event
+limit_regex: "rate limit|usage limit|quota exceeded|too many requests"
+brief_limit_lines: 100             # above this, use run_file
+cwd_flag: --cd {cwd}               # or `env` when the CLI only honors the process cwd
+---
 
-Contract for a Batuta executor. Copy this file to `adapters/<name>.md` (or
-`.batuta/adapters/<name>.md` in a project — that path takes precedence), fill in
-every section, then add a row to the routing table.
+# Adapter: <executor>
 
-Adapters are dormant: this file is only read when its routing row is used, so
-an unused adapter costs zero context. Keep it that way — stay around 50 lines
-(discovery commands over hardcoded catalogs; no model lists pasted in), and
-never make any skill load adapters the routing table doesn't reference.
+Copy to `adapters/<executor>.md` (or `.batuta/adapters/<executor>.md` in a
+project — that path wins), fill the frontmatter, add a row to the routing
+table. Adapters are dormant: read only when their row is routed to. Keep
+under 60 lines; discovery commands over pasted model lists.
 
-## Invocation
+## Placeholders
 
-Exact non-interactive command the orchestrator runs via Bash. The command must
-finish on its own — no prompts, no TUI.
+| Placeholder | Meaning |
+|---|---|
+| `{brief}` | the brief inline, shell-quoted |
+| `{brief_file}` | path of a temp file holding the brief |
+| `{prompt}` | a read-only prompt (scout, verifier, reviewer) |
+| `{model}` | the routing row's model ID |
+| `{effort}` | the routing row's reasoning effort, when it names one |
+| `{model_flags}` | this file's `model_flags` line, expanded |
+| `{cwd}` | the task's working directory (worktree or checkout) |
 
-```bash
-<cli> <exec-subcommand> [flags] "<brief>"
-```
+## Invocation notes
 
-Notes: working directory expectations, flags that control write access/sandbox,
-how to select a model (if configurable).
-
-## Context passing
-
-How the brief is delivered: inline argument, file path, or stdin. State the
-practical size limit and what to do when the brief exceeds it (e.g. write the
-brief to a temp file and pass the path).
+Working directory, sandbox flags, how the model is selected, stdin
+behavior (close it with `< /dev/null` when the CLI reads a non-TTY stdin).
 
 ## Capabilities and limits
 
-- Recommended task size (e.g. single-file edits, small features).
-- What to avoid delegating (e.g. multi-file refactors, anything needing project
-  history).
+Recommended task size; what never to delegate here.
 
 ## Cost
 
-Subscription or pay-per-use, and roughly how it compares to the other adapters.
-This feeds the routing table's Cost column.
+Subscription or pay-per-use, relative to the other adapters.
 
-## Availability check
+## Review invocation
 
-Commands the orchestrator runs to confirm the executor is usable before
-delegating (installed, authenticated):
-
-```bash
-command -v <cli>
-<cli> <auth-status-subcommand>
-```
+How this executor serves as second reviewer or verifier: the `readonly`
+line plus the findings-file instruction.

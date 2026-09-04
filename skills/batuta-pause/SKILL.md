@@ -1,36 +1,19 @@
 ---
-name: pause
-description: Pause Batuta work across sessions. Use when the user invokes /batuta:pause or says they are stopping and want to hand the current state off to a future session.
+name: batuta-pause
+description: Pause Batuta work across sessions — honest WORK.md plus a handoff note a fresh session resumes from. Use for /batuta-pause or when the user is stopping for now.
+disable-model-invocation: true
 ---
 
-# Batuta pause — session handoff
+# Batuta pause — hand off to a future session
 
-1. **Honest `WORK.md`:** update the in-flight task's line with its real state
-   ("delegated to codex, awaiting verification") — the conducting log stays
-   truthful.
-2. **Background tasks:** list what is still running; note in `WORK.md` what
-   will finish on its own, stop what would be orphaned. With the Compozy
-   runtime active, Compozy sessions are not orphans — record their ids in
-   the handoff's Background section (`compozy.md`, parallelism row) instead
-   of stopping them.
-3. **Write `.batuta/handoff.md`** — prose, four fixed sections:
+1. **Honest `WORK.md`.** Update the in-flight task's line with its real state ("delegated to codex, awaiting verification"; "parked with a question").
+2. **Background.** List executors still running. Note in `WORK.md` what finishes on its own; stop what would be orphaned. A running `batuta loop` is not an orphan: record its journal path; it resumes with `--resume`.
+3. **Worktrees.** List Batuta worktrees and the branch each holds. Remove none.
+4. **Write `.batuta/handoff.md`** — four sections, prose, format in `../batuta/references/state.md`: Cycle point · Decisions not yet written · Background · Open questions.
+5. Say in one line where the project stands and that `/batuta-resume` picks it up.
 
-```markdown
-# Handoff — <date>
+*Done when:* `WORK.md` is truthful and the handoff has its four sections filled or marked `none`.
 
-## Cycle point
-Where exactly the session stopped ("brief ready, delegation not sent").
-
-## Decisions not yet written
-Agreed in conversation but not yet in code or profile.
-
-## Background
-Executors running or pending, and what to do with each.
-
-## Open questions
-Pending questions for the user.
-```
-
-The handoff is a transit note, not state: `/batuta:resume` absorbs it into
-`WORK.md` and deletes it. One handoff per project — pausing again overwrites
-it.
+The handoff is a transit note, not state: `/batuta-resume` absorbs it into
+`WORK.md` and deletes it. One handoff per project; pausing again
+overwrites.

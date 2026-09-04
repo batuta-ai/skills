@@ -1,86 +1,48 @@
-# Adapter: claude
+---
+name: claude
+executable: claude
+run: env -u CLAUDECODE claude -p --permission-mode acceptEdits {model_flags} "{brief}" < /dev/null
+run_file: env -u CLAUDECODE claude -p --permission-mode acceptEdits {model_flags} "Follow the instructions in {brief_file}" < /dev/null
+model_flags: --model {model}
+readonly: env -u CLAUDECODE claude -p --model {model} --disallowedTools "Write,Edit,NotebookEdit" "{prompt}" < /dev/null
+available: command -v claude
+models: declared
+finished: exit_code
+limit_regex: "usage limit reached|hit your (session|usage|.-hour) limit|.-hour limit reached|\"api_error_status\": 429"
+brief_limit_lines: 100
+cwd_flag: env
+---
 
-The orchestrator itself executes the task. Reserved for critical work — tasks
-needing the conversation's full context, security judgment, or decisions still
-open. This is the most expensive lane, and using it for anything a cheaper
-lane can take defeats Batuta's purpose.
+# Adapter: claude — Claude Code in the background
 
-## Invocation
+A headless `claude -p` instance. Never the session that is conducting —
+that is `self.md`.
 
-No external command in the common case: the current orchestrator session writes
-the code directly, then proceeds to verification as usual (self-review is not
-skipped — run tests and acceptance criteria checks exactly like for any
-executor).
+## Invocation notes
 
-For parallel work, spawn a background instance instead:
+- `< /dev/null` is mandatory: `claude -p` reads stdin when it is not a TTY and would consume whatever the caller is piping.
+- `env -u CLAUDECODE` removes the nested-session marker when the conductor is itself Claude Code.
+- Working directory: run the command inside `{cwd}`; there is no cd flag.
+- `--output-format stream-json --verbose` gives a per-event log; then `finished` becomes the last `"type":"result"` event with `is_error: false`. Only the last one — earlier `is_error` events are tool results, not failures.
+- Model aliases (`haiku`, `sonnet`, `opus`) are accepted; the row records the alias it confirmed.
 
-```bash
-claude -p "<brief>" --permission-mode acceptEdits
-```
+## Lanes
 
-## Model selection
-
-Common case: the session's model applies — there is nothing to pin. Background
-instances accept `--model <model>` (e.g. `claude -p --model sonnet "<brief>"`);
-a routing row may use that to create an intermediate Claude lane (a cheaper
-Claude model for tasks that deserve Claude but not the top model).
-
-The main use of that is the **Complex lane on a strong Claude model**: at
-onboarding the user may map the Complex row to `claude -p --model opus
-"<brief>"` instead of codex — heavy-logic work that passes the brief test
-doesn't need the session's top model. The limit is context, not capability: a
-background instance never sees the conversation, so this variant only fits
-tasks a self-sufficient brief can carry. Needing the conversation's context
-still means Critical, which is always the session itself.
-
-In claude-only setups this is how the whole table works: lower lanes run
-cheaper Claude models via background instances (haiku for trivial, sonnet for
-medium, opus for complex), and only the critical lane is the session itself.
-If a row names a Claude model, it follows the explicit-model rule: the row
-records it, the invocation passes it.
-
-Note for future orchestrator-agnostic versions: this adapter means "the
-orchestrating tool executes", whatever that tool is — nothing here may assume
-Claude specifically beyond the invocation line above.
-
-## Context passing
-
-Common case: none needed — the orchestrator already holds the conversation
-context. Background instance: brief inline via `-p`, or written to a file the
-prompt points at.
-
-## Research invocation
-
-For the Research support lane: background instance on a cheap model with
-write tools blocked:
-
-```bash
-claude -p --model haiku --disallowedTools "Write,Edit,NotebookEdit" "<research brief>"
-```
-
-Bash remains available for `grep`/`ls`; the universal guard from
-`skills/batuta/SKILL.md` ("The scout") covers writes attempted through it.
+- **Cheap Claude lanes** (a claude-only setup): `haiku` for `low`, `sonnet` for `medium`, `opus` for `high`. The row names the alias; the invocation passes it.
+- **`high` on a strong Claude model** instead of codex: the user's choice at onboarding. The limit is context, not capability — a background instance never sees the conversation, so this fits only what a self-sufficient brief carries.
 
 ## Capabilities and limits
 
-- Good at: architecture, security-sensitive work, tasks that need the
-  conversation's full context or real judgment.
-- Avoid: anything a cheaper lane can do — check the routing table first.
-  Multi-file work alone no longer lands here: if a self-sufficient brief can
-  specify it, it belongs to the Complex row (codex + strong model, or a strong
-  Claude model in background — whichever the project's routing names).
+Good at anything a brief can carry. Never a substitute for `self` when the
+task needs the conversation.
 
 ## Cost
 
-The user's Claude subscription — the most expensive lane. Every task landing
-here should justify why the cheaper lanes couldn't take it (usually: the
-routing table classified it critical, or escalation brought it here).
+The user's Claude subscription. Cheaper than the session only when the row
+names a cheaper model.
 
-## Availability check
+## Review invocation
 
-Always available in the common case (the orchestrator is already running).
-Background instance:
-
-```bash
-command -v claude
-```
+The `readonly` line with a cheap model. Bash stays available for `grep` and
+`ls`; the scout guard (`references/scout.md`) covers writes attempted
+through it. The findings-file instruction goes in `{prompt}`.

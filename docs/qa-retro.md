@@ -21,10 +21,10 @@ destilação em `docs/superpowers/specs/`.
 2. **Prova, não otimismo** — um Pass exige o observável esperado confirmado
    por caminho independente: o commit existe e é atômico (`git log`), o
    WORK.md tem a linha, o diff rastreia ao pedido. O Batuta *dizer* que fez
-   não é confirmação — é exatamente a regra do `verification.md` aplicada
+   não é confirmação — é exatamente a regra do `skills/batuta/references/verification.md` aplicada
    ao próprio Batuta. A trilha da tarefa em `.batuta/runs/` é evidência de
    primeira classe: brief enviado, relato do executor e provas
-   reproduzidas, sem depender da memória da sessão (`runs.md`).
+   reproduzidas, sem depender da memória da sessão (`skills/batuta/references/state.md`).
 3. **Write back ou não aconteceu** — todo achado vira registro na sessão
    (com evidência: comando, saída, hash) antes de seguir adiante.
 

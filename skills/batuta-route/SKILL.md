@@ -1,25 +1,23 @@
 ---
-name: route
-description: Batuta routing. Use when the user invokes /batuta:route or wants to view or edit the complexity-to-executor routing table.
+name: batuta-route
+description: View or edit the project's routing table — lanes, executors, models, research lane, adapters. Use for /batuta-route or "which executor handles what". Not for onboarding (batuta-init).
+disable-model-invocation: true
 ---
 
-# Batuta — routing
+# Batuta route
 
 ## View
 
-1. Show the table in effect: the project's `.batuta/routing.md` if it exists,
-   otherwise the plugin's `routing.md` (say which one applies).
-2. For each executor, check availability as described in its adapter
-   (`adapters/<executor>.md`) and flag it: ✅ available / ⚠️ not found.
+1. Show the table in effect: `.batuta/routing.md`, else `../batuta/references/routing.md` (say which).
+2. For each executor the table names, run its adapter's `available` line and mark ✅ available / ⚠️ not found. Never check adapters the table does not name.
+3. Report the stamp state (line 3 vs `profile.md`).
 
 ## Edit
 
-1. If the project has no `.batuta/routing.md` yet, copy the plugin default there
-   before editing — never edit the plugin's own file.
-2. Apply the requested change (swap a row's executor, add a row, point to a new
-   adapter) keeping the plain markdown table format.
-3. New executor without a matching adapter in `adapters/` → guide the user to
-   copy `adapters/_template.md`, fill it in and save it as
-   `adapters/<name>.md` (in the project, `.batuta/adapters/<name>.md` also works
-   and takes precedence).
-4. Show the resulting table for confirmation.
+1. No project copy yet → copy the default there first; never edit the skill's own file.
+2. Apply the change keeping the markdown table: swap a row's executor or model, add a domain-specific row, add or remove the research row.
+3. A model change on a multi-model CLI → discover with the adapter's `models` line and confirm the exact ID; never write one from memory.
+4. A new executor without an adapter → copy `../batuta/adapters/_template.md` to `.batuta/adapters/<name>.md`, fill the frontmatter with the user, then add the row.
+5. Refresh the stamp. Show the resulting table for confirmation.
+
+*Done when:* the table shown is the file on disk and every row's executor was checked.

@@ -1,46 +1,48 @@
 ---
-name: plan
-description: Batuta's formal planning. Use when the user invokes /batuta:plan or when work will span sessions and needs an approvable, persistent plan.
+name: batuta-plan
+description: Write an approvable plan for work that spans sessions — atomic-commit-sized tasks with lane, scope and acceptance criteria. Use for /batuta-plan. Not for work that fits one sitting (batuta).
+disable-model-invocation: true
 ---
 
-# Batuta — formal plan
+# Batuta plan — formal, approvable, resumable
 
-Use only for work that spans sessions. Work that fits in one session uses inline
-planning (2–3 questions in the conversation) or goes straight into the cycle.
+Only for work that spans sessions. Work that fits one session uses
+inline planning (`../batuta/references/method/clarify.md`) or goes
+straight into the cycle.
 
-## How
+## Procedure
 
-With superpowers installed, conduct steps 1–2 by the `writing-plans` method
-(plugin root `superpowers.md`, `/batuta:plan` row); artifact, format and
-approval below stay unchanged.
-
-1. Understand the goal; ask the missing questions (few, all at once).
-2. Break the work into atomic-commit-sized tasks. For each one:
-   - a 1–2 sentence description;
-   - estimated complexity (trivial/medium/complex/critical) and the executor predicted by
-     the routing table;
-   - acceptance criteria.
-3. Save to `.batuta/plan-<slug>.md` in the project, in this format:
+1. **Understand the goal.** Ask the missing questions, few, one at a time, per `clarify.md`. Preserve executable requirements literally.
+2. **Decompose** into tasks by the cycle's unit: the smallest deliverable that verifies and commits alone. For each task: one or two sentences; domain × complexity and the executor the routing table predicts; a closed Scope; acceptance criteria with their proof; dependencies.
+3. **Right-size.** A task that needs more than one executor session is two tasks. A task with no verifiable criterion is not a task.
+4. **Write** `.batuta/plan-<slug>.md`:
 
 ```markdown
 # Plan — <title>
+<!-- inputs: profile.md@sha256:<12 hex> routing.md@sha256:<12 hex> -->
 
 **Goal:** <1–3 sentences>
-**Created:** <date>
-**Status:** proposed | approved | in progress | done
+**Created:** <date> · **Status:** proposed | approved | in progress | done
 
 ## Tasks
-- [ ] 1. <task> — <predicted executor>
-      Accept: <criteria>
-- [ ] 2. ...
+- [ ] 1. <title> — <domain>/<complexity> → <executor/model>
+      Scope: <paths>
+      Accept: <criterion → proof>; <criterion → proof>
+- [ ] 2. <title> — <domain>/<complexity> → <executor/model>
+      Depends on: 1
+      Scope: <paths>
+      Accept: <criterion → proof>
 
 ## Decisions and context
 <free prose: what a fresh session needs to know to resume>
 ```
 
-4. Present the plan to the user and **wait for approval** before executing.
-5. Approved → execute task by task through the normal cycle of the `batuta`
-   skill, ticking the plan's checkboxes and recording in `WORK.md`.
+   Machine contract (read by `/batuta-loop`): a task is a `- [ ] N.` line; `Accept:` is mandatory; `Depends on:` lists task numbers; `Scope:` is a comma-separated list of paths or globs. Everything else is prose.
+5. **Self-check:**
+   ```bash
+   test "$(grep -c '^- \[ \] [0-9]*\.' .batuta/plan-<slug>.md)" = "$(grep -c '^      Accept:' .batuta/plan-<slug>.md)"
+   ```
+6. **Present and wait for approval.** Set `Status: approved` only on the user's word.
+7. Approved → execute task by task through the `batuta` cycle, ticking checkboxes and recording in `WORK.md`; or hand off to `/batuta-loop` for an unattended run.
 
-Prose + checkboxes, no rigid schema. The plan is resumable: a fresh session must
-be able to continue from the file alone.
+*Done when:* the file exists, the self-check passes, the user approved or asked for changes.

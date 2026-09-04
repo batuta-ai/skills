@@ -1,90 +1,57 @@
-# Adapter: opencode
+---
+name: opencode
+executable: opencode
+run: opencode run --dir {cwd} --model {model} "{brief}" < /dev/null
+run_file: opencode run --dir {cwd} --model {model} "Follow the instructions in {brief_file}" < /dev/null
+model_flags: --model {model}
+readonly: opencode run --dir {cwd} --model {model} "Read-only task: do not create, edit or delete any file. {prompt}" < /dev/null
+available: command -v opencode && opencode models | grep -qx '{model}'
+models: opencode models
+finished: exit_code
+limit_regex: "rate limit|quota|too many requests|insufficient credits"
+brief_limit_lines: 100
+cwd_flag: --dir {cwd}
+---
 
-opencode CLI running non-interactively, with a configurable model (Kimi,
-DeepSeek, etc.). Default executor for trivial tasks — the cheapest lane.
+# Adapter: opencode — any provider, any model, non-interactive
 
-## Invocation
+Default executor for `low`: the cheapest lane. Also the usual research
+lane with a budget model.
 
-```bash
-opencode run --model <provider/model> "<brief>"
-```
+## Invocation notes
 
-- Run from the project root.
-- The model MUST come from the routing table row or a user override
-  ("use kimi for this"). Never fall back to the CLI's global default — it is
-  whatever the user last configured and may point at an expensive premium
-  model, silently defeating the cost routing. If the routing row has no model,
-  run the model discovery below, ask the user once and record the answer in
-  `.batuta/routing.md`.
-- Model IDs vary per installation and per provider (the same model can appear
-  as `opencode/kimi-k2.5` or `openrouter/~moonshotai/kimi-latest`). Never
-  hardcode an ID from memory — discover it.
+- The model is mandatory and comes from the row or the user's override. Never the CLI's global default — it is whatever the user last configured and may be a premium model.
+- IDs are `provider/model` and vary per installation (`opencode/kimi-k2.5`, `openrouter/moonshotai/kimi-latest`). Never write one from memory: discover it.
+- `--format json` gives raw events when a log is needed.
 
 ## Model discovery
 
-The CLI is the source of truth for what exists on this machine:
-
-```bash
-opencode providers list      # providers with configured credentials
-opencode models              # every available model, already in provider/model format
-opencode models <provider>   # filter by provider
-```
-
-`opencode models` only lists models from providers with credentials, so its
-output is exactly the set of valid `--model` values. To map the cheap lane,
-filter it down to a shortlist instead of showing hundreds of entries:
+`opencode models` lists only models from providers with credentials — its
+output is exactly the set of valid `--model` values. Shortlist the cheap
+lane instead of showing hundreds:
 
 ```bash
 opencode models | grep -iE 'kimi|deepseek|glm|qwen|flash|mini|free'
 ```
 
-Suggest 2–3 candidates from the shortlist, let the user confirm one, and
-record only the confirmed ID in `.batuta/routing.md`. When the user overrides
-verbally ("use kimi for this"), resolve the informal name to an exact ID the
-same way: `opencode models | grep -i kimi`.
-
-## Context passing
-
-Brief goes inline as the argument. For long briefs, write to a temp file and
-instruct the model to read it first:
-
-```bash
-batuta_brief=$(mktemp) && cat > "$batuta_brief" <<'EOF'
-<brief>
-EOF
-opencode run --model <provider/model> "Follow the instructions in $batuta_brief"
-```
-
-## Research invocation
-
-For the Research support lane (`routing.md`, Support lanes): same invocation
-shape, model from the Research row. opencode has no native read-only mode, so
-the research brief MUST state: "Read-only task: do not create, edit or delete
-any file." The universal guard from `skills/batuta/SKILL.md` ("The scout") —
-`git status --porcelain` before/after, revert + count as failure if dirty —
-is the actual guarantee.
+Suggest two or three, let the user confirm one, record only the confirmed
+ID. A verbal override ("use kimi") resolves the same way:
+`opencode models | grep -i kimi`. A recorded model no longer listed →
+re-discover and re-confirm before delegating; never substitute silently.
 
 ## Capabilities and limits
 
-- Good at: renames, config changes, copy edits, simple unit tests, small
-  well-specified single-file changes.
-- Avoid delegating: anything ambiguous, multi-file work, tasks whose acceptance
-  criteria require judgment. Budget models follow briefs literally — the brief
-  must be exhaustive.
+Good at renames, config, copy, simple tests, small well-specified
+single-file changes. Budget models follow briefs literally — the brief must
+be exhaustive and may prescribe the how (`brief.md`, sweep exception).
+Avoid anything ambiguous or multi-file.
 
 ## Cost
 
-Pay-per-use API of the chosen model — typically cents per task with Kimi or
-DeepSeek. The cheapest adapter; that is its role.
+Pay-per-use API of the chosen model — typically cents with Kimi, DeepSeek
+or GLM. The cheapest adapter; that is its role.
 
-## Availability check
+## Review invocation
 
-```bash
-command -v opencode
-opencode providers list
-opencode models | grep -qx '<provider/model from the routing row>'
-```
-
-If the recorded model is no longer listed (credential removed, provider
-renamed the ID), re-run model discovery and re-confirm with the user before
-delegating — never fail mid-task or silently substitute another model.
+opencode has no native read-only mode: the `readonly` line states it in the
+prompt, and the scout guard (`references/scout.md`) is the actual guarantee.

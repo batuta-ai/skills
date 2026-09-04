@@ -1,108 +1,51 @@
-# Adapter: codex
+---
+name: codex
+executable: codex
+run: codex exec --sandbox workspace-write {cwd_flag} {model_flags} "{brief}" < /dev/null
+run_file: codex exec --sandbox workspace-write {cwd_flag} {model_flags} "Follow the instructions in {brief_file}" < /dev/null
+model_flags: -m {model} -c model_reasoning_effort="{effort}"
+readonly: codex exec --sandbox read-only {cwd_flag} -m {model} "{prompt}" < /dev/null
+available: command -v codex && codex login status
+models: codex debug models --bundled
+finished: exit_code
+limit_regex: "rate limit reached|quota exceeded|usage limit reached|too many requests"
+brief_limit_lines: 100
+cwd_flag: --cd {cwd}
+---
 
-OpenAI's Codex CLI running non-interactively. Default executor for medium
-tasks; with an explicit strong model, also the executor for complex tasks.
+# Adapter: codex — OpenAI Codex CLI, non-interactive
 
-## Invocation
+Default executor for `medium`; with an explicit strong model and high
+reasoning, also for `high`.
 
-Medium lane (default model):
+## Invocation notes
 
-```bash
-codex exec --sandbox workspace-write "<brief>"
-```
+- `--sandbox workspace-write` lets it edit files inside the workspace and nowhere else. For riskier tasks, `--sandbox read-only` and apply the proposed diff yourself.
+- `--cd {cwd}` targets a worktree without changing your own directory.
+- `-m` picks the model; `-c model_reasoning_effort="<low|medium|high>"` the reasoning depth. Both together are the row's "explicit model". On `medium` with no effort in the row, drop the `-c` flag.
+- `models` prints JSON; the IDs are `.models[].slug` and `.models[].supported_reasoning_levels[].effort`.
 
-Complex lane (explicit model + high reasoning, from the routing row):
+## Lanes
 
-```bash
-codex exec --sandbox workspace-write -m <model> -c model_reasoning_effort="high" "<brief>"
-```
-
-- Run from the project root; `workspace-write` lets it edit files but not leave
-  the workspace.
-- Add `--cd <path>` to target another directory instead of cd-ing.
-- For riskier tasks, downgrade to `--sandbox read-only` and apply the proposed
-  diff manually.
-
-## Model selection
-
-- `-m <model>` picks the model; `-c model_reasoning_effort="<low|medium|high>"`
-  sets reasoning depth. Both count as the "explicit model" of a routing row —
-  record them together (e.g. `codex -m gpt-5-codex, reasoning high`).
-- **Medium lane:** the CLI's default model, no flags. Under a subscription the
-  per-task cost is flat, so pinning a model there buys nothing.
-- **Complex lane:** the model MUST come from the routing row — never rely on
-  the CLI's default, which may be a mid-tier model that silently downgrades
-  the lane. The row is born at onboarding: suggest the strongest model the
-  account offers (check `codex --help` / the CLI's model list for what this
-  installation accepts; don't hardcode names from memory) and confirm with
-  the user once.
-- User overrides ("use o3 for this") work like everywhere else: resolve to the
-  exact model name and record the routing story in `WORK.md`.
-
-## Context passing
-
-Brief goes inline as the argument. For long briefs (> ~100 lines), write the
-brief to a file and reference it:
-
-```bash
-batuta_brief=$(mktemp) && cat > "$batuta_brief" <<'EOF'
-<brief>
-EOF
-codex exec --sandbox workspace-write "Follow the instructions in $batuta_brief"
-```
-
-## Research invocation
-
-For the Research support lane: native read-only sandbox, model from the
-Research row (small/cheap — this is not the complex lane's strong model):
-
-```bash
-codex exec --sandbox read-only -m <model> "<research brief>"
-```
-
-The sandbox blocks writes; still apply the universal guard from
-`skills/batuta/SKILL.md` ("The scout") as defense in depth.
+- **`medium`:** the CLI's default model, no flags. Under a subscription the per-task cost is flat; pinning buys nothing.
+- **`high`:** the model must come from the row — the default may be a mid-tier model that silently downgrades the lane. At onboarding, suggest the strongest slug `models` lists and confirm once.
+- On an API key instead of a subscription, cost is no longer flat: treat every lane's model as explicit and remember high reasoning multiplies spend.
 
 ## Capabilities and limits
 
-- Default model — good at: isolated features, bugfixes with a clear repro,
-  tests, refactors scoped to a few files.
-- Strong model + high reasoning — also good at: multi-file features and
-  refactors, as long as the brief is self-sufficient (precise file list,
-  decisions already made, verifiable acceptance criteria).
-- Never delegate, regardless of model: architecture decisions still being
-  discussed, security-sensitive changes, tasks whose acceptance criteria
-  require the conversation's context or the maestro's judgment — those are
-  the claude lane (see `routing.md`, Complex vs Critical).
+Default model: isolated features, bugfixes with a clear repro, tests,
+refactors scoped to a few files. Strong model + high reasoning: multi-file
+features and refactors, as long as the brief is self-sufficient. Never:
+open architecture decisions, security-sensitive changes, criteria that
+need the conversation — those are `self`.
 
 ## Cost
 
-Covered by the user's ChatGPT subscription (or OpenAI API key). Cheaper than
-the orchestrator; more expensive than budget API models.
+ChatGPT subscription or OpenAI API key. Cheaper than the conducting host;
+pricier than budget API models.
 
-Model choice here is a capability/speed knob, not a cost knob — the
-subscription makes per-task cost flat. That's why the medium lane accepts the
-default model while the complex lane requires an explicit one: same price,
-different capability. Caveat: if the user runs codex on an API key instead of
-a subscription, cost is no longer flat — treat every lane's model like
-opencode's (explicit in the routing row) and remember high reasoning
-multiplies token spend.
+## Review invocation
 
-## Plugin transport
-
-When the codex companion plugin is installed in the maestro's Claude Code
-(`codex:*` skills present in the session), delegation goes through the
-plugin's shared runtime instead of the raw `codex exec` delegation commands
-above — see `codex-plugin.md` at the plugin root. The Research invocation
-may also use the runtime, but keeps its read-only mode (permissive,
-matching `codex-plugin.md`). Everything else in this adapter (model
-selection, context passing, capabilities, cost, availability, sandbox/
-read-only mode) applies unchanged; the commands above remain the baseline
-without the plugin.
-
-## Availability check
-
-```bash
-command -v codex
-codex login status
-```
+The `readonly` line: the native sandbox blocks writes; the scout guard
+applies as defense in depth. Model from the research row, not the `high`
+row.
