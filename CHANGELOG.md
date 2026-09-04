@@ -1,5 +1,73 @@
 # Changelog
 
+## [0.5.0](https://github.com/batuta-ai/skills/compare/v0.4.0...v0.5.0) (2026-09-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* host-agnostic skills with inlined method, unified taxonomy and machine-readable adapters
+* commands renamed — plan, status, route and review without prefix
+
+### Features
+
+* agy adapter replaces the discontinued Gemini CLI ([0e60151](https://github.com/batuta-ai/skills/commit/0e60151b1be90cd7706ada18ac3768ba3609118c))
+* catalog note and Never blocks in the existing templates ([d0d425e](https://github.com/batuta-ai/skills/commit/d0d425e957465b75fff8cb4850749b60fa809dd6))
+* Claude variant on the complex lane — background opus as an alternative to codex ([1e0a4d3](https://github.com/batuta-ai/skills/commit/1e0a4d393475b2c44c68c1f14efaed07188986ff))
+* complex lane delegable to codex and user-chosen lane mapping ([c87edac](https://github.com/batuta-ai/skills/commit/c87edac3fd6c3834ecbb8fc08c285dd40a570813))
+* Compozy runtime in init, status and pause — offer, listing and session handoff ([9d0ad16](https://github.com/batuta-ai/skills/commit/9d0ad16710957a23db8f7a5f84818a95fc1d67b3))
+* Compozy runtime integration — dormant compozy.md and delegation as a managed session ([2568168](https://github.com/batuta-ai/skills/commit/256816818581eacc6a818aaf6825633c6332724f))
+* Compozy task board — WORK.md items as tasks, delegation as task runs ([d20a011](https://github.com/batuta-ai/skills/commit/d20a0117a32a1bd7e49940bc420d76cd22b11692))
+* conducting log in WORK.md and routing read in status ([e8dc046](https://github.com/batuta-ai/skills/commit/e8dc0467450cd7447c3c03b621b84dc5545bed73))
+* cross-review contract — lenses, findings as artifact and the maestro's judgment (distillation wave 3) ([170cda6](https://github.com/batuta-ai/skills/commit/170cda6f27f80364a0baba61f724f7cf36a5cda6))
+* declared scope in the brief — Scope field in Step 2 and mechanical check in Step 4 ([b4234c5](https://github.com/batuta-ai/skills/commit/b4234c591f28926b9acc09b4e23bf3de0b0a22e1))
+* explicit models in routing and executor checks at onboarding ([b24993f](https://github.com/batuta-ai/skills/commit/b24993fb8d50dbcd4bdbb68189e93c988f338549))
+* explicit write boundary and conflict detection with CLAUDE.md/AGENTS.md ([8c14723](https://github.com/batuta-ai/skills/commit/8c14723040c78d8abd7505a39732da018a13f823))
+* hardened brief — expected evidence, stop conditions and anti-workaround (distillation wave 2) ([f739695](https://github.com/batuta-ai/skills/commit/f739695d0430a386ba8652c3984cd2731021ddc7))
+* hardened verification — a report is not evidence (distillation wave 1) ([1d1522a](https://github.com/batuta-ai/skills/commit/1d1522a7bfec98e0217565124d90d59cbf1a5ab1))
+* host-agnostic skills with inlined method, unified taxonomy and machine-readable adapters ([89be22f](https://github.com/batuta-ai/skills/commit/89be22fe01a91226e76824a43fd785d083b5a18a))
+* init asks batch execution mode (sequential default) ([87d1fcd](https://github.com/batuta-ai/skills/commit/87d1fcdc58e4522043e694d46ce631c3f80b1953))
+* init skill — onboarding moved and reconfigure mode ([58a201d](https://github.com/batuta-ai/skills/commit/58a201d26f831492862da5e2f78a369e6597e917))
+* **init:** ask for the worktree mode and the install command ([e2ff893](https://github.com/batuta-ai/skills/commit/e2ff8939a3cd289261f738d6b1a33c1ac7c823c7))
+* initial plugin structure (skills, adapters, templates, routing) ([c7f3d58](https://github.com/batuta-ai/skills/commit/c7f3d580ae597cfee16e2f7f92fd0d5159b028e9))
+* **init:** offer the Batuta discovery pointer in AGENTS.md ([28d744a](https://github.com/batuta-ai/skills/commit/28d744a178ebb2c603ad4a7c80e682de2dfc2cdc))
+* NestJS template and the full catalog in init ([4917d60](https://github.com/batuta-ai/skills/commit/4917d60eee26ef6fcb820a056461175a9cd383eb))
+* Next.js and React Native templates ([c49e94b](https://github.com/batuta-ai/skills/commit/c49e94bc39f3dcae6c3950020f583e17206a178b))
+* opencode provider/model discovery through the CLI at onboarding ([963b290](https://github.com/batuta-ai/skills/commit/963b290e95a0fd30763143d118337c00270b5f47))
+* pause and resume skills — consumable session handoff ([3534ec5](https://github.com/batuta-ai/skills/commit/3534ec50f46eecb63d9346abe417e946b36626e9))
+* plan and review point at superpowers.md ([901e3c3](https://github.com/batuta-ai/skills/commit/901e3c3982821cd8f84ad3991af67075bb440365))
+* project map in the profile, takeover of other frameworks and visual identity ([d25660d](https://github.com/batuta-ai/skills/commit/d25660d90315a3d52798c092120835de0d16e71e))
+* Python and Laravel templates ([57f667e](https://github.com/batuta-ai/skills/commit/57f667e8fa0d0c500763e640c598df801a1f3a1c))
+* read-only research invocation in the adapters (sandbox, blocked tools, git guard) ([53f0c6c](https://github.com/batuta-ai/skills/commit/53f0c6ca8edc7ea31629d9a73adf0a4884a73b92))
+* Research support lane in the routing table — the scout ([1f0d0e9](https://github.com/batuta-ai/skills/commit/1f0d0e987335a8450f9f193c4ed9114b01e741c2))
+* review and the codex adapter point at codex-plugin.md ([4bd9c1f](https://github.com/batuta-ai/skills/commit/4bd9c1f17b48abc3213ccbdb56bb8ac35fbebde2))
+* **review:** run the scope check when a brief is associated ([918a28a](https://github.com/batuta-ai/skills/commit/918a28ad5417bb9d8d8d0bd283890a5b3aa7f688))
+* run trail — .batuta/runs/ per task with a dormant runs.md ([62e98af](https://github.com/batuta-ai/skills/commit/62e98af8d3f2ec92e780908868b6d435f291077f))
+* scout protocol in the cycle — research brief, report contract and structural verification ([d9d7f60](https://github.com/batuta-ai/skills/commit/d9d7f609fcb1fd887b1df50ede2dcf291e8c8414))
+* Step 1.5 Decompose — full cycle and atomic commit per item ([22a5767](https://github.com/batuta-ai/skills/commit/22a576778894e48a5b04350e7b98cc386b5375c6))
+* the cycle gains the per-task worktree path (Steps 1.5, 3–5) ([43865ae](https://github.com/batuta-ai/skills/commit/43865aeaa230d344ac4d629f496cabd3b098dc32))
+* the cycle points at codex-plugin.md in Steps 2–4 ([fcc1cd2](https://github.com/batuta-ai/skills/commit/fcc1cd2d57a3a4d59deec0942c868f7768f4e586))
+* the cycle points at superpowers.md in Steps 1–4 ([9b86d1e](https://github.com/batuta-ai/skills/commit/9b86d1eae215d2e1fb7e112ff53e105c4f1eea33))
+
+
+### Bug Fixes
+
+* aborted-item trail in Step 4, path-complete scope check and review adjustments ([1a45d26](https://github.com/batuta-ai/skills/commit/1a45d26201d94b3158e9243759a50c3909e9e275))
+* **agy:** slugs carry the reasoning level, disable slash expansion, note glog noise ([3bddc23](https://github.com/batuta-ai/skills/commit/3bddc2386983259e1366f5b330a76f3d7a6cd339))
+* align docs and skills with the sequential decomposition default ([1ccd5e0](https://github.com/batuta-ai/skills/commit/1ccd5e0aa9b88ba651c91c1ed72ace686684d68c))
+* **compozy:** explicit worktree on spawn, critical-lane carve-out and session lifecycle ([d2285cf](https://github.com/batuta-ai/skills/commit/d2285cfe2ed389838714d19af4e78962dfd6270e))
+* final review findings on per-task worktrees (wording, counts, fallback and guards) ([feefb31](https://github.com/batuta-ai/skills/commit/feefb31f7d2496f00b85aac296a8d4aef9c57d14))
+* final review findings on the codex plugin integration (write guard, wording) ([74d9726](https://github.com/batuta-ai/skills/commit/74d9726dd77c45c9141d9706768d5dea159d8961))
+* final review findings on the stack templates (Extends chain, restored guards) ([cd0c9dc](https://github.com/batuta-ai/skills/commit/cd0c9dc2645dd8aad21d1c2c8e28d53978ed4305))
+* **init:** explicit pointer idempotency and reconfigure reconciliation ([2661855](https://github.com/batuta-ai/skills/commit/26618559ce312bddebbd7cdc33e94f0504f69d08))
+* map sweep deferred until after lane mapping, scout guard under parallelism ([1c1446c](https://github.com/batuta-ai/skills/commit/1c1446c2522695d34df1faf37643fc26b56ab12e))
+* prose of the cycle pointers (Step 4 before the list, line breaks) ([b1c897d](https://github.com/batuta-ai/skills/commit/b1c897d5242d0b66ddfc61acd569355292c4f251))
+* Step 0 gate — meta-questions about integrations read the integration file before answering ([d5d0bb3](https://github.com/batuta-ai/skills/commit/d5d0bb3e7e6b9280aa3e3916c772b7a43be81efa))
+
+
+### Code Refactoring
+
+* commands renamed — plan, status, route and review without prefix ([22e8de5](https://github.com/batuta-ai/skills/commit/22e8de54a22d925772326b9165a721eeb28cbbfd))
+
 ## [0.4.0](https://github.com/batuta-ai/skills/compare/v0.3.0...v0.4.0) (2026-09-04)
 
 
