@@ -27,7 +27,7 @@ run Step 4 exactly as for any executor. Self-review is not skipped.
 | Claude Code | the Claude session | `claude.md` = background `claude -p` |
 | Codex | the Codex session | `codex.md` = background `codex exec` |
 | Cursor | the Cursor agent session | `cursor-agent.md` = background `cursor-agent -p` |
-| Gemini CLI | the Gemini session | `gemini.md` = background `gemini -p` |
+| Antigravity CLI | the agy session | `agy.md` = background `agy -p` |
 | opencode | the opencode session | `opencode.md` = background `opencode run` |
 
 A routing row never points `self` below `critical`. Cheaper lanes on the

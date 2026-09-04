@@ -8,7 +8,7 @@ The Batuta skills: a conducting cycle for AI coding agents. The agent you
 talk to becomes the **conductor** — it classifies the task, routes it to
 the cheapest executor that can handle it, writes the brief, delegates,
 verifies the diff and commits. The code is written by **executors**:
-`codex`, `opencode` (Kimi, DeepSeek, GLM…), `cursor-agent`, `gemini`, a
+`codex`, `opencode` (Kimi, DeepSeek, GLM…), `cursor-agent`, `agy` (Antigravity), a
 background `claude`, or the conductor itself only for critical work.
 
 This repository is pure markdown in the [agentskills.io](https://agentskills.io)
@@ -76,7 +76,7 @@ YAML frontmatter, add a row.
 ```
 skills/
   batuta/            SKILL.md + references/ (brief, verification, routing, state, scout, worktree, method/)
-                     adapters/ (self, claude, codex, opencode, cursor-agent, gemini) · templates/ (per stack)
+                     adapters/ (self, claude, codex, opencode, cursor-agent, agy) · templates/ (per stack)
   batuta-<command>/  one directory per command skill, agents/openai.yaml for Codex
 tests/skills/check.sh   lint and token budget — CI gate
 docs/qa-retro.md        the dogfooding protocol
