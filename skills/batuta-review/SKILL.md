@@ -1,44 +1,25 @@
 ---
-name: review
-description: Batuta's on-demand verification. Use when the user invokes /batuta:review or asks to review a diff, an executor's work, or uncommitted changes.
+name: batuta-review
+description: Verify any diff on demand with the cycle's Step 4 — scope, traceability, tests, criteria, optional second reviewer. Use for /batuta-review or when asked to review uncommitted changes, an executor's work or a range. Never changes code.
 ---
 
-# Batuta — on-demand review
+# Batuta review — verification on demand
 
-Re-runs the cycle's verification step over any diff, delegating no code work.
+**STOP. Read `../batuta/references/verification.md` in full before the
+first verdict.** Its rules apply here unchanged: report ≠ evidence, scans
+when the diff touches tests, slop in the diff review, the cross-review
+contract when a second reviewer is dispatched.
 
-With superpowers installed, conduct the review with the rigor of
-`requesting-code-review` and `verification-before-completion`
-(plugin root `superpowers.md`, verification row); the steps and the verdict
-below stay unchanged.
+## Procedure
 
-With the codex plugin installed, also request a Codex second-opinion
-review of the diff (`codex-plugin.md`, cross-review row); the verdict
-below stays the maestro's.
+1. **Target.** Default: uncommitted changes (`git diff` + `git diff --staged`). The user may name a range (`HEAD~3..`), a branch or a commit.
+2. **Contract.** A brief with a Scope list associated (the trail in `.batuta/runs/` carries it verbatim) → scope check first. A plan or spec → include it verbatim in the review material. Nothing associated → derive the criteria from what the change appears to deliver, and say that you did.
+3. **Diff review** as the conductor: correctness, traceability (drive-by edits are findings even when correct), conventions from `.batuta/profile.md` and its template, slop, workarounds.
+4. **Tests.** The profile's test command, run by you. No profile → ask which command.
+5. **Criteria**, one by one, each with its proof re-run.
+6. **Second reviewer** when the user asks, or when the change is `high`/`critical`: any executor from the table through its `readonly` line, findings file outside the repo, lenses by diff size. Judge each finding with a one-line rationale.
+7. **Verdict:** ✅ approved or ❌ rejected, findings as `file:line — problem — fix`, and the next step (fix via `/batuta`, commit, discard). A rejected finding you declined goes to `.batuta/learnings.md` as one rule, when it taught one.
 
-The hardened-verification rules in `verification.md` apply here in full:
-report ≠ evidence, test-hygiene scans when the diff touches tests, slop
-checklist inside the diff review, and the cross-review contract whenever
-a second reviewer is dispatched.
+*Done when:* the verdict lists one proof line per criterion and every finding has a location.
 
-1. **Determine the target:** by default, uncommitted changes (`git diff` +
-   `git diff --staged`); the user may point to a range (`HEAD~3..`), a branch or
-   a commit.
-2. **Diff review** — review as the maestro: correctness, scope, adherence to the
-   conventions in `.batuta/profile.md` and the stack template. When a brief
-   with a Scope list is associated, run the scope check first: the target's
-   changed paths (`git status --porcelain` for uncommitted work, `git diff
-   --name-only <range>` otherwise) against the list — out-of-list paths are
-   findings. Traceability
-   test: every changed line must trace to what the change set out to do — flag
-   drive-by edits even when correct.
-3. **Tests** — run the profile's test command (if there is no profile, ask which
-   command to use).
-4. **Acceptance criteria** — if a brief or plan is associated with the change
-   (the task's run trail in `.batuta/runs/` carries the brief verbatim),
-   check item by item; otherwise derive criteria from what the change appears to
-   deliver and make that explicit.
-5. **Verdict** — ✅ approved or ❌ rejected, with an objective list of issues
-   (file:line) and a suggested next step (fix via `/batuta`, commit, discard).
-
-This skill neither commits nor changes code — it only evaluates and reports.
+Read-only: no commits, no code changes, no delegation of code work.

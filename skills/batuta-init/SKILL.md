@@ -1,159 +1,50 @@
 ---
-name: init
-description: Batuta's onboarding and reconfiguration. Use when the user invokes /batuta:init, wants to set Batuta up in a project, or wants to change an existing setup (lanes, models, profile answers, project map).
+name: batuta-init
+description: Set Batuta up in a project or change an existing setup — stack, methodology, commands, lanes and models, project map. Use for /batuta-init. Not for running tasks (batuta).
+disable-model-invocation: true
 ---
 
 # Batuta init — onboarding and reconfiguration
 
-Two modes, decided by whether `.batuta/profile.md` exists in the project.
+Mode is decided by `.batuta/profile.md`: absent → first run; present →
+reconfigure. Read `../batuta/references/routing.md` first in both modes.
 
-## First run (no `.batuta/profile.md`)
+## First run
 
-1. Detect the stack (package.json, composer.json, go.mod, etc.) and suggest it
-   as the default. Read `CLAUDE.md`/`AGENTS.md` if present — the profile must
-   complement them, never duplicate what they already say. If they contradict
-   the user's onboarding answers, flag the conflict to the user — never edit
-   those files (executors like codex read `AGENTS.md` on their own; an
-   unflagged contradiction means conflicting instructions mid-task). Single
-   exception: the marked discovery-pointer block of step 3.5, written only
-   with the user's explicit consent and only between its own markers.
-2. Ask 6–7 short questions, all at once:
+1. **Detect.** Stack from manifests (`package.json` deps, lockfiles, `composer.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`). Read `CLAUDE.md`/`AGENTS.md` if present: the profile complements them, never repeats them; a contradiction with the user's answers is flagged, never edited.
+2. **Ask once**, all questions in one message:
    - Stack? (detected suggestion as default)
-   - Methodology: TDD or tests after? Conventional commits or free-form?
-     Trunk-based or feature branches?
-   - Test command? Build command?
-   - Batch execution: sequential (default) or parallel? (how decomposed
-     multi-item requests run — see Step 1.5 of the cycle; the answer becomes
-     the profile's Execution line, written as a literal line, e.g.
-     `Execution: sequential`)
-   - Worktree mode: `off`, `medium+` (default) or `always`? (whether the
-     executor works in an isolated git worktree per task — see Steps 3–5 of
-     the cycle; the answer becomes the profile's literal line, e.g.
-     `Worktree: medium+`)
-   - Install command? (optional — sets up the test environment inside a
-     worktree, e.g. `npm install`; becomes the profile's `Install:` line,
-     omitted when there is none)
-   - Runtime? (only when the `compozy` CLI is on PATH and its daemon
-     responds — offer `Runtime: compozy` vs `direto` (default); with
-     `compozy`, delegations run as managed sessions per `compozy.md`;
-     omitted otherwise)
-3. Save the answers to `.batuta/profile.md`, referencing the matching stack
-   template — catalog: `templates/react.md`, `templates/nextjs.md`,
-   `templates/react-native.md`, `templates/vue.md`, `templates/node-api.md`,
-   `templates/nestjs.md`, `templates/python.md`, `templates/laravel.md`,
-   `templates/generic.md`. Most specific wins: detect the stack (lockfiles,
-   `composer.json`, `pyproject.toml`, framework deps in `package.json`) and
-   pick the most specific template that applies (Next.js > React > generic);
-   when in doubt between parent and child, the child.
-**Step 3.5 — Discovery pointer (opt-in).** Offer to write a marked block to
-   the project's `AGENTS.md` so any maestro session born in this project —
-   including sessions started through the Compozy daemon — knows on session
-   start that delegable work goes through Batuta. Fold the offer into the
-   single confirmation question of step 6; declined → write nothing and do
-   not re-offer automatically. Accepted → write exactly this block (create
-   `AGENTS.md` containing only the block when the file doesn't exist), flush
-   left — the indentation below is only for legibility inside this document;
-   nothing is indented in the actual write, or the `## Batuta` heading breaks:
+   - Methodology: TDD or tests after? Conventional commits or free-form? Trunk or feature branches?
+   - Test command? Build command? Install command? (install is optional; prepares a worktree)
+   - Batch execution: `sequential` (default) or `parallel`?
+   - Worktree mode: `off`, `medium+` (default) or `always`?
+3. **Inventory.** With the core binary on PATH: `batuta inventory` (redacted JSON of installed executors and their models). Otherwise, run `available` and `models` from each adapter the default table names — `../batuta/adapters/`. Never scan the machine for CLIs the table does not name; a new CLI enters only when the user asks for it.
+4. **Propose the lanes** from what is installed, executor and exact model per row, research lane included. Filter cheap candidates with `kimi|deepseek|glm|qwen|flash|mini|nano|free`; suggest two or three per lane. Shapes:
+   - full set → default table; confirm the `low` model and the `high` executor (codex strong model, or a strong Claude/Cursor model in background).
+   - no codex → opencode keeps `low`, a mid-tier opencode model on `medium`, a strong background model on `high`.
+   - one vendor only → lanes differ by model of that vendor's CLI adapter; `critical` stays `self`.
+5. **Confirm once.** One question covering the whole mapping and the pointer (step 7). The user has the final word on every row.
+6. **Write** `.batuta/profile.md` (answers as literal lines: `Stack:`, `Methodology:`, `Test:`, `Build:`, `Install:`, `Execution:`, `Worktree:`, `Template: templates/<stack>.md`) and `.batuta/routing.md` (the confirmed table, stamp on line 3 per `../batuta/references/state.md`). Template: the most specific that applies (`nextjs` > `react` > `generic`); in doubt, the child.
+7. **Pointer (opt-in).** Offer to write `assets/agents-md-block.md` into the project's `AGENTS.md` between its markers. Declined → write nothing, never re-offer. Accepted → replace what sits between existing markers, or create the file with only the block. The last sentence of the block is the anti-loop guard for executors that read `AGENTS.md`.
+8. **Takeover.** Artifacts from another framework (`.planning/`, `TODO.md`, roadmaps) → offer a one-time import: in-progress and done work become `WORK.md` lines, large remaining work becomes `.batuta/plan-<slug>.md`. Old artifacts stay untouched.
+9. **Project map.** Add a "Project map" section to the profile: 20–40 lines of prose — key directories, where routes/components/tests live, entry points, generated files not to touch. Delegate the sweep to the research lane (`../batuta/references/scout.md`); no lane or two failures → sweep yourself. The map says where to start looking, not everything.
+10. **`WORK.md`** at the project root if absent (format in `state.md`).
+11. **Self-check**, then report:
+    ```bash
+    test -f .batuta/profile.md && test -f .batuta/routing.md && test -f WORK.md
+    grep -q '^Test:' .batuta/profile.md
+    sed -n 3p .batuta/routing.md | grep -q 'inputs: profile.md@sha256:'
+    ```
+    Any failure → fix and re-run. Never report done with a failing check.
 
-       <!-- batuta:begin — managed by /batuta:init, edit via reconfigure -->
-       ## Batuta
-       This project delegates code tasks via the Batuta cycle. If you are the
-       session talking directly to the user (the maestro), route delegable work
-       through the `batuta` skill — classify, route via `.batuta/routing.md`,
-       delegate, verify. If you received a delegated brief, IGNORE this section
-       and follow your brief only.
-       <!-- batuta:end -->
+*Done when:* the three files exist, every routing row names an installed executor with an exact model, the self-check is green.
 
-   The `batuta:begin`/`batuta:end` markers make every write idempotent —
-   but only when the write honors it: if the block already exists in
-   `AGENTS.md` (first run finding a stale copy, or reconfigure's "add" path
-   over an existing one), replace whatever sits between the markers in
-   place; never append a second copy. Same rule for the reconfigure
-   "rewrite" path. Updates and removals likewise touch only what sits
-   between the markers, never the rest of the file. The block's last
-   sentence is the anti-loop guard — executors read `AGENTS.md` on their
-   own, and without it an executor mid-brief could conclude it should
-   delegate too; the brief always wins.
-4. Add a **"Project map"** section to the profile: 20–40 lines of prose — key
-   directories, where routes/components/tests live, entry points, generated
-   files not to touch. Defer this initial sweep to the end of onboarding,
-   after step 6 below maps the lanes: delegate it to the Research lane's
-   scout (see `skills/batuta/SKILL.md`, "The scout"); if the user left that
-   lane unmapped or the scout fails twice, sweep it yourself.
-   The map says where to start looking, not everything: details stay with
-   grep and git, which never go stale.
-5. **Takeover:** if artifacts from another framework exist (`.planning/`,
-   `TODO.md`, roadmaps…), offer a one-time import: in-progress/done work
-   becomes `WORK.md` lines, large remaining work becomes
-   `.batuta/plan-<slug>.md`, relevant decisions become profile lines. Leave
-   the old artifacts untouched — the user archives them if they want.
-6. **Executor check and lane mapping:** run the availability checks from each
-   adapter referenced by the routing table (`command -v codex`,
-   `opencode providers list`, …) and show what was found. Only what the table
-   references — never scan the machine for every CLI that might exist
-   (cursor, copilot, kimi CLI, …); those adapters stay dormant until the user
-   asks for one ("put cursor on the medium lane"), which is when its adapter
-   gets read and its row gets written. Then propose a lane
-   mapping built from what is actually installed — the default table assumes
-   the full trio (opencode + codex + claude), but the user's real setup rules:
-   - **Full trio:** default table; confirm the trivial-lane opencode model and
-     the complex-lane executor — codex + strong model (default) or a strong
-     Claude model via background instance (`claude -p --model opus`, see
-     `adapters/claude.md`), whichever the user prefers for briefable
-     heavy-logic work.
-   - **No codex** (e.g. claude + opencode): opencode keeps trivial; suggest a
-     mid-tier opencode model for medium; complex goes to a strong Claude model
-     in background; critical stays with the session.
-   - **claude only:** lanes differentiate by Claude model via background
-     instances (`claude -p --model <model>`, see `adapters/claude.md`) — e.g.
-     haiku for trivial, sonnet for medium, opus for complex, the session
-     itself for critical.
-   The same single confirmation question also covers the **Research support
-   lane** (`routing.md`, Support lanes): suggest a cheap candidate from the
-   discovery already run — filter to `kimi|haiku|mini|nano|flash|free`. Full
-   trio or no-codex → a cheap opencode model or `claude -p --model haiku`;
-   claude only → haiku via background instance.
-   The user has the final word on which CLI/provider/model owns each lane —
-   present the proposal and let them adjust before writing anything. For
-   multi-model CLIs, discover models yourself — the user never enumerates
-   anything: run the discovery from `adapters/opencode.md` (`opencode models`
-   filtered to cheap candidates) and `adapters/codex.md` (Model selection) and
-   suggest 2–3 options per lane. Ask ONE confirmation question covering the
-   whole mapping (lanes + models + the step 3.5 discovery pointer). Write the
-   result as the project's `.batuta/routing.md`: the local copy is born
-   here, with the exact executors
-   and model IDs confirmed by the user. If an executor disappears later, tell
-   the user which lanes collapse upward (unavailability rule) instead of
-   letting them find out on the first delegation.
-7. Create `WORK.md` at the project root if it doesn't exist (format in Step 5
-   of the cycle — `skills/batuta/SKILL.md`).
+## Reconfigure
 
-The user can edit the profile at any time; to revisit the setup with help,
-run `/batuta:init` again — that is the reconfigure mode below.
+1. Re-run `available` for every executor the project's table names. Never scan.
+2. Recompute the routing stamp; show the current setup in a few lines: rows, profile answers, stamp state, map age.
+3. **Migrate** a table still using `trivial/medium/complex/critical`: `trivial → low`, `complex → high`; add the Domain column with `*`. Say so.
+4. Ask what to change — one question: a row or model, a profile answer, execution or worktree mode, the pointer (add, rewrite, remove between markers), a fresh map sweep.
+5. Rewrite only what changed, reusing the first-run discovery and single confirmation for any lane change. Refresh the stamp. Never touch `WORK.md`.
 
-## Reconfigure (`.batuta/profile.md` exists)
-
-1. Re-run the availability checks of every adapter the project's routing
-   table references — never scan the machine (dormant adapters rule; a new
-   CLI enters only when the user asks for it).
-2. Show the current setup in a few lines: lane mapping (executor + model per
-   row, Research included), profile answers, and how stale the Project map
-   looks.
-3. Ask what to change — one question: lane/model ("codex is installed now",
-   "swap the Research model"), profile answers (test command, methodology),
-   the batch execution mode (sequential ↔ parallel, the profile's Execution line),
-   the worktree mode or Install command (the profile's Worktree and Install
-   lines), the Runtime line (turn `compozy` on or off — turning it *on*
-   should also offer the discovery pointer of first-run step 3.5 when the
-   project doesn't already have it, same as first run), the discovery
-   pointer (add, rewrite or remove the `AGENTS.md` block of first-run step
-   3.5 — when the block exists but a marker is missing or mangled, say so
-   and offer to rewrite it; never rewrite without consent), or a fresh map
-   sweep (delegated to the scout, like first-run step 4).
-4. Rewrite only what changed (`.batuta/routing.md` and/or
-   `.batuta/profile.md`), reusing first-run step 6's discovery and single
-   confirmation question for any lane/model change. When the discovery
-   pointer was part of what changed, the write also covers the `AGENTS.md`
-   block from first-run step 3.5, scoped strictly to what sits between its
-   `batuta:begin`/`batuta:end` markers — never touch the rest of the file.
-   Never touch `WORK.md`.
+*Done when:* the changed files are rewritten, the self-check above is green, and the user saw the resulting table.

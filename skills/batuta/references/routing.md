@@ -1,89 +1,75 @@
-# Routing — default table
+# Routing — lanes, rules, defaults
 
-This is Batuta's default routing table. To customize it for a project, copy this
-file to `.batuta/routing.md` in the project repo — the local copy takes
-precedence. Edit freely: it is just a markdown table.
+This file is the default. `/batuta-init` writes the project's own
+`.batuta/routing.md` with real executors and model IDs; the project copy
+always wins. It is a markdown table — edit freely.
 
-The table assumes the full trio (opencode + codex + claude). Onboarding adapts
-it to what the user actually has and prefers — a claude-only setup, for
-instance, maps lanes to different Claude models instead (see
-`skills/init/SKILL.md`). The executor column of the project's
-local copy is the user's choice, not this default.
+## Contents
 
-| Complexity | Examples | Executor | Cost |
-|---|---|---|---|
-| Trivial | rename, config, copy change, simple unit test | opencode + `<provider/model>` set at onboarding (e.g. kimi, deepseek) | cents (API) |
-| Medium | isolated feature, bugfix with clear repro | codex (default model) | ChatGPT subscription |
-| Complex | multi-file feature/refactor that a precise brief can fully specify | codex + `<strong model>` with high reasoning, set at onboarding | ChatGPT subscription |
-| Critical | architecture decisions, security-sensitive work, tasks needing the conversation's full context or real judgment | claude | Claude subscription |
+- Taxonomy
+- Default table
+- Rules
+- Support lane: research
+- Adapters
+
+## Taxonomy
+
+**Complexity** — one of four:
+
+| Lane | Intent | Minimum posture |
+|---|---|---|
+| `low` | contained change, well-trodden path: rename, config, copy, simple test | cheapest coding-capable model |
+| `medium` | isolated feature, bugfix with clear repro, new interface with moderate coordination | mid-tier coding model; raise reasoning before raising cost |
+| `high` | new subsystem, multi-file feature or refactor that a precise brief can fully specify | strong coding model, high reasoning |
+| `critical` | architecture, security-sensitive work, anything needing the conversation's context or open decisions | the conducting host itself (`self`) |
+
+**Domain** — one of: `backend, frontend, mobile, data, infra, security,
+testing, docs, general, fullstack`. Domain is a routing discriminator: a row
+may name a different executor per domain (e.g. `frontend` → cursor-agent).
+Rows without a domain apply to all.
+
+High vs critical is the **brief test**, not size: self-sufficient brief →
+`high`; needs the conversation → `critical`. In doubt, `critical`: a wrong
+`high` costs a failed delegation cycle; a wrong `critical` costs only the
+price difference.
+
+## Default table
+
+Assumes the full set is installed. Onboarding adapts it to what exists.
+
+| Lane | Domain | Executor | Model | Cost |
+|---|---|---|---|---|
+| low | * | opencode | `<provider/model>` set at onboarding (kimi, deepseek, glm…) | cents (API) |
+| medium | * | codex | default model | ChatGPT subscription |
+| high | * | codex | `<strongest model>`, reasoning high, set at onboarding | ChatGPT subscription |
+| critical | * | self | the session's model | host subscription |
 
 ## Rules
 
-- The orchestrator classifies on its own and announces it in one line:
-  `→ codex: medium bugfix`.
-- The user can override verbally at any time ("use kimi for this").
-- **Automatic escalation:** if the executor fails verification twice (original
-  attempt + 1 retry with feedback), the task moves one row up the table.
-- Executor unavailable (CLI not installed / not logged in) → use the next row up.
-- Each executor maps to an adapter at `adapters/<executor>.md`.
-- **Dormant adapters:** the table references, the adapter sleeps. An adapter
-  is only read when its row is routed to (delegation) or explicitly added to
-  the table (onboarding/`/batuta:route`). Never scan, check, or load adapters
-  the active table doesn't reference — extra CLIs on the user's machine
-  (cursor, copilot, kimi CLI, …) cost zero context until the user opts a row
-  in. This is what keeps Batuta cheap as the adapter catalog grows; don't
-  break it when adding executors.
-- **Complex vs Critical:** the dividing line is the brief, not the size. If a
-  self-sufficient brief can carry everything the executor needs (file list,
-  decisions already made, verifiable acceptance criteria), the task is Complex
-  and delegable to the Complex row's executor with a strong model. If the task
-  needs the conversation's context, security judgment, or decisions that are
-  still open, it is Critical and stays with claude. When in doubt, classify
-  Critical — a wrong Complex costs a failed delegation cycle; a wrong Critical
-  only costs the price difference.
-- **Complex-lane executor is a user choice:** the default (full trio) is codex
-  with a strong model, but at onboarding the user may map the row to a strong
-  Claude model via background instance instead (`claude -p --model opus
-  "<brief>"`, see `adapters/claude.md`) — heavy-logic work that passes the
-  brief test doesn't need the session's top model, and some users prefer
-  Claude's strong models over codex for it. Either way the row names the exact
-  model. This choice never absorbs Critical: a background instance has no
-  access to the conversation, so anything needing that context stays with the
-  session regardless of which executor owns Complex.
-- **Explicit model:** for multi-model CLIs (opencode), the row must name the
-  exact `provider/model` ID — never rely on the CLI's global default, which is
-  whatever the user last configured and may point at an expensive premium
-  model, silently defeating the cost routing. IDs vary per installation, so
-  they are discovered via `opencode models` (see `adapters/opencode.md`) and
-  confirmed once at onboarding — this default table carries a placeholder;
-  the project's `.batuta/routing.md` carries the real ID. Exception: codex
-  under a subscription has flat per-task cost, so its default model is
-  acceptable on the Medium row. The Complex row is different: there the model
-  choice is a capability knob, so the row must still name the exact model and
-  reasoning effort (see `adapters/codex.md`), confirmed at onboarding —
-  delegating complex work to codex's default model silently downgrades the
-  lane's capability.
+- Classify alone and announce in one line: `→ codex/gpt-5.6-sol: medium backend — <title>`.
+- The user overrides verbally at any time. Obey.
+- **Escalation:** two failed verifications (original + 1 retry) → one row up.
+- **Unavailable executor** (not installed, not logged in, model not listed) → one row up. Say so.
+- **Explicit model:** every row names the exact model ID the CLI accepts. Never the CLI's global default — it is whatever the user last touched and may be a premium model, silently defeating cost routing. Exception: codex under a subscription has flat per-task cost, so its default is acceptable on `medium` only. On `high` the model is a capability knob and must be explicit.
+- **Discover, never recall:** model IDs come from the adapter's `models` command on this machine, confirmed once at onboarding. Never write an ID from memory.
+- **`self` is the host that conducts.** In Claude Code, `self` is the Claude session and `claude.md` means a background `claude -p`. In Codex, `self` is the Codex session and `codex.md` means a background `codex exec`. Rows never point `self` below `critical`.
+- **Dormant adapters:** the table references, the adapter sleeps. An adapter is read only when its row is routed to or added. Never scan the machine for CLIs the table does not name.
 
-## Support lanes
+## Support lane: research
 
-Support lanes route work that serves the cycle but is not code writing. They
-are orthogonal to the complexity ladder above — the escalation rule ("moves
-one row up") does not apply here.
+Orthogonal to the ladder. The escalation rule does not apply.
 
 | Role | Examples | Executor | Cost |
 |---|---|---|---|
-| Research | project map sweep, brief context, "where does X live?" | `<CLI + cheap model>` set at onboarding (e.g. opencode + kimi, `claude -p --model haiku`) | cents (API) |
+| research | project map sweep, brief context, "where does X live?" | `<CLI + cheap model>` set at onboarding (opencode + kimi, `claude -p --model haiku`) | cents |
 
-### Research rules
+- Read-only, contract in `scout.md`. Never writes code, never commits, never appears in `WORK.md`.
+- Scout failed twice or unavailable → you research yourself. Nothing escalates.
 
-- The scout is read-only: it answers questions about the codebase and returns
-  a structured report (protocol in `skills/batuta/SKILL.md`, "The scout").
-  It never writes code, never commits, never appears in `WORK.md`.
-- **No ladder:** scout failed twice (original + 1 retry) or executor
-  unavailable → the maestro does the research itself. Nothing escalates.
-- **Explicit model**, like the trivial lane: the row names the exact CLI and
-  model, discovered via the adapter and confirmed once at onboarding — this
-  default table carries a placeholder; the project's `.batuta/routing.md`
-  carries the real ID.
-- **Dormant adapters** apply unchanged: only the adapter this row references
-  is read.
+## Adapters
+
+One file per executor at `adapters/<executor>.md`; the project may override
+with `.batuta/adapters/<executor>.md`. The YAML frontmatter is the machine
+contract (`run`, `readonly`, `available`, `models`, `finished`,
+`limit_regex`); the prose is for you. New executor: copy
+`adapters/_template.md`, fill the frontmatter, add a row.
