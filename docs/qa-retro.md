@@ -1,88 +1,89 @@
-# Protocolo de retrô — QA de uso real do Batuta
+# Retro protocol — real-use QA of Batuta
 
-Roteiro reusável para as rodadas de teste do Batuta num projeto cobaia.
-Operacionaliza os critérios de sucesso do PRD §8 como sessões de dogfooding:
-uma persona (você, dev usando o Batuta de verdade) caminha jornadas
-completas e registra o que um usuário real experimentaria. O protocolo mora
-aqui e é versionado com o Batuta; os **resultados** de cada rodada (achados,
-vereditos, debrief) pertencem à sessão de retrô e ficam com o cobaia.
+Reusable script for Batuta test rounds on a guinea-pig project. It turns
+the PRD §8 success criteria into dogfooding sessions: one persona (you, a
+developer using Batuta for real) walks complete journeys and records what a
+real user would experience. The protocol lives here and is versioned with
+Batuta; the **results** of each round (findings, verdicts, debrief) belong
+to the retro session and stay with the guinea pig.
 
-Destilado de `qa-execution`/`qa-report` do
-[pedronauck/skills](https://github.com/pedronauck/skills) — ver a spec de
-destilação em `docs/superpowers/specs/`.
+Distilled from `qa-execution`/`qa-report` in
+[pedronauck/skills](https://github.com/pedronauck/skills) — see the
+distillation spec under `docs/superpowers/specs/`.
 
-## Os três inegociáveis da sessão
+## The session's three non-negotiables
 
-1. **In persona** — toda interação passa pela superfície pública do Batuta
-   (comandos, briefs, WORK.md, commits). Proibido espiar a implementação
-   das skills para decidir o que "deveria" acontecer, proibido contornar
-   um travamento por dentro. O que a persona não alcança, o usuário real
-   também não alcança.
-2. **Prova, não otimismo** — um Pass exige o observável esperado confirmado
-   por caminho independente: o commit existe e é atômico (`git log`), o
-   WORK.md tem a linha, o diff rastreia ao pedido. O Batuta *dizer* que fez
-   não é confirmação — é exatamente a regra do `skills/batuta/references/verification.md` aplicada
-   ao próprio Batuta. A trilha da tarefa em `.batuta/runs/` é evidência de
-   primeira classe: brief enviado, relato do executor e provas
-   reproduzidas, sem depender da memória da sessão (`skills/batuta/references/state.md`).
-3. **Write back ou não aconteceu** — todo achado vira registro na sessão
-   (com evidência: comando, saída, hash) antes de seguir adiante.
+1. **In persona** — every interaction goes through Batuta's public surface
+   (commands, briefs, WORK.md, commits). Peeking at the skills'
+   implementation to decide what "should" happen is forbidden, and so is
+   working around a stall from the inside. What the persona cannot reach,
+   the real user cannot reach either.
+2. **Proof, not optimism** — a Pass requires the expected observable
+   confirmed through an independent path: the commit exists and is atomic
+   (`git log`), WORK.md has the line, the diff traces back to the request.
+   Batuta *saying* it did something is not confirmation — that is exactly
+   the rule of `skills/batuta/references/verification.md` applied to Batuta
+   itself. The task's trail in `.batuta/runs/` is first-class evidence: the
+   brief sent, the executor's report and the reproduced proofs, independent
+   of the session's memory (`skills/batuta/references/state.md`).
+3. **Write back or it did not happen** — every finding becomes a record in
+   the session (with evidence: command, output, hash) before moving on.
 
-## Stall é finding
+## A stall is a finding
 
-Travada, pergunta que não devia existir, commit não-atômico, estado
-perdido no resume, brief que o executor não entendeu: cada um é um achado
-a registrar com evidência — nunca algo a empurrar, re-prompted ou
-consertar na hora para "continuar o teste". Consertar no meio da sessão
-contamina a rodada; o fix vem depois, pelo ciclo normal, no repo do Batuta.
+A freeze, a question that should not exist, a non-atomic commit, state lost
+on resume, a brief the executor did not understand: each one is a finding
+to record with evidence — never something to push through, re-prompt or fix
+on the spot "to keep the test going". Fixing mid-session contaminates the
+round; the fix comes later, through the normal cycle, in Batuta's repository.
 
-## Jornadas a caminhar
+## Journeys to walk
 
-Toda rodada cobre as jornadas tocadas pelas mudanças desde a rodada
-anterior, mais uma adjacente como canário. Rodada de release cobre todas:
+Every round covers the journeys touched by the changes since the previous
+round, plus one adjacent journey as a canary. A release round covers all:
 
-| # | Jornada | Estado final verdadeiro |
+| # | Journey | True final state |
 |---|---|---|
-| J1 | `init` → primeiro ciclo simples | tarefa trivial delegada e commitada com < 3 interações (PRD §8.1) |
-| J2 | Ciclo com decomposição | pedido-lista vira N ciclos e N commits atômicos, não um commitzão |
-| J3 | Falha → retry → escalada | feedback específico no retry; escalada sobe uma linha da tabela; diagnóstico enriquece o re-brief |
-| J4 | `pause` → sessão nova → `resume` | trabalho retomado só com os arquivos, sem contexto extra (PRD §8.4) |
-| J5 | Worktree por tarefa | main limpo durante a execução; squash com mensagem do maestro; worktree removido |
-| J6 | Verificação endurecida | executor que declara sem evidência é pego; scan de higiene de teste dispara quando provocado; a trilha em `.batuta/runs/` existe e sustenta o veredito |
+| J1 | `init` → first simple cycle | a trivial task delegated and committed in < 3 interactions (PRD §8.1) |
+| J2 | Cycle with decomposition | a list request becomes N cycles and N atomic commits, not one big commit |
+| J3 | Failure → retry → escalation | specific feedback on the retry; escalation goes one row up the table; the diagnosis enriches the re-brief |
+| J4 | `pause` → new session → `resume` | work resumed from the files alone, with no extra context (PRD §8.4) |
+| J5 | Worktree per task | main stays clean during execution; squash with the conductor's message; worktree removed |
+| J6 | Hardened verification | an executor that declares without evidence is caught; the test-hygiene scan fires when provoked; the trail in `.batuta/runs/` exists and supports the verdict |
 
-Cada jornada caminha até o **estado final verdadeiro** — não até "parece
-que funcionou". Inclui pelo menos um caminho de abandono por rodada
-(ex.: rejeitar um plano, cancelar no meio do ciclo).
+Each journey is walked to its **true final state** — not to "it seems to
+have worked". Each round includes at least one abandonment path (e.g.
+rejecting a plan, cancelling mid-cycle).
 
-## Rubrica de impacto (severidade dos achados)
+## Impact rubric (finding severity)
 
-| Tier | Significado para o usuário |
+| Tier | Meaning for the user |
 |---|---|
-| 1 — Bloqueia | a jornada não termina; sem contorno em persona |
-| 2 — Perde trabalho | estado/commit/diff perdido ou corrompido |
-| 3 — Quebra confiança | o Batuta afirma algo que a evidência contradiz |
-| 4 — Atrito | a jornada termina, mas custou interações ou confusão a mais |
-| 5 — Paper cut | incômodo que nenhum critério formal pega; registrar mesmo assim |
+| 1 — Blocks | the journey does not finish; no in-persona workaround |
+| 2 — Loses work | state, commit or diff lost or corrupted |
+| 3 — Breaks trust | Batuta claims something the evidence contradicts |
+| 4 — Friction | the journey finishes, but cost extra interactions or confusion |
+| 5 — Paper cut | an annoyance no formal criterion catches; record it anyway |
 
-## Registro de achado (formato mínimo)
+## Finding record (minimum format)
 
 ```markdown
-### <slug curto> — tier N
-Jornada: J<n> · Rodada: <data>
-O que aconteceu: <1-3 frases, em persona>
-Evidência: <comando + saída, hash, trecho de WORK.md>
-Esperado: <o que o usuário esperava ver>
+### <short slug> — tier N
+Journey: J<n> · Round: <date>
+What happened: <1-3 sentences, in persona>
+Evidence: <command + output, hash, WORK.md excerpt>
+Expected: <what the user expected to see>
 ```
 
-Dedup antes de registrar: achado re-encontrado de rodada anterior soma à
-entrada existente ("re-found"), não vira achado novo.
+Dedupe before recording: a finding re-encountered from a previous round is
+added to the existing entry ("re-found"), not opened as a new finding.
 
-## Fechamento da rodada
+## Closing the round
 
-- Toda jornada em escopo tem veredito (Pass / achados / bloqueada — com o
-  pré-requisito exato que faltou). Cortou jornada por falta de janela?
-  Corta por risco (tier 1 primeiro) e **declara o corte** — cobertura
-  encolhe visivelmente ou não encolhe.
-- Status final: pronto ou não para a próxima versão, com totais por tier.
-- Os achados viram trabalho no repo do Batuta pelo ciclo normal (um fix =
-  um ciclo = um commit), priorizados por tier.
+- Every journey in scope has a verdict (Pass / findings / blocked — with the
+  exact prerequisite that was missing). Cut a journey for lack of time?
+  Cut by risk (tier 1 first) and **declare the cut** — coverage shrinks
+  visibly or does not shrink.
+- Final status: ready or not for the next version, with totals per tier.
+- Findings become work in Batuta's repository through the normal cycle
+  (one fix = one cycle = one commit), prioritized by tier.
