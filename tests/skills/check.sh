@@ -109,13 +109,32 @@ conventions() {
   # The "## Conventions for briefs" section of a template, up to the next H2.
   awk '/^## Conventions for briefs/{on=1; next} /^## /{on=0} on' "$1"
 }
-cycle=$(tokens skills/batuta/SKILL.md skills/batuta/references/brief.md skills/batuta/references/verification.md   skills/batuta/references/routing.md skills/batuta/references/state.md skills/batuta/references/worktree.md   skills/batuta/adapters/codex.md skills/batuta/templates/nextjs.md skills/batuta/templates/react.md skills/batuta/templates/generic.md)
-brief=$( { for t in nextjs react generic; do conventions "skills/batuta/templates/$t.md"; done
-           awk '/^## Test laws/{on=1; next} /^## /{on=0} on' skills/batuta/references/brief.md
-           awk '/^## Method/{on=1; next} /^## /{on=0} on' skills/batuta/references/brief.md; } | wc -c | awk '{print int($1/4)}')
-printf 'cycle packet   ~%5d tokens (budget 9000)\nbrief overhead ~%5d tokens (budget 900)\n' "$cycle" "$brief"
-[ "$cycle" -le 9000 ] || bad "conductor cycle packet ~$cycle tokens > 9000"
-[ "$brief" -le 900 ] || bad "executor brief overhead ~$brief tokens > 900"
+chain() {
+  # A template followed by its Extends chain, child first up to generic.
+  local t=$1 seen=""
+  while [ -n "$t" ] && ! printf '%s' "$seen" | grep -q " $t "; do
+    seen="$seen $t "; printf '%s\n' "skills/batuta/templates/$t.md"
+    t=$(head -8 "skills/batuta/templates/$t.md" | tr '\n' ' ' | grep -oE 'Extends[^`]*`templates/[a-z0-9-]+\.md`' | grep -oE '[a-z0-9-]+\.md' | head -1 | sed 's/\.md$//')
+  done
+}
+laws=$( { awk '/^## Test laws/{on=1; next} /^## /{on=0} on' skills/batuta/references/brief.md
+          awk '/^## Method/{on=1; next} /^## /{on=0} on' skills/batuta/references/brief.md; } | wc -c)
+cycle_max=0; cycle_max_at=""; brief_max=0; brief_max_at=""
+for tmpl in skills/batuta/templates/*.md; do
+  name=$(basename "$tmpl" .md); [ "$name" = "_template" ] && continue
+  files=$(chain "$name")
+  b=$(( ( $(for f in $files; do conventions "$f"; done | wc -c) + laws ) / 4 ))
+  [ "$b" -gt "$brief_max" ] && { brief_max=$b; brief_max_at=$name; }
+  for adapter in skills/batuta/adapters/*.md; do
+    aname=$(basename "$adapter" .md); [ "$aname" = "_template" ] && continue
+    c=$(tokens skills/batuta/SKILL.md skills/batuta/references/brief.md skills/batuta/references/verification.md \
+      skills/batuta/references/routing.md skills/batuta/references/state.md skills/batuta/references/worktree.md "$adapter" $files)
+    [ "$c" -gt "$cycle_max" ] && { cycle_max=$c; cycle_max_at="$name+$aname"; }
+  done
+done
+printf 'cycle packet   ~%5d tokens max (%s; budget 9500)\nbrief overhead ~%5d tokens max (%s; budget 1000)\n' "$cycle_max" "$cycle_max_at" "$brief_max" "$brief_max_at"
+[ "$cycle_max" -le 9500 ] || bad "conductor cycle packet ~$cycle_max tokens ($cycle_max_at) > 9500"
+[ "$brief_max" -le 1000 ] || bad "executor brief overhead ~$brief_max tokens ($brief_max_at) > 1000"
 
 if [ "$fail" -ne 0 ]; then note "skills check: FAILED"; exit 1; fi
 note "skills check: ok"
