@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/batuta-ai/skills/compare/v0.5.2...v0.5.3) (2026-09-05)
+
+
+### Bug Fixes
+
+* **plan:** declare the lane in the machine contract; budget the real packet maxima ([#16](https://github.com/batuta-ai/skills/issues/16)) ([e640d29](https://github.com/batuta-ai/skills/commit/e640d29c2ea85cdbcc686b6fdbc8596e36e8bb81))
+
 ## [0.5.2](https://github.com/batuta-ai/skills/compare/v0.5.1...v0.5.2) (2026-09-05)
 
 
