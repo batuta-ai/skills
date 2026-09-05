@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/batuta-ai/skills/compare/v0.5.0...v0.5.1) (2026-09-05)
+
+
+### Bug Fixes
+
+* **skills:** close the contracts the 2026-09-05 review found broken ([#11](https://github.com/batuta-ai/skills/issues/11)) ([1cd280f](https://github.com/batuta-ai/skills/commit/1cd280f7c4b566f99de4517d2fa4af31b7daaa84))
+
 ## [0.5.0](https://github.com/batuta-ai/skills/compare/v0.4.0...v0.5.0) (2026-09-04)
 
 
