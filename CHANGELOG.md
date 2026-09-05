@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/batuta-ai/skills/compare/v0.5.1...v0.5.2) (2026-09-05)
+
+
+### Bug Fixes
+
+* **brief:** keep the templates' conductor-only sections out of executor briefs; budget the packets ([#14](https://github.com/batuta-ai/skills/issues/14)) ([bcefcbe](https://github.com/batuta-ai/skills/commit/bcefcbe14239309cb1fd0eb47bbf6631daf39e01)), closes [#13](https://github.com/batuta-ai/skills/issues/13)
+
 ## [0.5.1](https://github.com/batuta-ai/skills/compare/v0.5.0...v0.5.1) (2026-09-05)
 
 
