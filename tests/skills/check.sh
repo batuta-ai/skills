@@ -99,5 +99,23 @@ for r in skills/batuta/references/*.md; do
   fi
 done
 
+# Token accounting beyond the resident body. Two packets, bytes/4 each:
+# what the conductor loads across one cycle (SKILL.md, the references a
+# cycle reads, one adapter, the longest template chain), and the overhead
+# every executor brief carries (the chain's Conventions sections, the test
+# laws and the method line). Budgets are ceilings, not targets.
+tokens() { cat "$@" | wc -c | awk '{print int($1/4)}'; }
+conventions() {
+  # The "## Conventions for briefs" section of a template, up to the next H2.
+  awk '/^## Conventions for briefs/{on=1; next} /^## /{on=0} on' "$1"
+}
+cycle=$(tokens skills/batuta/SKILL.md skills/batuta/references/brief.md skills/batuta/references/verification.md   skills/batuta/references/routing.md skills/batuta/references/state.md skills/batuta/references/worktree.md   skills/batuta/adapters/codex.md skills/batuta/templates/nextjs.md skills/batuta/templates/react.md skills/batuta/templates/generic.md)
+brief=$( { for t in nextjs react generic; do conventions "skills/batuta/templates/$t.md"; done
+           awk '/^## Test laws/{on=1; next} /^## /{on=0} on' skills/batuta/references/brief.md
+           awk '/^## Method/{on=1; next} /^## /{on=0} on' skills/batuta/references/brief.md; } | wc -c | awk '{print int($1/4)}')
+printf 'cycle packet   ~%5d tokens (budget 9000)\nbrief overhead ~%5d tokens (budget 900)\n' "$cycle" "$brief"
+[ "$cycle" -le 9000 ] || bad "conductor cycle packet ~$cycle tokens > 9000"
+[ "$brief" -le 900 ] || bad "executor brief overhead ~$brief tokens > 900"
+
 if [ "$fail" -ne 0 ]; then note "skills check: FAILED"; exit 1; fi
 note "skills check: ok"
