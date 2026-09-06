@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.0](https://github.com/batuta-ai/skills/compare/v0.5.9...v0.6.0) (2026-09-06)
+
+
+### Features
+
+* **roadmap:** plan phases from .batuta/roadmap.md; status, init and loop know the roadmap ([9b55779](https://github.com/batuta-ai/skills/commit/9b55779e97c32cc9c2b7dc19d1fb8c726c125ba9))
+* **roadmap:** plan phases from .batuta/roadmap.md; status, init and loop know the roadmap ([5616a01](https://github.com/batuta-ai/skills/commit/5616a01d01c7981c78b1d442b80dc0ce74c9555d)), closes [#36](https://github.com/batuta-ai/skills/issues/36)
+
 ## [0.5.9](https://github.com/batuta-ai/skills/compare/v0.5.8...v0.5.9) (2026-09-06)
 
 
