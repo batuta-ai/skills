@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.9](https://github.com/batuta-ai/skills/compare/v0.5.8...v0.5.9) (2026-09-06)
+
+
+### Bug Fixes
+
+* **routing:** loop-first projects seat the critical lane on a CLI executor ([f110b03](https://github.com/batuta-ai/skills/commit/f110b03349173738ff0f56be8060dabab77c8847))
+* **routing:** loop-first projects seat the critical lane on a CLI executor ([c532f16](https://github.com/batuta-ai/skills/commit/c532f16f49f878165a86cdb8b66df3742ad5916f)), closes [#33](https://github.com/batuta-ai/skills/issues/33)
+
 ## [0.5.8](https://github.com/batuta-ai/skills/compare/v0.5.7...v0.5.8) (2026-09-06)
 
 
