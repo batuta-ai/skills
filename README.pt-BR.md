@@ -1,4 +1,8 @@
-# batuta-ai/skills
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/batuta-ai/.github/main/brand/readme-header-skills-dark.png">
+  <img src="https://raw.githubusercontent.com/batuta-ai/.github/main/brand/readme-header-skills-light.png" width="100%" alt="batuta-ai / skills — Método de condução: habilidades reutilizáveis para agentes. Conducting method: reusable skills for agents.">
+</picture>
+
 
 > 🇺🇸 [English version](README.md)
 
