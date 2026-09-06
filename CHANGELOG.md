@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.4](https://github.com/batuta-ai/skills/compare/v0.5.3...v0.5.4) (2026-09-06)
+
+
+### Bug Fixes
+
+* **init:** probe every shipped adapter, not only the default table's executors ([#20](https://github.com/batuta-ai/skills/issues/20)) ([7d1b1e8](https://github.com/batuta-ai/skills/commit/7d1b1e86023413731d98ebce12a6e1e3fccd0fc9)), closes [#19](https://github.com/batuta-ai/skills/issues/19)
+
 ## [0.5.3](https://github.com/batuta-ai/skills/compare/v0.5.2...v0.5.3) (2026-09-05)
 
 
