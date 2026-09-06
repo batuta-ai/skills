@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.8](https://github.com/batuta-ai/skills/compare/v0.5.7...v0.5.8) (2026-09-06)
+
+
+### Bug Fixes
+
+* **batuta-plan:** scope Decisions paragraphs to their tasks ([7671a8e](https://github.com/batuta-ai/skills/commit/7671a8edbcdebe5fb17ae62df99e98f07adb805f))
+* **batuta-plan:** scope Decisions paragraphs to their tasks ([2a4b0b3](https://github.com/batuta-ai/skills/commit/2a4b0b38ff84331797821bfd2e1ab5bb719b27d7))
+
 ## [0.5.7](https://github.com/batuta-ai/skills/compare/v0.5.6...v0.5.7) (2026-09-06)
 
 
