@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.6](https://github.com/batuta-ai/skills/compare/v0.5.5...v0.5.6) (2026-09-06)
+
+
+### Bug Fixes
+
+* **loop:** document --dashboard --watch and the progress protocol; agy readonly runs headless ([#25](https://github.com/batuta-ai/skills/issues/25)) ([acf557a](https://github.com/batuta-ai/skills/commit/acf557a0d8e0b1a3992806406336a7ae9066fc82))
+
 ## [0.5.5](https://github.com/batuta-ai/skills/compare/v0.5.4...v0.5.5) (2026-09-06)
 
 
