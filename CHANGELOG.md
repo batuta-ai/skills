@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.7](https://github.com/batuta-ai/skills/compare/v0.5.6...v0.5.7) (2026-09-06)
+
+
+### Miscellaneous Chores
+
+* release the gate subcommand and plan directory docs as v0.5.7 ([#28](https://github.com/batuta-ai/skills/issues/28)) ([3ec549c](https://github.com/batuta-ai/skills/commit/3ec549cbfc14ed3d2cd24f467874ec03db045574))
+
 ## [0.5.6](https://github.com/batuta-ai/skills/compare/v0.5.5...v0.5.6) (2026-09-06)
 
 
