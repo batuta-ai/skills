@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.5](https://github.com/batuta-ai/skills/compare/v0.5.4...v0.5.5) (2026-09-06)
+
+
+### Bug Fixes
+
+* **loop:** align the loop and plan skills with the shipped batuta loop ([#22](https://github.com/batuta-ai/skills/issues/22)) ([dfdcc25](https://github.com/batuta-ai/skills/commit/dfdcc256eb32f831968c2c51803c65b0df58afae))
+
 ## [0.5.4](https://github.com/batuta-ai/skills/compare/v0.5.3...v0.5.4) (2026-09-06)
 
 
