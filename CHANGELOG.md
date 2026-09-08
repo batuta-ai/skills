@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://github.com/batuta-ai/skills/compare/v0.6.2...v0.7.0) (2026-09-08)
+
+
+### Features
+
+* **batuta-review:** route eligible work through the core review engine ([a48f86f](https://github.com/batuta-ai/skills/commit/a48f86f4a606858da690474539962c7c4fa0793c))
+* **batuta-review:** route eligible work through the core review engine ([8c9988d](https://github.com/batuta-ai/skills/commit/8c9988de3fb103941e27628cfed5492cb4c965a6))
+
 ## [0.6.2](https://github.com/batuta-ai/skills/compare/v0.6.1...v0.6.2) (2026-09-08)
 
 
