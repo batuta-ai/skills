@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.1](https://github.com/batuta-ai/skills/compare/v0.6.0...v0.6.1) (2026-09-07)
+
+
+### Bug Fixes
+
+* **loop:** describe batuta watch as the way to follow a run ([206de35](https://github.com/batuta-ai/skills/commit/206de3540b10e12ae63d62de0878eb575c5a8291))
+* **loop:** describe batuta watch as the way to follow a run ([9a6fa73](https://github.com/batuta-ai/skills/commit/9a6fa734bd90bc1483f1b38f951defc8fee6deb8))
+
 ## [0.6.0](https://github.com/batuta-ai/skills/compare/v0.5.9...v0.6.0) (2026-09-06)
 
 
