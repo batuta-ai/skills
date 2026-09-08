@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.2](https://github.com/batuta-ai/skills/compare/v0.6.1...v0.6.2) (2026-09-08)
+
+
+### Bug Fixes
+
+* **batuta-init:** propose domain rows only for installed CLIs that fit the domain ([e9eb2a8](https://github.com/batuta-ai/skills/commit/e9eb2a8b2be5e93f9d8e26de71cc00cf36d5904f))
+* **batuta-init:** propose domain rows only for installed CLIs that fit the domain ([1567454](https://github.com/batuta-ai/skills/commit/156745468b414a2a0964aba735bb70b4b45f4375))
+
 ## [0.6.1](https://github.com/batuta-ai/skills/compare/v0.6.0...v0.6.1) (2026-09-07)
 
 
