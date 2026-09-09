@@ -1,7 +1,7 @@
 # WORK — skills
 
 ## In progress
-- [ ] Plano `qa-skills`: destilar as duas skills de QA real-user e corrigir as referências de `docs/qa-retro.md` (aprovado 2026-09-09)
+- [ ] Plano `qa-skills-fixes`: fechar os dois blockers da review de `qa-skills` (aprovado 2026-09-09)
 
 ## Done
 - [x] QA tree contract reference → codex (gpt-5.6-sol), commit 6d35c183b876 (trail: .batuta/runs/2026-09-09-qa-skills-task-1.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)

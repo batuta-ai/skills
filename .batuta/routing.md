@@ -1,6 +1,6 @@
 # Routing — skills
 
-<!-- inputs: profile.md@sha256:411240c70639 -->
+<!-- inputs: profile.md@sha256:3f3de48a1e13 -->
 
 Confirmed with the user by /batuta-init on 2026-09-09. Installed and probed by `batuta inventory`: agy, claude, codex, cursor-agent, opencode — all available. cursor-agent and opencode are installed and left unrouted by choice. Loop-first setup: `critical` names a CLI so every task can run unattended through `batuta loop`.
 
