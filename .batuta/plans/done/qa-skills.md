@@ -6,39 +6,39 @@ from `qa-execution`/`qa-report` in pedronauck/skills — `batuta-qa-plan` owns t
 living QA tree and plans persona sessions, `batuta-qa-run` walks them and writes
 results back. Rewritten for Batuta's register and constraints, never copied. The
 dead reference in `docs/qa-retro.md` is corrected in the same delivery.
-**Created:** 2026-09-09 · **Status:** approved
+**Created:** 2026-09-09 · **Status:** done
 
 ## Tasks
-- [ ] 1. QA tree contract reference — docs/medium
+- [x] 1. QA tree contract reference — docs/medium
       Scope: skills/batuta-qa-plan/references/tree.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; the tree defaults to `.batuta/qa/` and nothing defaults to `docs/qa` → grep -q '\.batuta/qa' skills/batuta-qa-plan/references/tree.md; a reference over 100 lines opens with a Contents section → test $(wc -l < skills/batuta-qa-plan/references/tree.md) -le 100 || grep -q '^## Contents' skills/batuta-qa-plan/references/tree.md; the file defines the directory layout, what is durable versus per-run, the exclude policy, the bootstrap procedure, the scenario frontmatter schema with its status enum, and content-addressed id minting; every rule is written in Batuta's own words with no paragraph carried over verbatim from the source
 
-- [ ] 2. Planner skill — docs/high
+- [x] 2. Planner skill — docs/high
       Depends on: 1
       Scope: skills/batuta-qa-plan/SKILL.md, skills/batuta-qa-plan/references/planning.md, skills/batuta-qa-plan/agents/openai.yaml, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; the body stays inside the 60-line budget → test $(wc -l < skills/batuta-qa-plan/SKILL.md) -le 60; the skill routes its steps to the references that own them → grep -q 'references/tree.md' skills/batuta-qa-plan/SKILL.md; the host interface file exists → test -f skills/batuta-qa-plan/agents/openai.yaml; `planning.md` carries personas, journeys mapped as flows before any scenario, the five coverage dimensions, session charters and a short automation-backlog section, each with its file format inline; the SKILL.md steps are pointers to those contracts, never the contracts themselves
 
-- [ ] 3. Bug registry reference — docs/medium
+- [x] 3. Bug registry reference — docs/medium
       Depends on: 1
       Scope: skills/batuta-qa-plan/references/bugs.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; a reference over 100 lines opens with a Contents section → test $(wc -l < skills/batuta-qa-plan/references/bugs.md) -le 100 || grep -q '^## Contents' skills/batuta-qa-plan/references/bugs.md; the file is the single severity model both skills cite, and defines id minting, dedup before filing, the bug statuses including re-found and regressed, the five user-impact tiers and the required fields
 
-- [ ] 4. Runner skill and cross-skill references in the gate — docs/high
+- [x] 4. Runner skill and cross-skill references in the gate — docs/high
       Depends on: 1, 3
       Scope: skills/batuta-qa-run/SKILL.md, skills/batuta-qa-run/references/session.md, skills/batuta-qa-run/agents/openai.yaml, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; the body stays inside the 60-line budget → test $(wc -l < skills/batuta-qa-run/SKILL.md) -le 60; the runner cites the planner's shared severity model → grep -q 'batuta-qa-plan/references/bugs.md' skills/batuta-qa-run/SKILL.md; the host interface file exists → test -f skills/batuta-qa-run/agents/openai.yaml; the gate's reference resolver accepts a citation of the form `../<skill>/references/<file>.md` and still reports a reference that genuinely does not exist; `session.md` carries the public-interface rule, stall-is-a-finding, the enter-act-verify-capture loop, the evidence standard, and the CLI or HTTP path as a first-class journey surface with the browser named as one instrument among several and never as a requirement
 
-- [ ] 5. Probe catalogs — docs/medium
+- [x] 5. Probe catalogs — docs/medium
       Depends on: 4
       Scope: skills/batuta-qa-run/references/probes.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; a reference over 100 lines opens with a Contents section → test $(wc -l < skills/batuta-qa-run/references/probes.md) -le 100 || grep -q '^## Contents' skills/batuta-qa-run/references/probes.md; the file merges the tour catalog, the six experiential lenses and the non-technical user edge cases into one reference, each entry reduced to what a runner needs to pick it and apply it; every entry is reachable from a headless host
 
-- [ ] 6. Close and fix governor — docs/medium
+- [x] 6. Close and fix governor — docs/medium
       Depends on: 3, 4
       Scope: skills/batuta-qa-run/references/close.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; a reference over 100 lines opens with a Contents section → test $(wc -l < skills/batuta-qa-run/references/close.md) -le 100 || grep -q '^## Contents' skills/batuta-qa-run/references/close.md; the file defines the session status enum, the dated report written before the first session, the write-back into the tree, the governor that judges a fix before any edit, the regression proof each auto-fix ships, the escalation path for everything outside the bounds, and the round-close checklist
 
-- [ ] 7. Docs wiring — docs/low
+- [x] 7. Docs wiring — docs/low
       Depends on: 2, 4
       Scope: docs/qa-retro.md, README.md, README.pt-BR.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; the dead spec path is gone → test $(grep -c 'docs/superpowers' docs/qa-retro.md) -eq 0; both new skills are listed in both READMEs → grep -q 'batuta-qa-run' README.md && grep -q 'batuta-qa-run' README.pt-BR.md; `docs/qa-retro.md` keeps its own subject, the retro protocol for testing Batuta itself, and points at the two new skills as the method they implement without absorbing their content
