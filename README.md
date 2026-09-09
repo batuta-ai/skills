@@ -54,6 +54,8 @@ Then, in a project: `/batuta-init` once, `/batuta` from there on.
 | `batuta-status` | `/batuta-status` | in progress, done, leftovers, delegation and escalation rates |
 | `batuta-route` | `/batuta-route` | view and edit the routing table |
 | `batuta-pause` / `batuta-resume` | `/batuta-pause`, `/batuta-resume` | session handoff |
+| `batuta-qa-plan` | `/batuta-qa-plan` | plan real-user QA as personas, journeys, scenarios, and charters in `.batuta/qa/` |
+| `batuta-qa-run` | `/batuta-qa-run` | walk planned QA sessions through public surfaces and record findings |
 
 Only `batuta` and `batuta-review` load on the model's own initiative; the
 rest cost nothing until invoked.
