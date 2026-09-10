@@ -93,8 +93,9 @@ Use five dimensions as lenses, not as a case matrix:
 5. **Cross-cutting:** responsiveness, adjacent regression, consistency, and continuity.
 
 Record coverage per journey in the cycle's durable
-`reports/<YYYY-MM-DD>-<scope>.md`. Every dimension points to a scenario or
-charter, or carries an explicit skip reason.
+`reports/<YYYY-MM-DD>-<scope>-<run-id>.md`, following the run identity and resume
+rules in [tree.md](tree.md#id-and-merge-rules). Every dimension points to a
+scenario or charter, or carries an explicit skip reason.
 
 ```markdown
 | Journey | Dimension | Scenario/charter | Status or skip reason |

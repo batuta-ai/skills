@@ -9,7 +9,7 @@ here are Batuta's.
 - Layout and persistence policy
 - Bootstrap procedure
 - Scenario frontmatter and status enums
-- Content-addressed ids and merge behavior
+- Stable content-addressed ids, unique run identities, and merge behavior
 
 The QA tree is committed project memory. Its default is `.batuta/qa/`; an
 explicit path may relocate it only within the repository. Refuse a path that
@@ -25,16 +25,17 @@ resolves outside the repository instead of substituting a temporary location.
 ├── journeys/J-<slug>.md
 ├── charters/CH-<slug>.md
 ├── bugs/BUG-<YYYYMMDD>-<slug>.md
-├── reports/<YYYY-MM-DD>-<scope>.md
-├── evidence/<YYYY-MM-DD>-<scope>/
+├── reports/<YYYY-MM-DD>-<scope>-<run-id>.md
+├── evidence/<YYYY-MM-DD>-<scope>-<run-id>/
 ├── automation-backlog/<slug>.md
 ├── state.csv                 generated scenario index
 └── templates/{scenario,bug,charter,report}.md
 ```
 
 Each scenario, journey, charter, bug, and backlog item owns a file. Each run
-owns a new dated report and evidence directory; it never appends to a shared
-run log or replaces an earlier report.
+owns a new dated report and evidence directory with the same unique `run-id`
+(see Id and merge rules); it never appends to a shared run log or replaces an
+earlier report.
 
 ## Durable and per-run state
 
@@ -108,9 +109,13 @@ report that established the latest verdict. `overlaps` lists related scenario
 ids with the canonical owner first.
 
 The closed `qa_status` set is `untested`, `pass`, `fail`, `blocked-verify`,
-`blocked-decision`, and `skipped`. A failure requires `bug_ids`. A blocked
-verdict records its exact missing human, browser, account, service, or decision
-prerequisite in the body. A skipped verdict records its reason there.
+`blocked-decision`, and `skipped`. An observed unresolved failure stays `fail`
+and requires `bug_ids`, even when repair is pending or deferred or verification
+is unavailable. Without an observed failure, `blocked-decision` means evaluation
+or expected behavior needs human judgment; `blocked-verify` means evaluation
+needs unavailable verification. A blocked verdict records its exact missing
+human, browser, account, service, or decision prerequisite in the body. A skipped
+verdict records its reason there.
 
 When bugs are linked, `fix_status` is `pending`, `fixed`, or `deferred`; it is
 otherwise empty. `fixed` requires `fix_commits`. After a fix, `retest_status` is
@@ -120,10 +125,22 @@ settled until its retest passes.
 ## Id and merge rules
 
 Mint new scenario ids as `<AREA>-<slug>`, where the slug is 2–5 kebab-case
-words derived from the promised behavior. Mint journeys, charters, bugs, and
-run files from their stable slug or date-plus-slug pattern shown above. These
-ids are content-addressed: never inspect a maximum value or maintain a shared
-counter. The same behavior therefore converges on the same id across branches.
+words derived from the promised behavior. Mint journeys, charters, and bugs
+from their stable slug or date-plus-slug pattern shown above. These ids are
+content-addressed: never inspect a maximum value or maintain a shared counter.
+The same behavior therefore converges on the same id across branches.
+
+Run identities are unique, not content-addressed. For each new run, mint
+`run-id` once as a UUID v4 using a host-available UUID facility before the first
+session. Record it in the report and use it in both paths shown in Layout.
+Independent runs get different identities even with equal dates and scopes.
+A counter, timestamp alone, or checking only the current branch for an existing
+filename is insufficient. Refuse an unexpected existing new-run report or
+evidence path rather than overwriting it.
+
+All checkpoints and resume reuse the recorded identity, report path, and evidence
+links. Resume existing reports in place, including legacy reports without UUIDs;
+do not rename historical artifacts or mint a new identity for an interrupted run.
 
 Ids never change after references exist. Retire a scenario with `skipped` and
 a body note. If two files overlap, cross-link them and choose one canonical
