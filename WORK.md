@@ -1,7 +1,8 @@
 # WORK — skills
 
 ## In progress
-- [ ] Plano `qa-skills-fixes`: fechar os dois blockers da review de `qa-skills` (aprovado 2026-09-09)
+- [ ] Rodada 3 de correções em `skills/batuta-qa-run/references/close.md`: plano ainda não escrito. Dois defeitos confirmados pela review de 2026-09-09 — nome de relatório sem identificador único (colide entre branches paralelas) e ausência de um estado de falha no ledger, que torna `qa_status: fail` inalcançável
+- [ ] `AGENTS.md` com o bloco anti-loop do Batuta: decidido, não escrito
 
 ## Done
 - [x] QA tree contract reference → codex (gpt-5.6-sol), commit 6d35c183b876 (trail: .batuta/runs/2026-09-09-qa-skills-task-1.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
