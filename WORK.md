@@ -21,3 +21,5 @@
 - [x] Docs wiring → agy (gemini-3.8-flash-low), commit 3a20fc204302 (trail: .batuta/runs/2026-09-09-qa-skills-task-7.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
 - [x] Dedup transitions bound to explicit statuses → codex (gpt-5.6-sol), commit 929fd7b98ec4 (trail: .batuta/runs/2026-09-09-qa-skills-fixes-task-1.md, delivery qa-skills-fixes-20260909-205535, plan qa-skills-fixes, 2026-09-10)
 - [x] Wire the unreachable references into their skills → codex (gpt-6-astra), 1 retry, commit ae269d1b2169 (trail: .batuta/runs/2026-09-09-qa-skills-fixes-task-2.md, delivery qa-skills-fixes-20260909-205535, plan qa-skills-fixes, 2026-09-10)
+- [x] Give each QA run a stable unique identity and preserve observed failures → codex (gpt-6-astra), commit 08e53d9dc9c2 (trail: .batuta/runs/2026-09-10-qa-skills-round3-task-1.md, delivery qa-skills-round3-20260910-132031, plan qa-skills-round3, 2026-09-10)
+- [x] Reject references unreachable from shipped skill entrypoints → codex (gpt-5.6-sol), commit b37f520a3257 (trail: .batuta/runs/2026-09-10-qa-skills-round3-task-2.md, delivery qa-skills-round3-20260910-132031, plan qa-skills-round3, 2026-09-10)

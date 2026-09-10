@@ -2,14 +2,14 @@
 <!-- inputs: profile.md@sha256:3f3de48a1e13 routing.md@sha256:556eb69f6375 -->
 
 **Goal:** Close the remaining QA review findings: independently unique run artifacts and an explicit failure verdict. Prevent shipped references from becoming unreachable without broadening the QA feature or changing host integration.
-**Created:** 2026-09-10 · **Status:** approved
+**Created:** 2026-09-10 · **Status:** done
 
 ## Tasks
-- [ ] 1. Give each QA run a stable unique identity and preserve observed failures — docs/high
+- [x] 1. Give each QA run a stable unique identity and preserve observed failures — docs/high
       Scope: skills/batuta-qa-run/references/close.md, skills/batuta-qa-plan/references/tree.md, skills/batuta-qa-plan/references/planning.md, tests/skills/check.sh
       Accept: the existing gate passes → bash tests/skills/check.sh; both references retain Contents sections → grep -q '^## Contents' skills/batuta-qa-run/references/close.md && grep -q '^## Contents' skills/batuta-qa-plan/references/tree.md; every new run uses an independently generated UUID in both report and evidence paths and resume reuses that identity without renaming historical artifacts; the layout and Id and merge rules distinguish stable scenario identities from unique run identities without counters or local-existence-only collision prevention; a terminal Fail ledger row maps to qa_status fail and every observed unresolved failure remains fail even when repair needs human approval or a replay fails; blocked-decision means evaluation or expected behavior needs a human decision and blocked-verify means evaluation needs unavailable verification, neither erases an already observed failure; final readiness cannot be ready or ready with blocked items while an observed failure remains unresolved
 
-- [ ] 2. Reject references unreachable from shipped skill entrypoints — testing/medium
+- [x] 2. Reject references unreachable from shipped skill entrypoints — testing/medium
       Depends on: 1
       Scope: tests/skills/check.sh, tests/skills/reference_reachability.py, tests/skills/test_reference_reachability.py
       Accept: fixture regressions pass → PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/skills -p 'test_reference_reachability.py'; the public gate passes with the new checker and regression suite wired in → bash tests/skills/check.sh; fixtures cover direct and transitive links, bare sibling citations, cross-skill paths, anchors, an orphan, an unreachable two-file cycle and a reachable cycle without hanging; a fixture matching the former QA defect fails when the close or probes citation is removed and succeeds when restored; the checker reports each unreachable references Markdown path deterministically and returns nonzero through the public gate; the gate stays read-only against the checkout, preserves existing missing-target checks and budget checks, and requires no new third-party dependency
