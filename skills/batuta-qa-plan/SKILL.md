@@ -26,9 +26,10 @@ distilled from Pedro Nauck's work at <https://github.com/pedronauck/skills>.
 2. **Define the audience.** Read [references/planning.md](references/planning.md) § Personas and update durable project personas only when the audience changed; deliver `personas.md` with explicit accessibility or mobile exclusions.
 3. **Map journeys before scenarios.** Read [references/planning.md](references/planning.md) § Journeys and flows and map every user-visible change or selected release journey through a true end state; deliver journey files with flows, public rereads, and abandonment paths.
 4. **Derive coverage.** Read [references/tree.md](references/tree.md) for scenario state and [references/planning.md](references/planning.md) § Scenarios and coverage; deliver scenario files whose preserved verdicts reflect prior runs while new scenarios remain `untested`, plus a five-dimension coverage ledger.
-5. **Charter the sessions.** Read [references/planning.md](references/planning.md) § Session charters and ledger; deliver risk-ordered, immutable charters so every in-scope journey has at least one persona session and the ledger names each planned walk.
-6. **Record automation candidates.** Read [references/planning.md](references/planning.md) § Automation backlog; deliver deduplicated backlog items only for stable, valuable, or repeatedly failing paths.
-7. **Validate the handoff.** Reread [references/planning.md](references/planning.md) § Planning completeness; deliver a plan with every gap, skip, and blocked leg recorded with its exact missing human, browser, account, service, or decision prerequisite.
+5. **Register known bugs.** Read [references/bugs.md](references/bugs.md), reconcile existing findings by user-visible symptom, and register any imported finding only after deduplication; deliver stable bug files whose lifecycle, impact, and scenario links follow the shared registry.
+6. **Charter the sessions.** Read [references/planning.md](references/planning.md) § Session charters and ledger; deliver risk-ordered, immutable charters so every in-scope journey has at least one persona session and the ledger names each planned walk.
+7. **Record automation candidates.** Read [references/planning.md](references/planning.md) § Automation backlog; deliver deduplicated backlog items only for stable, valuable, or repeatedly failing paths.
+8. **Validate the handoff.** Reread [references/planning.md](references/planning.md) § Planning completeness; deliver a plan with every gap, skip, and blocked leg recorded with its exact missing human, browser, account, service, or decision prerequisite.
 
 ## Companion skills
 
