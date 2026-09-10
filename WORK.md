@@ -1,7 +1,7 @@
 # WORK — skills
 
 ## In progress
-- [ ] QA round 3: `.batuta/plans/qa-skills-round3.md` approved for execution on 2026-09-10. Two sequential tasks cover unique run artifacts plus honest failure verdicts, then a reference-reachability gate with regression fixtures. Preflight pending; after loop completion run the public gate and a separate delivery review before claiming completion. No push or merge authorized.
+- [ ] QA round 3: delivery `qa-skills-round3-20260910-132031` is terminal `done`, with both tasks integrated on their first attempt (08e53d9, b37f520). Plan archived at `.batuta/plans/done/qa-skills-round3.md`. Independent public gate and delivery review are now the remaining checks. No push or merge authorized.
 
 ## Follow-ups
 - [ ] After QA skills are reviewed and merged: host command wiring and vendoring in a separate repository plan.
