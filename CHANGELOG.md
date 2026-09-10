@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0](https://github.com/batuta-ai/skills/compare/v0.7.0...v0.8.0) (2026-09-10)
+
+
+### Features
+
+* **qa:** add persistent persona QA planning and execution skills ([915ad9a](https://github.com/batuta-ai/skills/commit/915ad9a9540da4a5829f8a71b196df7a17c7ec92))
+* **qa:** add persistent persona QA planning and execution skills ([#45](https://github.com/batuta-ai/skills/issues/45)) ([915ad9a](https://github.com/batuta-ai/skills/commit/915ad9a9540da4a5829f8a71b196df7a17c7ec92))
+
 ## [0.7.0](https://github.com/batuta-ai/skills/compare/v0.6.2...v0.7.0) (2026-09-08)
 
 
