@@ -1,7 +1,7 @@
 # WORK — skills
 
 ## In progress
-- [ ] QA round 3: delivery `qa-skills-round3-20260910-132031` is terminal `done`, with both tasks integrated on their first attempt (08e53d9, b37f520). Plan archived at `.batuta/plans/done/qa-skills-round3.md`. Independent public gate and delivery review are now the remaining checks. No push or merge authorized.
+- None. QA round 3 is verified locally; no push or merge authorized.
 
 ## Follow-ups
 - [ ] After QA skills are reviewed and merged: host command wiring and vendoring in a separate repository plan.
@@ -9,8 +9,11 @@
   - Nested conductors: qa-skills task 5 e1 and qa-skills-fixes task 1 e1 tried nested `codex exec` and hit `Operation not permitted (os error 1)`. The AGENTS guard is partial mitigation, not a complete plugin-level fix.
   - Verifier retry policy: qa-skills-fixes journal seq 47 records `verifier_incomplete` because agy emitted no parseable `TASK n: DONE|INCOMPLETE` lines. The loop reran implementation despite green task gates. Investigate retrying/escalating verification rather than implementation.
 - [ ] Deferred decisions: preventive Compozy guard and whether delivery review becomes a loop gate.
+- [ ] Next-delivery candidate, agreed with the user: a common loop-supervision contract with host-specific native subagent instructions where supported and managed-background fallback elsewhere. Verify each host's capabilities before designing the integration; do not replace core routing, gates or journal ownership.
+- [ ] Claude readonly adapter: `--disallowedTools` consumes the following prompt as option values on the installed CLI. The original invocation exits 1 with missing prompt; inserting `--` before the prompt returns OK. Plan a separate adapter fix with regression coverage. No issue filed yet.
 
 ## Done
+- [x] QA round 3 final verification (2026-09-10): independent public gate passed, seven fixture tests passed, and agy/gemini-3.8-flash-low delivery review returned SHIP with no findings, 1/1 cohort covered and 13/13 criteria satisfied. Conductor agrees after scope, diff and test-hygiene review. The first Claude review had missing coverage due to the adapter defect above, not implementation findings. Evidence: `.batuta/reviews/2026-09-10-qa-skills-round3/review.md` and `.batuta/runs/2026-09-10-qa-skills-round3-final-verification.md`.
 - [x] Root `AGENTS.md` delegated-brief guard copied verbatim from the init asset, verified with cmp and git diff --check, committed separately as d6bc86f before executors (2026-09-10).
 - [x] QA tree contract reference → codex (gpt-5.6-sol), commit 6d35c183b876 (trail: .batuta/runs/2026-09-09-qa-skills-task-1.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
 - [x] Planner skill → codex (gpt-6-astra), commit 37b6467391b6 (trail: .batuta/runs/2026-09-09-qa-skills-task-2.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
