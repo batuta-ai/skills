@@ -5,14 +5,14 @@
 delivery: the bug registry's dedup step contradicts its own lifecycle table, and
 three reference files are cited by no skill, so the procedures that own tours,
 lenses, edge probes, round closing and the shared severity model are unreachable.
-**Created:** 2026-09-09 · **Status:** approved
+**Created:** 2026-09-09 · **Status:** done
 
 ## Tasks
-- [ ] 1. Dedup transitions bound to explicit statuses — docs/medium
+- [x] 1. Dedup transitions bound to explicit statuses — docs/medium
       Scope: skills/batuta-qa-plan/references/bugs.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; the dedup step no longer routes every non-verified match to re-found → test $(grep -c 'matches an unverified bug' skills/batuta-qa-plan/references/bugs.md) -eq 0; the file stays inside its Contents contract → grep -q '^## Contents' skills/batuta-qa-plan/references/bugs.md; the dedup step names the transition for each current status it can meet, so a `verified` match becomes `regressed`, a `wont-fix` match stays `wont-fix` until its stated reconsideration condition holds, an `invalid` match is re-examined rather than reopened by default, and only genuinely unresolved statuses take the ordinary `re-found` transition; the lifecycle table and the dedup step state the same rules with no contradiction left between them
 
-- [ ] 2. Wire the unreachable references into their skills — docs/high
+- [x] 2. Wire the unreachable references into their skills — docs/high
       Depends on: 1
       Scope: skills/batuta-qa-run/SKILL.md, skills/batuta-qa-plan/SKILL.md, tests/skills/check.sh
       Accept: the gate passes → bash tests/skills/check.sh; the runner reads the probe catalogs before walking → grep -q 'references/probes.md' skills/batuta-qa-run/SKILL.md; the runner reads the closing contract → grep -q 'references/close.md' skills/batuta-qa-run/SKILL.md; the planner reads its own registry contract → grep -q 'references/bugs.md' skills/batuta-qa-plan/SKILL.md; both bodies stay inside the 60-line budget → test $(wc -l < skills/batuta-qa-run/SKILL.md) -le 60 && test $(wc -l < skills/batuta-qa-plan/SKILL.md) -le 60; every reference under both skills is cited by the skill that owns it, and each citation sits in the step that actually needs it rather than being appended as a list
