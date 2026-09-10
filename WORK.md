@@ -1,10 +1,17 @@
 # WORK — skills
 
 ## In progress
-- [ ] Rodada 3 de correções em `skills/batuta-qa-run/references/close.md`: plano ainda não escrito. Dois defeitos confirmados pela review de 2026-09-09 — nome de relatório sem identificador único (colide entre branches paralelas) e ausência de um estado de falha no ledger, que torna `qa_status: fail` inalcançável
-- [ ] `AGENTS.md` com o bloco anti-loop do Batuta: decidido, não escrito
+- [ ] QA round 3: `.batuta/plans/qa-skills-round3.md` approved for execution on 2026-09-10. Two sequential tasks cover unique run artifacts plus honest failure verdicts, then a reference-reachability gate with regression fixtures. Preflight pending; after loop completion run the public gate and a separate delivery review before claiming completion. No push or merge authorized.
+
+## Follow-ups
+- [ ] After QA skills are reviewed and merged: host command wiring and vendoring in a separate repository plan.
+- [ ] File the nested-conductor and verifier-incomplete retry-policy issues recorded below. No issues filed in this planning session.
+  - Nested conductors: qa-skills task 5 e1 and qa-skills-fixes task 1 e1 tried nested `codex exec` and hit `Operation not permitted (os error 1)`. The AGENTS guard is partial mitigation, not a complete plugin-level fix.
+  - Verifier retry policy: qa-skills-fixes journal seq 47 records `verifier_incomplete` because agy emitted no parseable `TASK n: DONE|INCOMPLETE` lines. The loop reran implementation despite green task gates. Investigate retrying/escalating verification rather than implementation.
+- [ ] Deferred decisions: preventive Compozy guard and whether delivery review becomes a loop gate.
 
 ## Done
+- [x] Root `AGENTS.md` delegated-brief guard copied verbatim from the init asset, verified with cmp and git diff --check, committed separately as d6bc86f before executors (2026-09-10).
 - [x] QA tree contract reference → codex (gpt-5.6-sol), commit 6d35c183b876 (trail: .batuta/runs/2026-09-09-qa-skills-task-1.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
 - [x] Planner skill → codex (gpt-6-astra), commit 37b6467391b6 (trail: .batuta/runs/2026-09-09-qa-skills-task-2.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
 - [x] Bug registry reference → codex (gpt-5.6-sol), commit 9863015b2a2b (trail: .batuta/runs/2026-09-09-qa-skills-task-3.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
