@@ -60,11 +60,22 @@ Search before creating a file:
 3. Compare the entry point, observable result, and true end state. A changed
    technical cause does not make a new bug when the user experiences the same
    failure.
-4. If the symptom matches an unverified bug, set its status to `re-found` and
-   append a re-found history entry.
-5. If the symptom matches a `verified` bug, set its status to `regressed` and
-   append a regression history entry.
-6. Mint an id only when no existing file describes the same user-visible
+4. Choose the transition from the matching bug's current status:
+   - For `open`, `re-found`, or `fixed`, set the status to `re-found` and append
+     a re-found history entry. The fresh observation shows that the symptom is
+     unresolved before a verified fix.
+   - For `verified`, set the status to `regressed` and append a regression
+     history entry.
+   - For `regressed`, keep `regressed` and append the fresh observation to its
+     history.
+   - For `wont-fix`, keep `wont-fix` unless scope or risk has changed. When it
+     has, reassess the disposition; set the status to `open` only when the bug
+     is accepted for resolution.
+   - For `invalid`, re-examine the recorded reasoning against the fresh
+     evidence. Keep `invalid` unless that evidence establishes a real symptom;
+     then set the status to `open` and record why the prior reasoning no longer
+     applies.
+5. Mint an id only when no existing file describes the same user-visible
    symptom.
 
 When uncertain, update the most likely bug with the comparison evidence and
@@ -77,13 +88,13 @@ Use exactly one current status:
 
 | Status | Meaning | Next proof |
 |---|---|---|
-| `open` | Confirmed and awaiting a fix. | A fix commit or a recorded disposition. |
-| `re-found` | Observed again before a verified fix. | Fix, disposition, or another dated observation. |
-| `fixed` | A fix was applied but the original journey has not been replayed. | Replay with the affected persona and independent reread. |
-| `verified` | The original journey was replayed and the symptom was absent. | Retain as durable history. |
-| `regressed` | Observed again after the bug had reached `verified`. | A new fix followed by the original replay. |
-| `wont-fix` | Deliberately declined with an owner and rationale. | Reconsider only when scope or risk changes. |
-| `invalid` | Evidence shows tester error or an environment artifact. | Retain the reasoning; do not delete the record. |
+| `open` | Confirmed and awaiting a fix. | A fix commit or a recorded disposition; a matching fresh observation moves it to `re-found`. |
+| `re-found` | Observed again before a verified fix. | Fix, disposition, or another dated observation that keeps it `re-found`. |
+| `fixed` | A fix was applied but the original journey has not been replayed. | Replay with the affected persona and independent reread; a matching fresh observation moves it to `re-found`. |
+| `verified` | The original journey was replayed and the symptom was absent. | Retain as durable history; a matching fresh observation moves it to `regressed`. |
+| `regressed` | Observed again after the bug had reached `verified`. | A new fix followed by the original replay; another matching observation keeps it `regressed`. |
+| `wont-fix` | Deliberately declined with an owner and rationale. | Keep `wont-fix` unless scope or risk changes; then reassess and move to `open` only if accepted for resolution. |
+| `invalid` | Evidence shows tester error or an environment artifact. | Retain and re-examine the reasoning; keep `invalid` unless fresh evidence establishes a real symptom, then move to `open`. |
 
 `re-found` and `regressed` are current statuses, not new identities. Repeated
 observations append history to the same file. A new fix moves either status to
