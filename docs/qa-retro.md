@@ -8,8 +8,8 @@ Batuta; the **results** of each round (findings, verdicts, debrief) belong
 to the retro session and stay with the guinea pig.
 
 Distilled from `qa-execution`/`qa-report` in
-[pedronauck/skills](https://github.com/pedronauck/skills) — see the
-distillation spec under `docs/superpowers/specs/`.
+[pedronauck/skills](https://github.com/pedronauck/skills) — implemented as
+the reusable skills `batuta-qa-plan` and `batuta-qa-run`.
 
 ## The session's three non-negotiables
 

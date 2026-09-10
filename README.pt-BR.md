@@ -54,6 +54,8 @@ Depois, num projeto: `/batuta-init` uma vez, `/batuta` dali em diante.
 | `batuta-status` | `/batuta-status` | em andamento, feito, sobras, taxas de delegação e escalada |
 | `batuta-route` | `/batuta-route` | ver e editar a tabela de roteamento |
 | `batuta-pause` / `batuta-resume` | `/batuta-pause`, `/batuta-resume` | handoff entre sessões |
+| `batuta-qa-plan` | `/batuta-qa-plan` | planejar QA de usuário real como personas, jornadas, cenários e charters em `.batuta/qa/` |
+| `batuta-qa-run` | `/batuta-qa-run` | executar sessões planejadas de QA por superfícies públicas e registrar achados |
 
 Só `batuta` e `batuta-review` carregam por iniciativa do modelo; as demais
 custam zero até serem invocadas.

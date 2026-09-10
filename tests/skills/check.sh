@@ -40,12 +40,21 @@ hits=$(grep -rnE "$FORBIDDEN" skills/ || true)
 [ -z "$hits" ] || bad "forbidden strings:"$'\n'"$hits"
 
 # Every relative reference cited in a skill must exist (relative to the
-# citing file, or to the skill root when a template cites `templates/...`).
+# citing file, to the skill root, or under skills/ for a cross-skill path).
 while IFS= read -r line; do
   file=${line%%:*}; ref=${line#*:}
   base=$(dirname "$file")
-  [ -e "$base/$ref" ] || [ -e "$(dirname "$base")/$ref" ] || bad "$file cites missing $ref"
-done < <(grep -roE '(\.\./batuta/)?(references|adapters|templates|assets)/[A-Za-z0-9_./-]+\.md' skills/ --include='*.md' | sort -u)
+  [ -e "$base/$ref" ] || [ -e "$(dirname "$base")/$ref" ] || [ -e "skills/${ref#../}" ] || bad "$file cites missing $ref"
+done < <(grep -roE '(\.\./[a-z0-9-]+/)?(references|adapters|templates|assets)/[A-Za-z0-9_./-]+\.md' skills/ --include='*.md' | sort -u)
+
+# References must be reachable from a shipped skill entrypoint, including
+# through other local Markdown files.
+if ! reachability_tests=$(PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/skills -p 'test_reference_reachability.py' 2>&1); then
+  bad "reference reachability tests:"$'\n'"$reachability_tests"
+fi
+if ! unreachable_references=$(PYTHONDONTWRITEBYTECODE=1 python3 tests/skills/reference_reachability.py skills 2>&1); then
+  bad "reference reachability:"$'\n'"$unreachable_references"
+fi
 
 # Adapters: the frontmatter is a machine contract. Parse it as the YAML
 # subset it uses (one `key: scalar` per line, ` #` starts a comment): a
