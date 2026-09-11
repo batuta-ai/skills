@@ -1,6 +1,7 @@
 # WORK — skills
 
 ## In progress
+- [ ] Approved native-dispatch (2 tasks) and later acp-dispatch (2 tasks), 2026-09-11. Execute native plan here; external ACP waits for qualified core. Baseline skills 94b6b19, core 940a7b3, host 32702e8.
 - None. QA round 3 is verified locally; no push or merge authorized.
 
 ## Follow-ups
