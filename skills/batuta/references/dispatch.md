@@ -1,35 +1,35 @@
 # Dispatch — native eligibility
 
-Dispatch changes a fixed route's transport only.
-
 ## Selection
 
-1. Select the route first, then the transport. Freeze executor, explicit model
-   and effort, isolation and permissions; the user model override is authoritative.
-2. Absent `Dispatch:` means legacy CLI. `Dispatch: auto` opts an interactive
-   conductor into native eligibility.
-3. Native requires every condition below. Otherwise run the same route's CLI
-   adapter and report the failed condition; never reroute for native access.
+1. Freeze route first: executor, requested model/effort, isolation, permissions;
+   user model overrides win.
+2. Absent `Dispatch:` is legacy CLI: check its adapter, then run it. `Dispatch: auto`
+   opts an interactive conductor into native eligibility.
+3. If auto-native is eligible, check and invoke only it; CLI absence is irrelevant.
+4. Otherwise, before submission check same-route CLI; if absent, use existing
+   unavailable-route policy. Never reroute for native access.
+5. After native accepts submission, cancellation, partial or uncertain outcomes
+   are non-success; never auto-replay through CLI.
 
 ## Native eligibility
 
-- Current-host capabilities expose a native subagent and its controls; an
-  installed CLI proves nothing. Standalone/headless hosts use CLI.
-- The facility maps the executor and accepts explicit model and effort. Missing,
-  unconfirmed, unknown or incompatible values fail; never inherit another model.
-- Prefer an isolated child context with only the self-sufficient brief; no full
-  conversation fork by default. Retain criteria, conventions, scope, boundaries,
-  proofs, permissions and stop conditions.
-- Required worktree isolation and controls exist; labels prove nothing.
+- Host exposes a native subagent and controls; CLI installation proves nothing.
+  Standalone/headless hosts use CLI.
+- Facility maps executor and accepts requested model/effort. Missing, unknown or
+  incompatible values fail; never inherit a model.
+- Isolate the self-sufficient brief from full conversation. Retain criteria,
+  conventions, scope, boundaries, proofs, permissions and stop conditions.
+- Worktree isolation/controls exist; labels prove nothing.
 
-Add no native adapter, daemon, install step or host-tool name.
+No native adapter, daemon, install step or host-tool name.
 
 ## Receipt
 
-At most 4 KiB: `Outcome`, route/model/effort, `Changed paths`, `Worker claims`
-with proof references, and `Uncertainty`. Cancellation and partial results are
-not success. Explicit overflow names an owned log and why to read it selectively.
+Target ≤4 KiB: task/attempt identity, outcome, selected transport, requested and
+observed model/effort (`unknown` if unobserved), changed paths, worker claims, evidence
+references and uncertainty. Overflow names the owned full-evidence reference and
+why selective reading is needed.
 
-Worker claims are not verified results: run the existing scope, diff, test and
-criterion gates. Use existing facilities for meaningful progress; add neither a
-summarizing LLM nor arbitrary loop-journal entries.
+Worker claims are unverified; run scope, diff, test and criterion gates. Add no
+summarizing LLM or arbitrary loop-journal entries.

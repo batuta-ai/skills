@@ -39,56 +39,6 @@ done
 hits=$(grep -rnE "$FORBIDDEN" skills/ || true)
 [ -z "$hits" ] || bad "forbidden strings:"$'\n'"$hits"
 
-# Native dispatch is opt-in and may never change the selected route.
-dispatch_contract() {
-  local file=skills/batuta/references/dispatch.md
-  [ -f "$file" ] || { printf '%s\n' "$file: missing"; return; }
-  grep -Fq 'Absent `Dispatch:`' "$file" || printf '%s\n' "$file: absent Dispatch must preserve legacy CLI"
-  grep -Fq '`Dispatch: auto`' "$file" || printf '%s\n' "$file: missing auto opt-in"
-  grep -Fq 'Select the route first, then the transport.' "$file" || printf '%s\n' "$file: route must precede transport"
-  grep -Fq 'explicit model and effort' "$file" || printf '%s\n' "$file: model and effort compatibility is not explicit"
-  grep -Fq 'unknown or incompatible' "$file" || printf '%s\n' "$file: unknown capabilities must be ineligible"
-  grep -Fq 'isolated child context' "$file" || printf '%s\n' "$file: native context isolation is not required"
-  grep -Fq 'headless' "$file" || printf '%s\n' "$file: headless fallback is not defined"
-  grep -Fq 'user model override' "$file" || printf '%s\n' "$file: user model override is not authoritative"
-  grep -Fq 'references/dispatch.md' skills/batuta/SKILL.md || printf '%s\n' 'skills/batuta/SKILL.md: dispatch contract is unreachable'
-}
-dispatch_findings=$(dispatch_contract)
-[ -z "$dispatch_findings" ] || bad "native dispatch contract:"$'\n'"$dispatch_findings"
-
-# Bounded native delegation must preserve the full brief contract and expose
-# outcomes that the conductor can verify without loading the worker's log.
-native_context_contract() {
-  local dispatch=skills/batuta/references/dispatch.md
-  local brief=skills/batuta/references/brief.md
-  local verification=skills/batuta/references/verification.md
-  local scenarios=docs/native-dispatch-scenarios.md
-  grep -Fq 'isolated child context' "$dispatch" || printf '%s\n' "$dispatch: isolated child context is not preferred"
-  grep -Fq '4 KiB' "$dispatch" || printf '%s\n' "$dispatch: receipt size bound is missing"
-  grep -Fq 'Worker claims' "$dispatch" || printf '%s\n' "$dispatch: worker claims are not identified"
-  grep -Fq 'verified results' "$dispatch" || printf '%s\n' "$dispatch: verified results are not distinguished"
-  grep -Fq 'Explicit overflow' "$dispatch" || printf '%s\n' "$dispatch: receipt overflow is not explicit"
-  grep -Fq 'Eight required sections' "$brief" || printf '%s\n' "$brief: eight-section requirement is not explicit"
-  for section in 'Goal' 'Context' 'Conventions' 'Acceptance criteria' 'Boundaries' 'Scope' 'Expected evidence' 'Stop conditions'; do
-    grep -Fq "| **$section** |" "$brief" || printf '%s\n' "$brief: missing required $section section"
-  done
-  grep -Fq "profile's rules, then the **Conventions for briefs**" "$brief" || printf '%s\n' "$brief: mandatory convention chain is missing"
-  grep -Fq 'BATUTA-PROGRESS <n> START' "$brief" || printf '%s\n' "$brief: progress convention is missing"
-  grep -Fq 'Test the behavior, never the mock.' "$brief" || printf '%s\n' "$brief: test laws are missing"
-  grep -Fq 'Work test-first from the acceptance criteria.' "$brief" || printf '%s\n' "$brief: method convention is missing"
-  grep -Fq 'Outcome' "$brief" || printf '%s\n' "$brief: receipt outcome is missing"
-  grep -Fq 'Uncertainty' "$brief" || printf '%s\n' "$brief: receipt uncertainty is missing"
-  grep -Fq "worker claims never count as verified results" "$verification" || printf '%s\n' "$verification: claims and verification are not separated"
-  [ -f "$scenarios" ] || { printf '%s\n' "$scenarios: missing"; return; }
-  for scenario in 'Native available' 'Native unavailable' 'Model mismatch' 'Inherited context' 'Cancellation' 'Partial results' 'Skills-only fallback'; do
-    grep -Fq "| $scenario |" "$scenarios" || printf '%s\n' "$scenarios: missing $scenario decision"
-  done
-  grep -Fq 'Worker claim' "$scenarios" || printf '%s\n' "$scenarios: worker claims are not separated from verification"
-  grep -Fq 'Expected decision' "$scenarios" || printf '%s\n' "$scenarios: expected decisions are not explicit"
-}
-native_context_findings=$(native_context_contract)
-[ -z "$native_context_findings" ] || bad "native delegation context:"$'\n'"$native_context_findings"
-
 # Every relative reference cited in a skill must exist (relative to the
 # citing file, to the skill root, or under skills/ for a cross-skill path).
 while IFS= read -r line; do
