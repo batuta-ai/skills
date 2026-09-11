@@ -1,7 +1,7 @@
 # WORK — skills
 
 ## In progress
-- [ ] Approved native-dispatch (2 tasks) and later acp-dispatch (2 tasks), 2026-09-11. Execute native plan here; external ACP waits for qualified core. Baseline skills 94b6b19, core 940a7b3, host 32702e8.
+- [x] Native-dispatch plan done and conductor review corrections verified, 2026-09-11. External acp-dispatch plan remains approved, waiting for qualified core. Baseline skills 94b6b19, core 940a7b3, host 32702e8.
 - None. QA round 3 is verified locally; no push or merge authorized.
 
 ## Follow-ups
@@ -14,6 +14,7 @@
 - [ ] Claude readonly adapter: `--disallowedTools` consumes the following prompt as option values on the installed CLI. The original invocation exits 1 with missing prompt; inserting `--` before the prompt returns OK. Plan a separate adapter fix with regression coverage. No issue filed yet.
 
 ## Done
+- [x] Native dispatch review corrections: chosen-transport availability/invocation, receipt provenance, no uncertain CLI replay, remove phrase-matching tests → codex/gpt-5.6-sol, first attempt, commit ea0597eaf8c8. Conductor gate and agy four criteria DONE/no findings. Trail .batuta/runs/native-review-fixes.md.
 - [x] QA round 3 final verification (2026-09-10): independent public gate passed, seven fixture tests passed, and agy/gemini-3.8-flash-low delivery review returned SHIP with no findings, 1/1 cohort covered and 13/13 criteria satisfied. Conductor agrees after scope, diff and test-hygiene review. The first Claude review had missing coverage due to the adapter defect above, not implementation findings. Evidence: `.batuta/reviews/2026-09-10-qa-skills-round3/review.md` and `.batuta/runs/2026-09-10-qa-skills-round3-final-verification.md`.
 - [x] Root `AGENTS.md` delegated-brief guard copied verbatim from the init asset, verified with cmp and git diff --check, committed separately as d6bc86f before executors (2026-09-10).
 - [x] QA tree contract reference → codex (gpt-5.6-sol), commit 6d35c183b876 (trail: .batuta/runs/2026-09-09-qa-skills-task-1.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
