@@ -2,13 +2,13 @@
 <!-- inputs: profile.md@sha256:3f3de48a1e13 routing.md@sha256:556eb69f6375 -->
 
 **Goal:** Use a compatible native host subagent when explicitly opted in, preserving route/model, isolation, evidence and skills-only CLI behavior. Reduce conductor context without discarding acceptance criteria.
-**Created:** 2026-09-11 · **Status:** approved
+**Created:** 2026-09-11 · **Status:** done
 
 ## Tasks
-- [ ] 1. Define native eligibility and preserve route selection — docs/medium
+- [x] 1. Define native eligibility and preserve route selection — docs/medium
       Scope: skills/batuta/SKILL.md, skills/batuta/references/dispatch.md, skills/batuta/references/routing.md, tests/skills/check.sh
       Accept: absent Dispatch preserves CLI behavior and auto uses native only with compatible explicit model/effort and isolation, with no native-tool assumptions in headless mode; installed skills satisfy existing line and token limits → bash tests/skills/check.sh
-- [ ] 2. Bound delegation context and return compact evidence — docs/medium
+- [x] 2. Bound delegation context and return compact evidence — docs/medium
       Depends on: 1
       Scope: skills/batuta/references/dispatch.md, skills/batuta/references/brief.md, skills/batuta/references/scout.md, skills/batuta/references/verification.md, tests/skills/check.sh, docs/native-dispatch-scenarios.md
       Accept: scenarios cover native available, unavailable, model mismatch, inherited context, cancellation, partial results and skills-only fallback with explicit expected decisions; brief retains eight required sections and mandatory conventions while receipts distinguish worker claims from verified results; gate accounts for newly referenced dispatch material and preserves 9500/1000 estimated-token budgets → bash tests/skills/check.sh
