@@ -1,13 +1,11 @@
 # Dispatch — native eligibility
 
-Dispatch changes how a fixed route runs, never its executor, model, effort or
-permissions.
+Dispatch changes a fixed route's transport only.
 
 ## Selection
 
 1. Select the route first, then the transport. Freeze executor, explicit model
-   and effort, isolation and permissions; the user model override is
-   authoritative.
+   and effort, isolation and permissions; the user model override is authoritative.
 2. Absent `Dispatch:` means legacy CLI. `Dispatch: auto` opts an interactive
    conductor into native eligibility.
 3. Native requires every condition below. Otherwise run the same route's CLI
@@ -15,21 +13,23 @@ permissions.
 
 ## Native eligibility
 
-- Actual current-host capabilities expose a native subagent plus its controls;
-  an installed CLI proves nothing. A standalone/headless host uses CLI.
-- The facility maps the executor and accepts its explicit model and effort
-  exactly. Missing, unconfirmed, unknown or incompatible values fail;
-  never inherit an available costlier host model.
-- The bounded brief is the worker's isolated context and retains criteria,
-  conventions, scope, boundaries, proofs, permissions and uncertainties.
-- Required worktree isolation and execution controls are available; a native
-  label proves neither.
+- Current-host capabilities expose a native subagent and its controls; an
+  installed CLI proves nothing. Standalone/headless hosts use CLI.
+- The facility maps the executor and accepts explicit model and effort. Missing,
+  unconfirmed, unknown or incompatible values fail; never inherit another model.
+- Prefer an isolated child context with only the self-sufficient brief; no full
+  conversation fork by default. Retain criteria, conventions, scope, boundaries,
+  proofs, permissions and stop conditions.
+- Required worktree isolation and controls exist; labels prove nothing.
 
-Do not add a native adapter, daemon, install step or host-tool name here.
+Add no native adapter, daemon, install step or host-tool name.
 
-## Result
+## Receipt
 
-Capture route, observed model/effort, changed paths, proofs and unresolved
-items. Worker claims are not verification: run existing scope, diff, test and
-criterion gates. Use existing state/worktree records; never write arbitrary
-loop-journal entries.
+At most 4 KiB: `Outcome`, route/model/effort, `Changed paths`, `Worker claims`
+with proof references, and `Uncertainty`. Cancellation and partial results are
+not success. Explicit overflow names an owned log and why to read it selectively.
+
+Worker claims are not verified results: run the existing scope, diff, test and
+criterion gates. Use existing facilities for meaningful progress; add neither a
+summarizing LLM nor arbitrary loop-journal entries.
