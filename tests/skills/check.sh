@@ -39,6 +39,23 @@ done
 hits=$(grep -rnE "$FORBIDDEN" skills/ || true)
 [ -z "$hits" ] || bad "forbidden strings:"$'\n'"$hits"
 
+# Native dispatch is opt-in and may never change the selected route.
+dispatch_contract() {
+  local file=skills/batuta/references/dispatch.md
+  [ -f "$file" ] || { printf '%s\n' "$file: missing"; return; }
+  grep -Fq 'Absent `Dispatch:`' "$file" || printf '%s\n' "$file: absent Dispatch must preserve legacy CLI"
+  grep -Fq '`Dispatch: auto`' "$file" || printf '%s\n' "$file: missing auto opt-in"
+  grep -Fq 'Select the route first, then the transport.' "$file" || printf '%s\n' "$file: route must precede transport"
+  grep -Fq 'explicit model and effort' "$file" || printf '%s\n' "$file: model and effort compatibility is not explicit"
+  grep -Fq 'unknown or incompatible' "$file" || printf '%s\n' "$file: unknown capabilities must be ineligible"
+  grep -Fq 'isolated context' "$file" || printf '%s\n' "$file: native context isolation is not required"
+  grep -Fq 'headless' "$file" || printf '%s\n' "$file: headless fallback is not defined"
+  grep -Fq 'user model override' "$file" || printf '%s\n' "$file: user model override is not authoritative"
+  grep -Fq 'references/dispatch.md' skills/batuta/SKILL.md || printf '%s\n' 'skills/batuta/SKILL.md: dispatch contract is unreachable'
+}
+dispatch_findings=$(dispatch_contract)
+[ -z "$dispatch_findings" ] || bad "native dispatch contract:"$'\n'"$dispatch_findings"
+
 # Every relative reference cited in a skill must exist (relative to the
 # citing file, to the skill root, or under skills/ for a cross-skill path).
 while IFS= read -r line; do
@@ -137,7 +154,8 @@ for tmpl in skills/batuta/templates/*.md; do
   for adapter in skills/batuta/adapters/*.md; do
     aname=$(basename "$adapter" .md); [ "$aname" = "_template" ] && continue
     c=$(tokens skills/batuta/SKILL.md skills/batuta/references/brief.md skills/batuta/references/verification.md \
-      skills/batuta/references/routing.md skills/batuta/references/state.md skills/batuta/references/worktree.md "$adapter" $files)
+      skills/batuta/references/routing.md skills/batuta/references/dispatch.md skills/batuta/references/state.md \
+      skills/batuta/references/worktree.md "$adapter" $files)
     [ "$c" -gt "$cycle_max" ] && { cycle_max=$c; cycle_max_at="$name+$aname"; }
   done
 done
