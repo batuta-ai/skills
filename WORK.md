@@ -1,6 +1,7 @@
 # WORK — skills
 
 ## In progress
+- [x] Native-dispatch plan done and conductor review corrections verified, 2026-09-11. External acp-dispatch plan remains approved, waiting for qualified core. Baseline skills 94b6b19, core 940a7b3, host 32702e8.
 - None. QA round 3 is verified locally; no push or merge authorized.
 
 ## Follow-ups
@@ -13,6 +14,7 @@
 - [ ] Claude readonly adapter: `--disallowedTools` consumes the following prompt as option values on the installed CLI. The original invocation exits 1 with missing prompt; inserting `--` before the prompt returns OK. Plan a separate adapter fix with regression coverage. No issue filed yet.
 
 ## Done
+- [x] Native dispatch review corrections: chosen-transport availability/invocation, receipt provenance, no uncertain CLI replay, remove phrase-matching tests → codex/gpt-5.6-sol, first attempt, commit ea0597eaf8c8. Conductor gate and agy four criteria DONE/no findings. Trail .batuta/runs/native-review-fixes.md.
 - [x] QA round 3 final verification (2026-09-10): independent public gate passed, seven fixture tests passed, and agy/gemini-3.8-flash-low delivery review returned SHIP with no findings, 1/1 cohort covered and 13/13 criteria satisfied. Conductor agrees after scope, diff and test-hygiene review. The first Claude review had missing coverage due to the adapter defect above, not implementation findings. Evidence: `.batuta/reviews/2026-09-10-qa-skills-round3/review.md` and `.batuta/runs/2026-09-10-qa-skills-round3-final-verification.md`.
 - [x] Root `AGENTS.md` delegated-brief guard copied verbatim from the init asset, verified with cmp and git diff --check, committed separately as d6bc86f before executors (2026-09-10).
 - [x] QA tree contract reference → codex (gpt-5.6-sol), commit 6d35c183b876 (trail: .batuta/runs/2026-09-09-qa-skills-task-1.md, delivery qa-skills-20260909-154719, plan qa-skills, 2026-09-09)
@@ -26,3 +28,5 @@
 - [x] Wire the unreachable references into their skills → codex (gpt-6-astra), 1 retry, commit ae269d1b2169 (trail: .batuta/runs/2026-09-09-qa-skills-fixes-task-2.md, delivery qa-skills-fixes-20260909-205535, plan qa-skills-fixes, 2026-09-10)
 - [x] Give each QA run a stable unique identity and preserve observed failures → codex (gpt-6-astra), commit 08e53d9dc9c2 (trail: .batuta/runs/2026-09-10-qa-skills-round3-task-1.md, delivery qa-skills-round3-20260910-132031, plan qa-skills-round3, 2026-09-10)
 - [x] Reject references unreachable from shipped skill entrypoints → codex (gpt-5.6-sol), commit b37f520a3257 (trail: .batuta/runs/2026-09-10-qa-skills-round3-task-2.md, delivery qa-skills-round3-20260910-132031, plan qa-skills-round3, 2026-09-10)
+- [x] Define native eligibility and preserve route selection → codex (gpt-5.6-sol), 1 retry, commit 72c9111a1469 (trail: .batuta/runs/2026-09-11-native-dispatch-task-1.md, delivery native-dispatch-20260911-132638, plan native-dispatch, 2026-09-11)
+- [x] Bound delegation context and return compact evidence → codex (gpt-5.6-sol), commit 6374ebe48222 (trail: .batuta/runs/2026-09-11-native-dispatch-task-2.md, delivery native-dispatch-20260911-132638, plan native-dispatch, 2026-09-11)
