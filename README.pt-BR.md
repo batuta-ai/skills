@@ -39,7 +39,7 @@ Depois, num projeto: `/batuta-init` uma vez, `/batuta` dali em diante.
 |---|---|
 | **Commits atômicos** | uma tarefa verificada = um commit; uma lista de seis vira seis ciclos |
 | **Estado retomável** | `WORK.md` em prosa na raiz; `/batuta-pause` e `/batuta-resume` entre sessões |
-| **Plano quando precisa** | tarefa clara vai direto; ambígua ganha duas ou três perguntas; trabalho longo ganha `/batuta-plan` |
+| **Plano quando precisa** | trabalho claro e autorizado vai direto; decisões materiais em aberto podem usar `/batuta-refine`; trabalho longo ganha `/batuta-plan` |
 | **Verificação sempre** | checagem de escopo, review do diff, testes rodados pelo maestro, critérios com prova reexecutada — o relato do executor nunca é evidência |
 
 ## Skills
@@ -50,6 +50,8 @@ Depois, num projeto: `/batuta-init` uma vez, `/batuta` dali em diante.
 | `batuta-review` | o modelo, em "revisa isso" | Step 4 sobre qualquer diff, segundo revisor opcional |
 | `batuta-init` | `/batuta-init` | onboarding e reconfiguração: perfil, lanes, modelos, mapa do projeto |
 | `batuta-plan` | `/batuta-plan` | plano aprovável de tarefas do tamanho de um commit |
+| `batuta-refine` | `/batuta-refine`, ou escolhas materiais que bloqueiam o plano | resolver decisões consequentes em rodadas limitadas; pular em trabalho claro e autorizado |
+| `batuta-write` | `/batuta-write`, ou pedido de edição de prosa | polir texto para o leitor preservando evidência, incerteza, voz e contratos executáveis |
 | `batuta-loop` | `/batuta-loop` | execução autônoma de um plano aprovado pelo binário `batuta` |
 | `batuta-status` | `/batuta-status` | em andamento, feito, sobras, taxas de delegação e escalada |
 | `batuta-route` | `/batuta-route` | ver e editar a tabela de roteamento |
@@ -57,8 +59,10 @@ Depois, num projeto: `/batuta-init` uma vez, `/batuta` dali em diante.
 | `batuta-qa-plan` | `/batuta-qa-plan` | planejar QA de usuário real como personas, jornadas, cenários e charters em `.batuta/qa/` |
 | `batuta-qa-run` | `/batuta-qa-run` | executar sessões planejadas de QA por superfícies públicas e registrar achados |
 
-Só `batuta` e `batuta-review` carregam por iniciativa do modelo; as demais
-custam zero até serem invocadas.
+`batuta-refine` é seletiva: escolhas materiais em aberto podem acioná-la, mas
+trabalho claro segue sem ela. `batuta-write` se aplica a prosa para o leitor,
+não como etapa obrigatória do planejamento. As demais skills de comando de
+barra esperam invocação explícita.
 
 ## Roteamento
 

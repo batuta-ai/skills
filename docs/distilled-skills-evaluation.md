@@ -8,6 +8,16 @@ The initial successful baseline responses below were supplied in the brief; they
 
 Additional read-only baseline and skill-guided evaluations use the same three independent requests. They permit repository fact lookup and prohibit file edits, implementation, network access and delegation. The evaluating agents receive the requests and raw repository paths, without the scoring criteria or the other agent's answers. These are bounded behavioral probes, not a release or runtime test.
 
+## Integration boundaries and provenance
+
+`batuta-refine` is a selective planning aid, not a required interview. It is derived from Matt Pocock's grilling skill (also named grill-me) at commit `959a8e9f1edc3adbe2f7e3054bb6fbefa6696260`. The adaptation keeps dependency-aware decisions, recommendations and fact lookup, while deliberately omitting exhaustive interviewing, mandatory delegation and an extra confirmation checkpoint.
+
+`batuta-write` edits or drafts user-facing prose. It is derived from Siqi Chen's humanizer, metadata version `3.0.0`, at commit `9862685f575c65a8247f90369951df1b3416e3d6`. The adaptation keeps evidence limits, intentional voice and prose-as-data boundaries, while deliberately omitting the long pattern catalog, word or punctuation bans, invented reactions, authorship judgments and default draft-plus-final output. Full source URLs and required MIT notices are retained in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
+
+Executable skill and plan contracts remain owned by their runtime formats. Writing work may polish user-facing prose inside an explicitly editable region, but it must not rewrite YAML, task labels, status, scopes, dependencies, acceptance syntax, proof commands or other executable requirements merely because they appear in a document. The W4 probe checks this boundary; `batuta-plan` continues to define the plan contract.
+
+The integration comparison reuses the independent results below instead of spending another evaluation on the same concern. R1 shows refinement remaining useful for a material release-scope decision; R2 shows clear, authorized work proceeding without refinement; W4 shows prose editing preserving the executable plan contract byte for byte outside the named prose regions. In every case the successful baseline also passed, so integration demonstrates selective routing and preserved behavior, not superiority or savings.
+
 ## Supplied successful baselines
 
 ### Scenario A: release planning
