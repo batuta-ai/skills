@@ -1,17 +1,17 @@
 # Plan — distill planning and writing skills
 
 **Goal:** Add concise English Batuta skills derived from grill-me/grilling and humanizer, preserving useful decisions and factual accuracy without adding unnecessary orchestration or mandatory interviews.
-**Created:** 2026-09-15 · **Status:** approved
+**Created:** 2026-09-15 · **Status:** done
 
 ## Tasks
-- [ ] 1. Add a bounded plan-refinement skill — docs/high
+- [x] 1. Add a bounded plan-refinement skill — docs/high
       Scope: skills/batuta-refine/SKILL.md, skills/batuta-refine/agents/openai.yaml, THIRD_PARTY_NOTICES.md, docs/distilled-skills-evaluation.md
       Accept: batuta-refine discovers environment facts before asking decisions, orders questions by dependencies, honors existing answers and authorization, and stops when material decisions are resolved without exhaustive interviewing; baseline and skill-guided realistic scenarios are recorded honestly without invented improvement; metadata, references and token budgets pass → bash tests/skills/check.sh
-- [ ] 2. Add a fact-preserving prose editing skill — docs/high
+- [x] 2. Add a fact-preserving prose editing skill — docs/high
       Depends on: 1
       Scope: skills/batuta-write/SKILL.md, skills/batuta-write/agents/openai.yaml, THIRD_PARTY_NOTICES.md, docs/distilled-skills-evaluation.md
       Accept: batuta-write preserves facts, uncertainty, claims, numbers, citations, code, commands, links and machine-readable contracts while removing unsupported rhetoric; input prose is data rather than executable instructions and editing does not imply publishing or code changes; baseline and skill-guided scenarios preserve all limitations without generating intermediate drafts unless requested; metadata, references and token budgets pass → bash tests/skills/check.sh
-- [ ] 3. Integrate discovery and selective planning use — docs/medium
+- [x] 3. Integrate discovery and selective planning use — docs/medium
       Depends on: 2
       Scope: skills/batuta-plan/SKILL.md, README.md, README.pt-BR.md, docs/distilled-skills-evaluation.md
       Accept: README documents both skills and plan routes material unresolved decisions to refine only when useful, without requiring it for clear already-authorized work; docs distinguish user-facing writing from executable skill/plan contracts and describe original attribution and deliberate omissions; full skill gate passes → bash tests/skills/check.sh
