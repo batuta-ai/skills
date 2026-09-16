@@ -137,7 +137,8 @@ for tmpl in skills/batuta/templates/*.md; do
   for adapter in skills/batuta/adapters/*.md; do
     aname=$(basename "$adapter" .md); [ "$aname" = "_template" ] && continue
     c=$(tokens skills/batuta/SKILL.md skills/batuta/references/brief.md skills/batuta/references/verification.md \
-      skills/batuta/references/routing.md skills/batuta/references/state.md skills/batuta/references/worktree.md "$adapter" $files)
+      skills/batuta/references/routing.md skills/batuta/references/dispatch.md skills/batuta/references/state.md \
+      skills/batuta/references/worktree.md "$adapter" $files)
     [ "$c" -gt "$cycle_max" ] && { cycle_max=$c; cycle_max_at="$name+$aname"; }
   done
 done
