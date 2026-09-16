@@ -178,24 +178,24 @@ The metadata generator initially reported `ModuleNotFoundError: No module named 
 
 ### Command record
 
-Read-only inspection commands printed the referenced source contents; excerpts and relevant outputs are noted below. Absolute snapshot and guidance paths refer to the supplied local files, not new project files.
+Read-only inspection commands printed the referenced source contents; excerpts and relevant outputs are noted below. Throughout the command records, `G` denotes the local Codex `skill-creator` guidance directory (`skills/.system/skill-creator` under the Codex home), and `R` denotes the supplied snapshot directory (`.batuta/research/distilled-skills` under the skills repository). Commands used expanded absolute paths, not shell variables; these portable shorthands replace machine-specific prefixes. Git worktree paths are shown from their `.git/worktrees/` suffix, including in the error output. These path substitutions preserve the recorded commands and outcomes without retaining personal filesystem locations.
 
 | Command | Observed output |
 | --- | --- |
 | `pwd` | The assigned `distilled-skills-task-1-e1` worktree path. |
 | `git status --short` (initial) | Empty: clean worktree. |
-| `cat /Volumes/Home/francisross/.codex/skills/.system/skill-creator/SKILL.md` | Skill Creator guidance, including independent forward-testing. |
+| `cat G/SKILL.md` | Skill Creator guidance, including independent forward-testing. |
 | `rg --files -g AGENTS.md -g 'SKILL.md' -g 'openai.yaml' -g '*evaluation*' -g '*NOTICES*' -g 'check.sh'` | Existing skill entrypoints and metadata, `AGENTS.md`, and `tests/skills/check.sh`; neither new document existed. |
 | `cat tests/skills/check.sh skills/batuta-plan/SKILL.md skills/batuta-plan/agents/openai.yaml` | Gate source and native planning contract/interface fields. |
-| `cat /Volumes/Home/francisross/.codex/skills/.system/skill-creator/references/openai_yaml.md` | Interface field guidance. |
-| `cat /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/grilling-upstream.md /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/grilling-ref.txt /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/grilling-LICENSE` | Upstream skill, commit `959a8e9f1edc3adbe2f7e3054bb6fbefa6696260`, and Matt Pocock MIT notice. |
+| `cat G/references/openai_yaml.md` | Interface field guidance. |
+| `cat R/grilling-upstream.md R/grilling-ref.txt R/grilling-LICENSE` | Upstream skill, commit `959a8e9f1edc3adbe2f7e3054bb6fbefa6696260`, and Matt Pocock MIT notice. |
 | `rg --files skills/batuta-plan docs` | Plan entrypoint/metadata and `docs/qa-retro.md`. |
 | `cat AGENTS.md` | Delegated briefs are exempt from conductor routing. |
 | `cat skills/batuta/references/method/clarify.md` | Existing clarification workflow and literal executable-requirement preservation. |
-| `cat /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/humanizer-upstream.md /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/humanizer-LICENSE` | Humanizer 3.0.0 and Siqi Chen MIT notice; combined tool output was partially truncated. |
-| `rg -n 'github.com.*(mattpocock\|blader)\|PR\|pull request\|Windows' README.md CONTRIBUTING.md /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills` | Snapshot matches plus the missing-file error reported above; exit 2. |
-| `sed -n '180,240p' /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/humanizer-upstream.md` | Source sections on hyphens, passive voice and inflated claims. |
-| `sed -n '160,180p' /Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills/humanizer-upstream.md` | Source sections on dashes and qualifiers, recovering the truncated portion. |
+| `cat R/humanizer-upstream.md R/humanizer-LICENSE` | Humanizer 3.0.0 and Siqi Chen MIT notice; combined tool output was partially truncated. |
+| `rg -n 'github.com.*(mattpocock\|blader)\|PR\|pull request\|Windows' README.md CONTRIBUTING.md R` | Snapshot matches plus the missing-file error reported above; exit 2. |
+| `sed -n '180,240p' R/humanizer-upstream.md` | Source sections on hyphens, passive voice and inflated claims. |
+| `sed -n '160,180p' R/humanizer-upstream.md` | Source sections on dashes and qualifiers, recovering the truncated portion. |
 | `bash tests/skills/check.sh` (twice) | Exit 0 both times; post-write output above. |
 | `git diff --check` | No output; untracked additions are not covered by this check. |
 | `git status --short` (after writing) | `?? THIRD_PARTY_NOTICES.md`, `?? docs/distilled-skills-evaluation.md`, `?? skills/batuta-refine/`. |
@@ -204,7 +204,7 @@ Read-only inspection commands printed the referenced source contents; excerpts a
 Metadata generation command (first attempt omitted `--name batuta-refine`; failure and successful retry output are recorded above):
 
 ```bash
-python3 /Volumes/Home/francisross/.codex/skills/.system/skill-creator/scripts/generate_openai_yaml.py skills/batuta-refine --name batuta-refine --interface 'display_name=batuta-refine' --interface 'short_description=Resolve material plan decisions in bounded rounds' --interface 'default_prompt=Use $batuta-refine to resolve the material open decisions in this plan and summarize the handoff.'
+python3 G/scripts/generate_openai_yaml.py skills/batuta-refine --name batuta-refine --interface 'display_name=batuta-refine' --interface 'short_description=Resolve material plan decisions in bounded rounds' --interface 'default_prompt=Use $batuta-refine to resolve the material open decisions in this plan and summarize the handoff.'
 ```
 
 Staging attempt:
@@ -218,7 +218,7 @@ git diff --cached --stat
 Actual output:
 
 ```text
-fatal: Unable to create '/Volumes/Home/francisross/Projects/batuta/skills/.git/worktrees/distilled-skills-task-1-e1/index.lock': Operation not permitted
+fatal: Unable to create '.git/worktrees/distilled-skills-task-1-e1/index.lock': Operation not permitted
 ```
 
 The two cached diff commands produced no output because nothing was staged. The sandbox permits source edits but blocks the external worktree index. No commit was attempted; the four deliverables remain uncommitted for the conductor.
@@ -432,7 +432,7 @@ skills check: ok
 
 These are approximate byte-based token budgets, not measured usage. No gate, runner, dependency or CI configuration was changed. Metadata was generated with the standard three interface fields and implicit invocation defaults. The skill needs no runtime references or Batuta plan. The existing gate is the only suite runner used; the byte comparison below is an inspection of recorded prose outputs.
 
-For readability in this command inventory, `G` denotes `/Volumes/Home/francisross/.codex/skills/.system/skill-creator`, and `R` denotes `/Volumes/Home/francisross/Projects/batuta/skills/.batuta/research/distilled-skills`. Commands used the expanded absolute paths, not shell variables. Read commands printed the named file contents; large outputs were recovered in smaller reads where needed. All commands exited 0 except the single mistaken discovery read noted below.
+This inventory uses the portable `G` and `R` shorthand defined in the Task 1 command record. Read commands printed the named file contents; large outputs were recovered in smaller reads where needed. All commands exited 0 except the single mistaken discovery read noted below.
 
 | Command | Real output or observation |
 | --- | --- |
@@ -451,7 +451,7 @@ For readability in this command inventory, `G` denotes `/Volumes/Home/francisros
 | `git diff --check && git diff --stat && cat skills/batuta-write/agents/openai.yaml && git status --short` | No whitespace findings; at that point 95 insertions and 2 deletions across the two tracked documents; generated interface printed; two modified documents and untracked `skills/batuta-write/`. |
 | `python3 -` (inline response-recording script) | `Recorded exact baseline and skill-guided W1–W4 responses and comparison.` Only the scoped evaluation document was written. |
 | `python3 -` (inline protected-byte and notice inspection) | `W4 baseline: protected bytes and prose labels/path/link match`; `W4 skill-guided: protected bytes and prose labels/path/link match`; `Humanizer MIT notice: exact snapshot text retained`. |
-| `git diff --check && git diff --numstat && git rev-parse --git-dir && git status --short` | No whitespace findings; then `30 0 THIRD_PARTY_NOTICES.md` and `186 2 docs/distilled-skills-evaluation.md`; git directory `/Volumes/Home/francisross/Projects/batuta/skills/.git/worktrees/distilled-skills-task-2-e1`; same three status entries. |
+| `git diff --check && git diff --numstat && git rev-parse --git-dir && git status --short` | No whitespace findings; then `30 0 THIRD_PARTY_NOTICES.md` and `186 2 docs/distilled-skills-evaluation.md`; git directory `.git/worktrees/distilled-skills-task-2-e1`; same three status entries. |
 | `sed -n '165,180p' R/humanizer-upstream.md && cat THIRD_PARTY_NOTICES.md skills/batuta-write/SKILL.md` | Recovered qualifier guidance; reviewed both notices and complete new skill. |
 
 Patches created the skill and added the fixtures, comparison and evidence record; successful patch calls returned an empty result object. The guided agent's only command was the successful skill read recorded above; the baseline used none. No commit was attempted: the shared git index is outside this task's writable roots. The four scoped deliverables remain uncommitted for the conductor. No files outside scope were edited.

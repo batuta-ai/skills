@@ -39,7 +39,7 @@ Then, in a project: `/batuta-init` once, `/batuta` from there on.
 |---|---|
 | **Atomic commits** | one verified task = one commit; a list of six becomes six cycles |
 | **Resumable state** | `WORK.md` in prose at the project root; `/batuta-pause` and `/batuta-resume` across sessions |
-| **Plan when needed** | clear, authorized work goes straight in; materially unresolved decisions can use `/batuta-refine`; long work gets `/batuta-plan` |
+| **Plan when needed** | clear, authorized work goes straight in; an ambiguous task gets two or three questions; materially unresolved plan decisions can use `/batuta-refine`; long work gets `/batuta-plan` |
 | **Verification always** | scope check, diff review, tests run by the conductor, criteria with re-run proof — the executor's report is never evidence |
 
 ## Skills

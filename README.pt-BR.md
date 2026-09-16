@@ -39,7 +39,7 @@ Depois, num projeto: `/batuta-init` uma vez, `/batuta` dali em diante.
 |---|---|
 | **Commits atômicos** | uma tarefa verificada = um commit; uma lista de seis vira seis ciclos |
 | **Estado retomável** | `WORK.md` em prosa na raiz; `/batuta-pause` e `/batuta-resume` entre sessões |
-| **Plano quando precisa** | trabalho claro e autorizado vai direto; decisões materiais em aberto podem usar `/batuta-refine`; trabalho longo ganha `/batuta-plan` |
+| **Plano quando precisa** | trabalho claro e autorizado vai direto; tarefa ambígua ganha duas ou três perguntas; decisões materiais em aberto no plano podem usar `/batuta-refine`; trabalho longo ganha `/batuta-plan` |
 | **Verificação sempre** | checagem de escopo, review do diff, testes rodados pelo maestro, critérios com prova reexecutada — o relato do executor nunca é evidência |
 
 ## Skills

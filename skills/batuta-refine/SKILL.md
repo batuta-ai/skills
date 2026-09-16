@@ -12,7 +12,7 @@ Keep the result usable by the existing Batuta planning workflow.
 
 1. Read the request, prior answers and relevant existing plan/context. Preserve settled choices, constraints and authorization; reopen a decision only when new evidence conflicts with it, explaining why.
 2. Look up relevant environment facts in available files, documentation or tools before asking the user. Distinguish observed facts from assumptions and missing evidence. If lookup is unavailable, name the gap; ask only when it blocks a material decision.
-3. Map unresolved decisions and their prerequisites. A pending fact lookup also blocks its dependent decisions. Continue independent useful refinement while it is pending; delegation is optional.
+3. Map unresolved decisions and their prerequisites. A pending fact lookup also blocks its dependent decisions. Continue independent useful refinement while it is pending; delegating the lookup itself is optional.
 4. If the task is already specific and authorized, skip the interview and hand it back to the authorized workflow with its constraints intact. Do not require approval again.
 
 ## Ask a bounded round
