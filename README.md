@@ -39,7 +39,7 @@ Then, in a project: `/batuta-init` once, `/batuta` from there on.
 |---|---|
 | **Atomic commits** | one verified task = one commit; a list of six becomes six cycles |
 | **Resumable state** | `WORK.md` in prose at the project root; `/batuta-pause` and `/batuta-resume` across sessions |
-| **Plan when needed** | clear task goes straight in; ambiguous task gets two or three questions; long work gets `/batuta-plan` |
+| **Plan when needed** | clear, authorized work goes straight in; an ambiguous task gets two or three questions; materially unresolved plan decisions can use `/batuta-refine`; long work gets `/batuta-plan` |
 | **Verification always** | scope check, diff review, tests run by the conductor, criteria with re-run proof — the executor's report is never evidence |
 
 ## Skills
@@ -50,6 +50,8 @@ Then, in a project: `/batuta-init` once, `/batuta` from there on.
 | `batuta-review` | the model, on "review this" | Step 4 over any diff, optional second reviewer |
 | `batuta-init` | `/batuta-init` | onboarding and reconfiguration: profile, lanes, models, project map |
 | `batuta-plan` | `/batuta-plan` | approvable plan of atomic-commit-sized tasks |
+| `batuta-refine` | `/batuta-refine`, or material choices that block planning | resolve consequential decisions in bounded rounds; skip it for clear, authorized work |
+| `batuta-write` | `/batuta-write`, or a prose editing request | polish user-facing writing while preserving evidence, uncertainty, voice, and executable contracts |
 | `batuta-loop` | `/batuta-loop` | unattended run of an approved plan through the `batuta` binary |
 | `batuta-status` | `/batuta-status` | in progress, done, leftovers, delegation and escalation rates |
 | `batuta-route` | `/batuta-route` | view and edit the routing table |
@@ -57,8 +59,10 @@ Then, in a project: `/batuta-init` once, `/batuta` from there on.
 | `batuta-qa-plan` | `/batuta-qa-plan` | plan real-user QA as personas, journeys, scenarios, and charters in `.batuta/qa/` |
 | `batuta-qa-run` | `/batuta-qa-run` | walk planned QA sessions through public surfaces and record findings |
 
-Only `batuta` and `batuta-review` load on the model's own initiative; the
-rest cost nothing until invoked.
+`batuta-refine` is selective: material unresolved choices can trigger it, but
+clear work proceeds without it. `batuta-write` applies to user-facing prose,
+not as a required planning step. The remaining slash-command skills wait for
+explicit invocation.
 
 ## Routing
 
