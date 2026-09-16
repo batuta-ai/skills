@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/batuta-ai/skills/compare/v0.8.0...v0.9.0) (2026-09-16)
+
+
+### Features
+
+* add planning refinement and evidence-preserving writing skills ([0560a83](https://github.com/batuta-ai/skills/commit/0560a8361349e1a442b14b4f7c9f6f3767461e1e))
+
 ## [0.8.0](https://github.com/batuta-ai/skills/compare/v0.7.0...v0.8.0) (2026-09-10)
 
 
