@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/batuta-ai/skills/compare/v0.9.0...v0.10.0) (2026-09-16)
+
+
+### Features
+
+* **dispatch:** support compatible native subagents and bounded receipts ([fc7b5fc](https://github.com/batuta-ai/skills/commit/fc7b5fc49a5d481fd708420f5266a66fb61aab84))
+
 ## [0.9.0](https://github.com/batuta-ai/skills/compare/v0.8.0...v0.9.0) (2026-09-16)
 
 
