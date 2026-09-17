@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/batuta-ai/skills/compare/v0.10.0...v0.10.1) (2026-09-17)
+
+
+### Bug Fixes
+
+* **loop:** align guidance with integrated supervision ([#51](https://github.com/batuta-ai/skills/issues/51)) ([b681285](https://github.com/batuta-ai/skills/commit/b6812855ec640b14230d6887bc9091e035ee58f7))
+
 ## [0.10.0](https://github.com/batuta-ai/skills/compare/v0.9.0...v0.10.0) (2026-09-16)
 
 
