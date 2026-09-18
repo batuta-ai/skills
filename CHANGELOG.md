@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/batuta-ai/skills/compare/v0.10.1...v0.11.0) (2026-09-18)
+
+
+### Features
+
+* **dispatch:** add qualified opt-in ACP and recovery guidance ([#53](https://github.com/batuta-ai/skills/issues/53)) ([e8dc7a9](https://github.com/batuta-ai/skills/commit/e8dc7a92c1f1331a5bf67e12c4cad76427780ce5))
+
 ## [0.10.1](https://github.com/batuta-ai/skills/compare/v0.10.0...v0.10.1) (2026-09-17)
 
 
