@@ -3,7 +3,7 @@
 ## Selection
 
 1. Freeze executor/model/effort/cost/isolation/permissions; overrides win.
-   Never reroute or substitute merely for transport access.
+   Never reroute/substitute for transport.
 2. Native requires `Dispatch: auto` and current-runtime mapping of executor,
    exact model/effort, isolation and permissions. Unknown fails; CLIs prove
    nothing; headless core has no native child.
@@ -11,13 +11,13 @@
    CLI. Honor explicit user ACP.
 4. Selected same-route CLI: check adapter `available`; absent → routing's
    unavailable-route policy. Never reroute to gain native/ACP.
-5. ACP requires `dispatch`, core ≥`v1.1.0-beta.24` by semver (never lexical),
-   and the exact qualification.
-6. Qualified core invokes one attempt:
+5. ACP requires `dispatch`, core ≥`v1.1.0-beta.24` (semver, never lexical),
+   and exact qualification.
+6. Qualified core runs all modes, CLI included:
    `batuta dispatch --brief-file <abs> --executor <id> --model <id>
    [--effort <v>] --cwd <abs> --transport <mode> --timeout 45m`.
-   Omit empty effort. Missing/old core makes explicit ACP unavailable; default
-   or auto invokes the adapter CLI directly. Do not install.
+   Empty effort omitted. Missing/old core: explicit ACP stops/reports unavailable
+   (no next row/install); default/auto runs checked same-route CLI.
 
 Only OpenCode 1.18.31/`opencode acp`/darwin-arm64/
 `opencode/big-pickle`/empty effort qualifies, never metadata. Do not alter

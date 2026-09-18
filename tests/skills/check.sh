@@ -42,10 +42,16 @@ hits=$(grep -rnE "$FORBIDDEN" skills/ || true)
 # Dispatch documentation carries stable scenario IDs so coverage is checked as
 # structure, while the prose remains free to explain each decision naturally.
 dispatch_scenarios='native-mismatch core-missing core-old-unqualified adapter-missing provider-version model-effort quota callback-denied disconnected canceled timeout cli-recovery'
-for scenario in $dispatch_scenarios; do
-  count=$(grep -c "^| \`$scenario\` |" docs/native-dispatch-scenarios.md || true)
-  [ "$count" -eq 1 ] || bad "docs/native-dispatch-scenarios.md: scenario '$scenario' appears $count times"
-done
+scenario_doc=docs/native-dispatch-scenarios.md
+if [ ! -f "$scenario_doc" ] || [ ! -r "$scenario_doc" ]; then
+  bad "$scenario_doc: missing or unreadable"
+else
+  for scenario in $dispatch_scenarios; do
+    count=$(grep -c "^| \`$scenario\` |" "$scenario_doc" 2>/dev/null)
+    count=${count:-0}
+    [ "$count" -eq 1 ] || bad "$scenario_doc: scenario '$scenario' appears $count times"
+  done
+fi
 for readme in README.md README.pt-BR.md; do
   grep -q '](docs/native-dispatch-scenarios.md)' "$readme" || bad "$readme: dispatch scenario link missing"
 done
@@ -141,14 +147,15 @@ for path in sys.argv[1:]:
                 if ph not in keys[key]:
                     print(f"{path}: {key} does not carry {ph}")
 
-for fixture in (
-    {"name": "opencode", "acp_run": "opencode acp"},
-    {"name": "opencode", "acp_run": "opencode acp {brief}", "acp_version": "1.18.31", "acp_model_config": "model"},
-    {"name": "opencode", "acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model", "acp_effort_config": "effort"},
-    {"name": "codex", "acp_run": "codex-acp", "acp_version": "1", "acp_model_config": "model"},
+for fixture, expect in (
+    ({"name": "opencode", "acp_run": "opencode acp"}, "missing 'acp_model_config'"),
+    ({"name": "opencode", "acp_run": "opencode acp {brief}", "acp_version": "1.18.31", "acp_model_config": "model"}, "fixed argv"),
+    ({"name": "opencode", "acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model", "acp_effort_config": "effort"}, "unexpected ACP metadata"),
+    ({"name": "codex", "acp_run": "codex-acp", "acp_version": "1", "acp_model_config": "model"}, "not recorded"),
 ):
-    if not acp_errors(fixture):
-        print(f"ACP lint self-test accepted malformed metadata: {fixture}")
+    errors = acp_errors(fixture)
+    if not any(expect in error for error in errors):
+        print(f"ACP lint self-test missed {expect!r} for {fixture}: {errors}")
 PY
 )
 [ -z "$adapter_findings" ] || bad "adapter frontmatter:"$'\n'"$adapter_findings"
