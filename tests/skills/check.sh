@@ -65,6 +65,26 @@ adapter_findings=$(python3 - skills/batuta/adapters/*.md <<'PY'
 import re, sys
 required = ["name", "run", "readonly", "available", "models", "finished"]
 placeholders = {"run": ["{brief}"], "run_file": ["{brief_file}"], "readonly": ["{prompt}", "{model}"], "model_flags": ["{model}"]}
+acp_keys = {"acp_run", "acp_version", "acp_model_config", "acp_effort_config"}
+acp_required = acp_keys - {"acp_effort_config"}
+# This is the shipped metadata inventory, not ACP qualification evidence.
+expected_acp = {"opencode": {"acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model"}}
+def acp_errors(keys):
+    errors = []
+    present = acp_keys & keys.keys()
+    if present:
+        errors += [f"ACP metadata missing '{key}'" for key in sorted(acp_required - present)]
+        errors += [f"ACP metadata '{key}' is empty" for key in sorted(present) if not keys[key]]
+        if any(mark in keys.get("acp_run", "") for mark in ("{", "}", "<", ">", "|", "&", ";")):
+            errors.append("acp_run must be fixed argv without placeholders or shell syntax")
+    name = keys.get("name")
+    if name in expected_acp:
+        expected = expected_acp[name]
+        errors += [f"{key} must be '{value}'" for key, value in expected.items() if keys.get(key) != value]
+        errors += [f"unexpected ACP metadata '{key}'" for key in sorted(present - expected.keys())]
+    elif present:
+        errors.append(f"ACP launch metadata is not recorded for '{name}'")
+    return errors
 for path in sys.argv[1:]:
     text = open(path).read()
     if not text.startswith("---\n") or "\n---\n" not in text[4:]:
@@ -90,6 +110,8 @@ for path in sys.argv[1:]:
     for key in required:
         if key not in keys:
             print(f"{path}: frontmatter missing '{key}'")
+    for finding in acp_errors(keys):
+        print(f"{path}: {finding}")
     if keys.get("name") == "self":
         continue
     for key, wanted in placeholders.items():
@@ -97,6 +119,15 @@ for path in sys.argv[1:]:
             for ph in wanted:
                 if ph not in keys[key]:
                     print(f"{path}: {key} does not carry {ph}")
+
+for fixture in (
+    {"name": "opencode", "acp_run": "opencode acp"},
+    {"name": "opencode", "acp_run": "opencode acp {brief}", "acp_version": "1.18.31", "acp_model_config": "model"},
+    {"name": "opencode", "acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model", "acp_effort_config": "effort"},
+    {"name": "codex", "acp_run": "codex-acp", "acp_version": "1", "acp_model_config": "model"},
+):
+    if not acp_errors(fixture):
+        print(f"ACP lint self-test accepted malformed metadata: {fixture}")
 PY
 )
 [ -z "$adapter_findings" ] || bad "adapter frontmatter:"$'\n'"$adapter_findings"
