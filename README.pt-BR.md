@@ -33,6 +33,26 @@ npx skills add batuta-ai/skills -a codex   # um agente só
 
 Depois, num projeto: `/batuta-init` uma vez, `/batuta` dali em diante.
 
+## Dispatch
+
+O Batuta fixa executor, modelo, effort e custo antes de escolher o transporte.
+`Dispatch: auto` habilita um filho nativo compatível somente quando o host atual
+consegue mapear exatamente essa rota e seus controles; CLIs instaladas não
+provam suporte nativo, e o core headless não o possui. O
+`--transport cli|acp|auto` externo é uma política explícita separada e usa CLI
+por padrão. ACP exige core `v1.1.0-beta.24` ou mais recente com `dispatch` e a
+tupla qualificada exata; um core antigo pode expor o comando sem qualificação.
+Não há instalação automática, substituição de modelo ou ampliação de permissão.
+
+Os [cenários de dispatch](docs/native-dispatch-scenarios.md) cobrem
+incompatibilidade nativa, core ausente/antigo, adapter ou binário ausente,
+versão do provider e modelo/effort rejeitados, quota e callbacks negados,
+desconexão, cancelamento e timeout incertos e recuperação CLI explícita após
+reconciliação. Recibos do worker continuam sendo alegações; escopo, árvore/diff,
+testes, critérios e o verificador CLI são independentes. A prova real documentada
+fica separada dos casos planejados, e qualificação funcional não prova economia
+de tokens.
+
 ## As quatro garantias
 
 | Garantia | Como |

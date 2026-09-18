@@ -39,6 +39,33 @@ done
 hits=$(grep -rnE "$FORBIDDEN" skills/ || true)
 [ -z "$hits" ] || bad "forbidden strings:"$'\n'"$hits"
 
+# Dispatch documentation carries stable scenario IDs so coverage is checked as
+# structure, while the prose remains free to explain each decision naturally.
+dispatch_scenarios='native-mismatch core-missing core-old-unqualified adapter-missing provider-version model-effort quota callback-denied disconnected canceled timeout cli-recovery'
+scenario_doc=docs/native-dispatch-scenarios.md
+if [ ! -f "$scenario_doc" ] || [ ! -r "$scenario_doc" ]; then
+  bad "$scenario_doc: missing or unreadable"
+else
+  for scenario in $dispatch_scenarios; do
+    count=$(grep -c "^| \`$scenario\` |" "$scenario_doc" 2>/dev/null)
+    count=${count:-0}
+    [ "$count" -eq 1 ] || bad "$scenario_doc: scenario '$scenario' appears $count times"
+  done
+fi
+for readme in README.md README.pt-BR.md; do
+  grep -q '](docs/native-dispatch-scenarios.md)' "$readme" || bad "$readme: dispatch scenario link missing"
+done
+if grep -Rqn 'Dispatch: cli' skills/batuta/SKILL.md skills/batuta/references/dispatch.md skills/batuta-loop/SKILL.md; then
+  bad "dispatch guidance invents unsupported profile value 'Dispatch: cli'"
+fi
+for form in '--transport <mode> --dry-run' '--transport <mode> .batuta/plans' '--transport <mode> --answer' '--transport <mode> --resume' '--transport <mode> --roadmap'; do
+  grep -q -- "$form" skills/batuta-loop/SKILL.md || bad "batuta-loop: selected transport missing from '$form'"
+done
+grep -q 'same-route CLI.*available' skills/batuta/references/dispatch.md || bad "dispatch: same-route CLI availability check missing"
+grep -q 'unavailable-route policy' skills/batuta/references/dispatch.md || bad "dispatch: routing unavailable-executor policy missing"
+grep -q 'adapter.*readonly.*cheap model' skills/batuta/references/verification.md || bad "verification: cheap-model adapter readonly rule missing"
+grep -q 'no summarizing LLM' skills/batuta/references/dispatch.md || bad "dispatch: summarizing-LLM prohibition missing"
+
 # Every relative reference cited in a skill must exist (relative to the
 # citing file, to the skill root, or under skills/ for a cross-skill path).
 while IFS= read -r line; do
@@ -65,6 +92,26 @@ adapter_findings=$(python3 - skills/batuta/adapters/*.md <<'PY'
 import re, sys
 required = ["name", "run", "readonly", "available", "models", "finished"]
 placeholders = {"run": ["{brief}"], "run_file": ["{brief_file}"], "readonly": ["{prompt}", "{model}"], "model_flags": ["{model}"]}
+acp_keys = {"acp_run", "acp_version", "acp_model_config", "acp_effort_config"}
+acp_required = acp_keys - {"acp_effort_config"}
+# This is the shipped metadata inventory, not ACP qualification evidence.
+expected_acp = {"opencode": {"acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model"}}
+def acp_errors(keys):
+    errors = []
+    present = acp_keys & keys.keys()
+    if present:
+        errors += [f"ACP metadata missing '{key}'" for key in sorted(acp_required - present)]
+        errors += [f"ACP metadata '{key}' is empty" for key in sorted(present) if not keys[key]]
+        if any(mark in keys.get("acp_run", "") for mark in ("{", "}", "<", ">", "|", "&", ";")):
+            errors.append("acp_run must be fixed argv without placeholders or shell syntax")
+    name = keys.get("name")
+    if name in expected_acp:
+        expected = expected_acp[name]
+        errors += [f"{key} must be '{value}'" for key, value in expected.items() if keys.get(key) != value]
+        errors += [f"unexpected ACP metadata '{key}'" for key in sorted(present - expected.keys())]
+    elif present:
+        errors.append(f"ACP launch metadata is not recorded for '{name}'")
+    return errors
 for path in sys.argv[1:]:
     text = open(path).read()
     if not text.startswith("---\n") or "\n---\n" not in text[4:]:
@@ -90,6 +137,8 @@ for path in sys.argv[1:]:
     for key in required:
         if key not in keys:
             print(f"{path}: frontmatter missing '{key}'")
+    for finding in acp_errors(keys):
+        print(f"{path}: {finding}")
     if keys.get("name") == "self":
         continue
     for key, wanted in placeholders.items():
@@ -97,6 +146,16 @@ for path in sys.argv[1:]:
             for ph in wanted:
                 if ph not in keys[key]:
                     print(f"{path}: {key} does not carry {ph}")
+
+for fixture, expect in (
+    ({"name": "opencode", "acp_run": "opencode acp"}, "missing 'acp_model_config'"),
+    ({"name": "opencode", "acp_run": "opencode acp {brief}", "acp_version": "1.18.31", "acp_model_config": "model"}, "fixed argv"),
+    ({"name": "opencode", "acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model", "acp_effort_config": "effort"}, "unexpected ACP metadata"),
+    ({"name": "codex", "acp_run": "codex-acp", "acp_version": "1", "acp_model_config": "model"}, "not recorded"),
+):
+    errors = acp_errors(fixture)
+    if not any(expect in error for error in errors):
+        print(f"ACP lint self-test missed {expect!r} for {fixture}: {errors}")
 PY
 )
 [ -z "$adapter_findings" ] || bad "adapter frontmatter:"$'\n'"$adapter_findings"
