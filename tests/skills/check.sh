@@ -39,6 +39,27 @@ done
 hits=$(grep -rnE "$FORBIDDEN" skills/ || true)
 [ -z "$hits" ] || bad "forbidden strings:"$'\n'"$hits"
 
+# Dispatch documentation carries stable scenario IDs so coverage is checked as
+# structure, while the prose remains free to explain each decision naturally.
+dispatch_scenarios='native-mismatch core-missing core-old-unqualified adapter-missing provider-version model-effort quota callback-denied disconnected canceled timeout cli-recovery'
+for scenario in $dispatch_scenarios; do
+  count=$(grep -c "^| \`$scenario\` |" docs/native-dispatch-scenarios.md || true)
+  [ "$count" -eq 1 ] || bad "docs/native-dispatch-scenarios.md: scenario '$scenario' appears $count times"
+done
+for readme in README.md README.pt-BR.md; do
+  grep -q '](docs/native-dispatch-scenarios.md)' "$readme" || bad "$readme: dispatch scenario link missing"
+done
+if grep -Rqn 'Dispatch: cli' skills/batuta/SKILL.md skills/batuta/references/dispatch.md skills/batuta-loop/SKILL.md; then
+  bad "dispatch guidance invents unsupported profile value 'Dispatch: cli'"
+fi
+for form in '--transport <mode> --dry-run' '--transport <mode> .batuta/plans' '--transport <mode> --answer' '--transport <mode> --resume' '--transport <mode> --roadmap'; do
+  grep -q -- "$form" skills/batuta-loop/SKILL.md || bad "batuta-loop: selected transport missing from '$form'"
+done
+grep -q 'same-route CLI.*available' skills/batuta/references/dispatch.md || bad "dispatch: same-route CLI availability check missing"
+grep -q 'unavailable-route policy' skills/batuta/references/dispatch.md || bad "dispatch: routing unavailable-executor policy missing"
+grep -q 'adapter.*readonly.*cheap model' skills/batuta/references/verification.md || bad "verification: cheap-model adapter readonly rule missing"
+grep -q 'no summarizing LLM' skills/batuta/references/dispatch.md || bad "dispatch: summarizing-LLM prohibition missing"
+
 # Every relative reference cited in a skill must exist (relative to the
 # citing file, to the skill root, or under skills/ for a cross-skill path).
 while IFS= read -r line; do
