@@ -22,9 +22,9 @@ CLI. Verified on `agy 1.1.26`.
 
 ## Invocation notes
 
-- `-p` runs one prompt and exits. `--mode=accept-edits` approves file edits; `--dangerously-skip-permissions` also approves commands — the executor needs it to run tests. `--sandbox` keeps the terminal restricted; keep both.
-- `--print-timeout` defaults to 5 minutes, too short for a task: the `run` line raises it. Raise further for long suites.
-- Working directory: run inside `{cwd}`; there is no cd flag.
+- `-p` runs one prompt. `--mode=accept-edits` approves edits; `--dangerously-skip-permissions` also approves commands needed for tests. `--sandbox` restricts the terminal; keep both.
+- `--print-timeout` defaults to 5 minutes; the `run` line raises it. Raise further for long suites.
+- Run inside `{cwd}`; there is no cd flag.
 - Slugs from `agy models` already carry the reasoning level (`gemini-3.8-flash-low`, `gemini-3.1-pro-high`, `claude-opus-4-6-thinking`): the row records the slug, not the display name, and that is the whole "explicit model". `--effort low|medium|high` exists for slugs without a level; add it to the row's flags only then.
 - `--disable-slash-commands` keeps a `/` at the start of a brief line from expanding into a slash command. It also disables `--mode=plan` (agy 1.1.27 warns and ignores it), and headless `agy` auto-denies every `command` permission: the `readonly` line therefore runs with `--dangerously-skip-permissions --sandbox` and relies on the prompt's read-only contract plus the scout guard, as every adapter does.
 - `--output-format json` gives a single envelope with a terminal `status` (`SUCCESS`, `ERROR`, `CANCELED`, …); then `finished` becomes `status == SUCCESS`. Responses go to stdout, diagnostics to stderr — capture them separately. Stderr carries glog noise prefixed `ERROR: logging before google.Init` on `I…` lines; those are INFO, not errors — filter them before reading real errors.
@@ -34,8 +34,8 @@ CLI. Verified on `agy 1.1.26`.
 ## Capabilities and limits
 
 Flash `-low`: `low` and research `low`. Flash `-high`: `medium` and
-research medium. Pro `-low`: `medium`. Pro `-high`, Claude thinking:
-`high`. Budget models follow briefs literally; be exhaustive.
+research medium. Pro `-low`: `medium`. Pro `-high`, Claude thinking: `high`.
+Budget models follow briefs literally; be exhaustive. Agy cannot see hidden directories.
 
 ## Cost
 

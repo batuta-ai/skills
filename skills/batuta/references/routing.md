@@ -48,10 +48,11 @@ Loop-first seats `critical` on a strong CLI; open decisions park with `BATUTA-QU
 - Freeze executor, model and effort before choosing transport; see `dispatch.md`.
 - **Escalation:** two failed verifications (original + 1 retry) → one row up.
 - **Unavailable executor** (install/login/model) → announce, then one row up.
-- **Explicit model:** name the exact CLI model, not its mutable global default. Codex default may serve `medium` (flat task cost); `high` stays explicit.
-- **Discover, never recall:** onboarding confirms model IDs via adapter `models`.
-- **`self`:** conducting host (Claude Code or Codex session); `claude.md`/`codex.md` invoke a background CLI. Never used below `critical`.
-- **Dormant adapters:** read only the routed/added one; onboarding probes shipped adapters only.
+- **Hidden paths:** Scope under a dot-directory (`.batuta/`, `.github/`, `.claude/`) never goes to agy: it cannot see hidden files. Use codex or `self`.
+- **Explicit model:** name the exact CLI model. Codex default may serve `medium` (flat task cost); `high` stays explicit.
+- **Discover, never recall:** onboarding confirms model IDs with adapter `models`.
+- **`self`:** conducting host; `claude.md`/`codex.md` invoke a background CLI. Never below `critical`.
+- **Dormant adapters:** read only the routed/added one; probe shipped adapters at onboarding.
 
 ## Research ladder
 
@@ -61,7 +62,7 @@ Loop-first seats `critical` on a strong CLI; open decisions park with `BATUTA-QU
 | medium (recommended) | synthesize cross-module flow, several questions, or diff verification |
 | high (optional) | judge ranked hypotheses or architecture |
 
-In doubt use low: a wrong low costs one cheap retry; medium costs only price.
+In doubt use low: its retry is cheap.
 
 | Role | Lane | Executor | Model | Cost |
 |---|---|---|---|---|
@@ -71,9 +72,9 @@ In doubt use low: a wrong low costs one cheap retry; medium costs only price.
 | research | high | CLI | exact | varies |
 
 Research uses CLI executors (never `self`) and exact models; review stays one
-row. No `Lane` column means research low. Per `scout.md`, ghost anchor or guard
-violation gets one same-row retry with feedback, then one row up; top-row
-failure/unavailability falls back to researching it yourself.
+row. No `Lane` means research low. Per `scout.md`, retry a ghost anchor or guard
+violation once on the same row with feedback, then move up; at the top,
+failure/unavailability means researching it yourself.
 
 ## Adapters
 
