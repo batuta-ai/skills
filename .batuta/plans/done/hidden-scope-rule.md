@@ -2,10 +2,10 @@
 <!-- inputs: profile.md@sha256:3f3de48a1e13 routing.md@sha256:8e409b47b53f -->
 
 **Goal:** Make the routing doctrine and the agy adapter say that a task whose Scope lives under a dot-directory (`.batuta/`, `.github/`, `.claude/`) is never routed to agy, because agy cannot see hidden directories, wrote nothing and reported success twice in the research-ladder deliveries.
-**Created:** 2026-09-20 · **Status:** approved
+**Created:** 2026-09-20 · **Status:** done
 
 ## Tasks
-- [ ] 1. Hidden-path routing rule in routing.md and the agy adapter — docs/medium
+- [x] 1. Hidden-path routing rule in routing.md and the agy adapter — docs/medium
       Scope: skills/batuta/references/routing.md, skills/batuta/adapters/agy.md
       Accept: the gate passes with the cycle packet inside its budget → bash tests/skills/check.sh; routing.md Rules carries a hidden-path rule naming dot-directories → grep -q 'dot-directory' skills/batuta/references/routing.md; agy.md Capabilities and limits states that agy cannot see hidden directories → grep -q 'hidden directories' skills/batuta/adapters/agy.md; neither file grows past its current line count → test $(wc -l < skills/batuta/references/routing.md) -le 91 && test $(wc -l < skills/batuta/adapters/agy.md) -le 48
 
