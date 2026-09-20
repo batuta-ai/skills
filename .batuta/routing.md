@@ -2,19 +2,20 @@
 
 <!-- inputs: profile.md@sha256:3f3de48a1e13 -->
 
-Confirmed with the user by /batuta-init on 2026-09-09; research ladder reseated on 2026-09-19. Installed and probed by `batuta inventory`: agy, claude, codex, cursor-agent, opencode — all available. cursor-agent and opencode are installed and left unrouted by choice. Loop-first setup: `critical` names a CLI so every task can run unattended through `batuta loop`.
+Confirmed with the user by /batuta-init on 2026-09-09; research ladder reseated on 2026-09-19; codex removed from every row on 2026-09-20 because the ChatGPT usage limit is too low. Installed and probed: agy, claude, cursor-agent, opencode. cursor-agent runs Grok only (no Claude models there, by the user's choice). Model IDs come from `batuta inventory` and each adapter's `models` line on this machine.
 
 | Lane | Domain | Executor | Model | Cost |
 |---|---|---|---|---|
 | low | * | agy | gemini-3.8-flash-low | free quota |
-| medium | * | codex | gpt-5.6-sol | ChatGPT subscription |
-| high | * | codex | gpt-6-astra | ChatGPT subscription, reasoning high |
+| medium | * | opencode | opencode/glm-5.3-flash | opencode credits, cents |
+| high | * | cursor-agent | cursor-grok-4.6-high | Cursor subscription, Grok 4.6 high |
 | critical | * | claude | opus | Claude subscription, background session |
 
 | Role | Lane | Executor | Model | Cost |
 |---|---|---|---|---|
 | research | low | agy | gemini-3.8-flash-low | free quota |
-| research | medium | codex | gpt-5.6-sol | ChatGPT subscription, read-only sandbox |
+| research | medium | opencode | opencode/glm-5.3-flash | opencode credits, cents |
+| research | high | cursor-agent | cursor-grok-4.6-high | Cursor subscription, native read-only `--mode ask` |
 
 No domain rows: the whole repository is prose, so a `docs` row would only repeat `*`.
 
