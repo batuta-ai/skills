@@ -2,21 +2,22 @@
 <!-- inputs: profile.md@sha256:3f3de48a1e13 routing.md@sha256:556eb69f6375 -->
 
 **Goal:** Turn the flat research support lane into a small ladder (`low`, `medium`, optional `high`) with the same escalation rule as the implementation lanes, so a hard discovery question climbs to a stronger read-only model before falling back to the conducting host, and the loop's independent verifier can be seated on a research row of the task's lane. Doctrine, onboarding, route editing and adapter notes change; the table format gains a `Lane` column in the Role table and stays backward compatible (no `Lane` = `low`).
-**Created:** 2026-09-19 · **Status:** approved
+**Created:** 2026-09-19 · **Status:** done
 
 ## Tasks
-- [ ] 1. Research ladder doctrine in routing.md and scout.md — docs/medium
+- [x] 1. Research ladder doctrine in routing.md and scout.md — docs/medium
       Scope: skills/batuta/references/routing.md, skills/batuta/references/scout.md
       Accept: the gate passes → bash tests/skills/check.sh; the Role table carries a Lane column with research rows per lane → grep -q '^| Role | Lane | Executor | Model |' skills/batuta/references/routing.md; the flat-lane wording is gone from both references → ! grep -q 'Nothing escalates' skills/batuta/references/routing.md skills/batuta/references/scout.md; scout.md classifies a research brief by lane and escalates one row up before falling back to self → grep -q 'one row up' skills/batuta/references/scout.md; both references keep their Contents section → grep -q '^## Contents' skills/batuta/references/scout.md
-- [ ] 2. Onboarding proposes the research ladder and route edits it — docs/medium
+- [x] 2. Onboarding proposes the research ladder and route edits it — docs/medium
       Depends on: 1
       Scope: skills/batuta-init/SKILL.md, skills/batuta-route/SKILL.md
       Accept: the gate passes → bash tests/skills/check.sh; batuta-init step 4 proposes research rows per lane from installed executors → grep -q 'research' skills/batuta-init/SKILL.md; batuta-route step 2 adds, removes or reseats a research row by lane → grep -q 'research' skills/batuta-route/SKILL.md; both SKILL.md bodies stay within their budgets → bash tests/skills/check.sh
-- [ ] 3. Adapter notes follow the research ladder — docs/low
+- [x] 3. Adapter notes follow the research ladder — docs/low
       Depends on: 1
       Scope: skills/batuta/adapters/agy.md, skills/batuta/adapters/opencode.md, skills/batuta/adapters/codex.md, skills/batuta/adapters/claude.md, skills/batuta/adapters/cursor-agent.md, skills/batuta/adapters/_template.md
       Accept: the gate passes → bash tests/skills/check.sh; codex.md seats the verifier on the research row of the task's lane instead of "the research row" → grep -q "task's lane" skills/batuta/adapters/codex.md; agy.md maps Flash -low to research low and Flash -high to research medium → grep -q 'research medium' skills/batuta/adapters/agy.md; no adapter references the flat research row wording → ! grep -q 'the research row, not' skills/batuta/adapters/codex.md
-- [ ] 4. Reseat this repository's own research rows — docs/low
+- [x] 4. Reseat this repository's own research rows — docs/low
+      Result: already satisfied on the base 277b6327a828, no commit
       Depends on: 1
       Scope: .batuta/routing.md
       Accept: the Role table has the Lane column with research low and medium rows → grep -q '^| research | medium |' .batuta/routing.md; the stamp line still references the profile → grep -q 'profile.md@sha256' .batuta/routing.md
