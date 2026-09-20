@@ -33,9 +33,9 @@ CLI. Verified on `agy 1.1.26`.
 
 ## Capabilities and limits
 
-Flash `-low`/`-medium` slugs: `low` and research. Flash `-high` and Pro
-`-low`: `medium`. Pro `-high` and the Claude thinking slugs: `high`. Budget models
-follow briefs literally; be exhaustive.
+Flash `-low`: `low` and research `low`. Flash `-high`: `medium` and
+research medium. Pro `-low`: `medium`. Pro `-high`, Claude thinking:
+`high`. Budget models follow briefs literally; be exhaustive.
 
 ## Cost
 
