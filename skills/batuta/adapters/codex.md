@@ -50,5 +50,4 @@ pricier than budget API models.
 ## Review invocation
 
 The `readonly` line: the native sandbox blocks writes; the scout guard
-applies as defense in depth. Model from the research row, not the `high`
-row.
+applies as defense in depth. Model from the research row of the task's lane.

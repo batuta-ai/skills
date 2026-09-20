@@ -2,7 +2,7 @@
 
 <!-- inputs: profile.md@sha256:3f3de48a1e13 -->
 
-Confirmed with the user by /batuta-init on 2026-09-09. Installed and probed by `batuta inventory`: agy, claude, codex, cursor-agent, opencode — all available. cursor-agent and opencode are installed and left unrouted by choice. Loop-first setup: `critical` names a CLI so every task can run unattended through `batuta loop`.
+Confirmed with the user by /batuta-init on 2026-09-09; research ladder reseated on 2026-09-19. Installed and probed by `batuta inventory`: agy, claude, codex, cursor-agent, opencode — all available. cursor-agent and opencode are installed and left unrouted by choice. Loop-first setup: `critical` names a CLI so every task can run unattended through `batuta loop`.
 
 | Lane | Domain | Executor | Model | Cost |
 |---|---|---|---|---|
@@ -11,9 +11,10 @@ Confirmed with the user by /batuta-init on 2026-09-09. Installed and probed by `
 | high | * | codex | gpt-6-astra | ChatGPT subscription, reasoning high |
 | critical | * | claude | opus | Claude subscription, background session |
 
-| Role | Executor | Model | Cost |
-|---|---|---|---|
-| research | agy | gemini-3.8-flash-low | free quota |
+| Role | Lane | Executor | Model | Cost |
+|---|---|---|---|---|
+| research | low | agy | gemini-3.8-flash-low | free quota |
+| research | medium | codex | gpt-5.6-sol | ChatGPT subscription, read-only sandbox |
 
 No domain rows: the whole repository is prose, so a `docs` row would only repeat `*`.
 
