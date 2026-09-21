@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.11.1](https://github.com/batuta-ai/skills/compare/v0.11.0...v0.11.1) (2026-09-21)
+
+
+### Bug Fixes
+
+* **adapters:** run claude executors with bypassPermissions like agy and cursor ([587ecab](https://github.com/batuta-ai/skills/commit/587ecabc9d27c725e15e4de827090fa7a87a8c86))
+* **adapters:** run claude executors with bypassPermissions like agy and cursor ([4a64bca](https://github.com/batuta-ai/skills/commit/4a64bca6b370620de6559b09e12952224224dff7))
+
 ## [0.11.0](https://github.com/batuta-ai/skills/compare/v0.10.1...v0.11.0) (2026-09-18)
 
 
