@@ -1,8 +1,8 @@
 ---
 name: claude
 executable: claude
-run: env -u CLAUDECODE claude -p --permission-mode acceptEdits {model_flags} "{brief}" < /dev/null
-run_file: env -u CLAUDECODE claude -p --permission-mode acceptEdits {model_flags} "Follow the instructions in {brief_file}" < /dev/null
+run: env -u CLAUDECODE claude -p --permission-mode bypassPermissions {model_flags} "{brief}" < /dev/null
+run_file: env -u CLAUDECODE claude -p --permission-mode bypassPermissions {model_flags} "Follow the instructions in {brief_file}" < /dev/null
 model_flags: --model {model}
 readonly: env -u CLAUDECODE claude -p --model {model} --disallowedTools "Write,Edit,NotebookEdit" "{prompt}" < /dev/null
 available: command -v claude
@@ -24,7 +24,8 @@ that is `self.md`.
 - `env -u CLAUDECODE` removes the nested-session marker when the conductor is itself Claude Code.
 - Working directory: run the command inside `{cwd}`; there is no cd flag.
 - `--output-format stream-json --verbose` gives a per-event log; then `finished` becomes the last `"type":"result"` event with `is_error: false`. Only the last one — earlier `is_error` events are tool results, not failures.
-- Model aliases (`haiku`, `sonnet`, `opus`) are accepted; the row records the alias it confirmed.
+- Model aliases (`haiku`, `sonnet`, `opus`, `fable`) are accepted; the row records the alias it confirmed.
+- `--permission-mode bypassPermissions` puts claude on the same footing as agy (`--dangerously-skip-permissions`) and cursor-agent (`--force --trust`): headless `claude -p` cannot answer a prompt, and `acceptEdits` left Bash to the host's settings, which denied tests and git on a host without an allowlist (Tempo MVP, 2026-09-21). The worktree is the sandbox, as for agy.
 
 ## Lanes
 
