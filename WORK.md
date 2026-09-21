@@ -1,7 +1,7 @@
 # WORK — skills
 
 ## In progress
-- [ ] 2026-09-21 pause: skills PR #58 open, CI green, not merged (claude adapter `--permission-mode bypassPermissions`, parity with agy and cursor-agent; Tempo MVP retrospective finding 4.1). Merged since 2026-09-20: research ladder (#55), hidden-path rule for agy (#56), routing without codex (#57). Next skills work from the Tempo backlog (core `.batuta/feedback/2026-09-21-tempo-mvp-triage.md`): adversarial review pass, `Lint:` detection in init, final-origin smoke criteria, init/doctor patching JS tool excludes for `.batuta/**`; and `batuta judge classify` in `batuta-plan`/`batuta-route` once core ships it.
+- [ ] 2026-09-21: skills PR #58 merged (claude adapter `--permission-mode bypassPermissions`, parity with agy and cursor-agent; Tempo MVP retrospective finding 4.1). Merged since 2026-09-20: research ladder (#55), hidden-path rule for agy (#56), routing without codex (#57). Next skills work from the Tempo backlog (core `.batuta/feedback/2026-09-21-tempo-mvp-triage.md`): adversarial review pass with the retrospective's scenario list, `batuta-init` writes `Lint:` when a lint script exists, an `Accept` idiom for the delivered origin, init/doctor add `.batuta/**` to known JS tool ignore lists; and `batuta judge classify` in `batuta-plan`/`batuta-route` once core ships it. Journals and run logs of `research-ladder` and `hidden-scope-rule` are judge benchmark corpus: never delete.
 - [x] Native-dispatch plan done and conductor review corrections verified, 2026-09-11. External acp-dispatch plan remains approved, waiting for qualified core. Baseline skills 94b6b19, core 940a7b3, host 32702e8.
 - None. QA round 3 is verified locally; no push or merge authorized.
 
