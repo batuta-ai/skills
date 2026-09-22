@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.11.2](https://github.com/batuta-ai/skills/compare/v0.11.1...v0.11.2) (2026-09-22)
+
+
+### Bug Fixes
+
+* **adapters:** opencode limit_regex matches provider errors, not prose ([0b13f92](https://github.com/batuta-ai/skills/commit/0b13f9243bce9c05b707cc934801f776df37fb59))
+* **adapters:** opencode limit_regex matches provider errors, not prose ([bdd0f40](https://github.com/batuta-ai/skills/commit/bdd0f40376033067f21fa88111d8f9754140aa74))
+
 ## [0.11.1](https://github.com/batuta-ai/skills/compare/v0.11.0...v0.11.1) (2026-09-21)
 
 
