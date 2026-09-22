@@ -8,7 +8,7 @@ readonly: 'opencode run --dir {cwd} --model {model} "Read-only task: do not crea
 available: command -v opencode && opencode models | grep -qx '{model}'
 models: opencode models
 finished: exit_code
-limit_regex: "rate limit|quota|too many requests|insufficient credits"
+limit_regex: "rate limit (reached|exceeded)|quota exceeded|too many requests|insufficient credits|usage limit reached"
 brief_limit_lines: 100
 cwd_flag: --dir {cwd}
 acp_run: opencode acp
