@@ -17,16 +17,15 @@ cwd_flag: env
 
 Google's terminal agent (`agy`), multi-model: Gemini Flash and Pro, Claude,
 GPT-OSS through one account. A cheap `low`/`medium` row with a Flash model,
-or research with Flash on the free quota. Replaces the discontinued Gemini
-CLI. Verified on `agy 1.1.26`.
+or research with Flash on the free quota. Verified on `agy 1.1.26`.
 
 ## Invocation notes
 
-- `-p` runs one prompt. `--mode=accept-edits` approves edits; `--dangerously-skip-permissions` also approves commands needed for tests. `--sandbox` restricts the terminal; keep both.
+- `-p` runs one prompt. `--mode=accept-edits` approves edits; `--dangerously-skip-permissions` also approves commands needed for tests. agy is not contained outside the worktree (probe: `--sandbox` blocked neither, blocked `go`; maintainer's decision 2026-09-23).
 - `--print-timeout` defaults to 5 minutes; the `run` line raises it. Raise further for long suites.
 - Run inside `{cwd}`; there is no cd flag.
 - Slugs from `agy models` already carry the reasoning level (`gemini-3.8-flash-low`, `gemini-3.1-pro-high`, `claude-opus-4-6-thinking`): the row records the slug, not the display name, and that is the whole "explicit model". `--effort low|medium|high` exists for slugs without a level; add it to the row's flags only then.
-- `--disable-slash-commands` keeps a `/` at the start of a brief line from expanding into a slash command. It also disables `--mode=plan` (agy 1.1.27 warns and ignores it), and headless `agy` auto-denies every `command` permission: the `readonly` line therefore runs with `--dangerously-skip-permissions --sandbox` and relies on the prompt's read-only contract plus the scout guard, as every adapter does.
+- `--disable-slash-commands` keeps a `/` at the start of a brief line from expanding into a slash command. It also disables `--mode=plan` (agy 1.1.27 warns and ignores it), and headless `agy` auto-denies every `command` permission: the `readonly` line therefore runs with `--dangerously-skip-permissions --sandbox` and relies on the prompt's read-only contract plus the scout guard.
 - `--output-format json` gives a single envelope with a terminal `status` (`SUCCESS`, `ERROR`, `CANCELED`, …); then `finished` becomes `status == SUCCESS`. Responses go to stdout, diagnostics to stderr — capture them separately. Stderr carries glog noise prefixed `ERROR: logging before google.Init` on `I…` lines; those are INFO, not errors — filter them before reading real errors.
 - `agy models` is a network call: run it at onboarding and on demand, never in a per-delegation availability check.
 - Headless auth: keyring, or `GEMINI_API_KEY` with `modelProvider: "gemini"` in `~/.gemini/antigravity-cli/settings.json` (CI).

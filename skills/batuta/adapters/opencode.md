@@ -24,6 +24,7 @@ lane with a budget model.
 ## Invocation notes
 
 - The model is mandatory and comes from the row or the user's override. Never the CLI's global default — it is whatever the user last configured and may be a premium model.
+- Containment: the CLI is not contained outside the worktree. It blocks edits outside through `external_directory` but not shell writes (probe, 2026-09-23) — the worktree is the only boundary. Kept as-is by the maintainer's decision of 2026-09-23.
 - IDs are `provider/model` and vary per installation (`opencode/kimi-k2.5`, `openrouter/moonshotai/kimi-latest`). Never write one from memory: discover it.
 - `--format json` gives raw events when a log is needed.
 
