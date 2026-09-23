@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.0](https://github.com/batuta-ai/skills/compare/v0.11.2...v0.12.0) (2026-09-23)
+
+
+### Features
+
+* **adapters:** codex and claude declare their qualified ACP bridges ([9ee3527](https://github.com/batuta-ai/skills/commit/9ee3527ea92e627369d72b5ccfc446f4b7e4a769))
+* the codex and claude adapters declare the ACP bridge metadata and ([8138526](https://github.com/batuta-ai/skills/commit/8138526bc8b277d2d6b7866a20721c16830d31d0))
+
 ## [0.11.2](https://github.com/batuta-ai/skills/compare/v0.11.1...v0.11.2) (2026-09-22)
 
 
