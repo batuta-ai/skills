@@ -11,6 +11,10 @@ finished: exit_code
 limit_regex: "rate limit reached|quota exceeded|usage limit reached|too many requests"
 brief_limit_lines: 100
 cwd_flag: --cd {cwd}
+acp_run: codex-acp
+acp_version: @agentclientprotocol/codex-acp 1.13.1
+acp_model_config: model
+acp_mode: read-only
 ---
 
 # Adapter: codex — OpenAI Codex CLI, non-interactive
@@ -39,8 +43,12 @@ features and refactors, as long as the brief is self-sufficient. Never:
 open architecture decisions, security-sensitive changes, criteria that
 need the conversation — those are `self`.
 
-External ACP is unqualified; this adapter intentionally has no ACP launch
-metadata. Its legacy `run` and `readonly` paths remain authoritative.
+ACP: `acp_run: codex-acp` (bridge 1.13.1) starts sessions in mode
+`acp_mode: read-only` ("Ask for approval"): despite its name it edits and
+runs commands freely inside the worktree and asks before anything outside
+it, which the worktree permission policy rejects. No `acp_session_meta` is
+declared, and effort follows the session's `thought_level`, so no
+`acp_effort_config` either.
 
 ## Cost
 

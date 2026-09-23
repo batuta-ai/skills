@@ -1,5 +1,11 @@
 # WORK — skills
 
+## Current status — 2026-09-23: ACP bridge adapters
+- [ ] skills#60 merged 2026-09-22. Plan `acp-bridge-adapters` on `feat/acp-bridge-adapters`: codex and claude adapters declare the ACP bridges core qualified on 2026-09-23.
+- [ ] Next, not planned: move CLI adapters to structured output with `output_decoder` (`codex-json`, `claude-stream-json`, `cursor-stream-json`, `agy-stream-json`, `opencode-json`); cursor and agy stay on CLI JSON because their ACP sends no usage.
+- [ ] CLI containment outside the worktree is missing for claude (`bypassPermissions`), cursor-agent (`--force`) and opencode; a probe-backed plan is due after the ACP work.
+- [ ] Keep the installed copy under `~/.agents/skills/batuta/` in sync with this repository; it was edited directly during the 2026-09-22 limit_regex incident.
+
 ## In progress
 - [ ] 2026-09-22 pause: PR **skills#60** (`fix/opencode-limit-regex`) is open with CI green, not merged; it also carries the two earlier WORK.md commits. The bare `rate limit` alternative had matched an executor's own report and made the core loop wait 30 minutes and re-run a finished attempt; the new pattern matches provider error phrasings only. The same change is already applied to the installed copy at `~/.agents/skills/batuta/adapters/`.
 - [ ] Next skills work, waiting on core: adapters gain `output_decoder` (stream-json/JSON decoding), `acp_run` for codex (`@agentclientprotocol/codex-acp`) and claude (`@agentclientprotocol/claude-agent-acp`), and model/effort config ids for ACP sessions. Transport decided in core: ACP for codex, claude and opencode; CLI JSON for cursor and agy, whose ACP reports no usage. Evidence in core `.batuta/acp-probes/` (core#119).
@@ -41,3 +47,4 @@
 - [x] Adapter notes follow the research ladder → agy (gemini-3.8-flash-low), commit 277b6327a828 (trail: .batuta/runs/2026-09-20-research-ladder-task-3.md, delivery research-ladder-20260920-001419, plan research-ladder, 2026-09-20)
 - [x] Reseat this repository's own research rows → agy (gemini-3.8-flash-low), already satisfied on the base 277b6327a828, no commit (trail: .batuta/runs/2026-09-20-research-ladder-task-4.md, delivery research-ladder-20260920-001419, plan research-ladder, 2026-09-20)
 - [x] Hidden-path routing rule in routing.md and the agy adapter → codex (gpt-5.6-sol), 1 retry, commit 293f2381a08d (trail: .batuta/runs/2026-09-20-hidden-scope-rule-task-1.md, delivery hidden-scope-rule-20260920-105745, plan hidden-scope-rule, 2026-09-20)
+- [x] The codex and claude adapters declare the ACP bridge metadata and the lint pins it → opencode (opencode/glm-5.3-flash), commit 8138526bc8b2 (trail: .batuta/runs/2026-09-23-acp-bridge-adapters-task-1.md, delivery acp-bridge-adapters-20260923-200841, plan acp-bridge-adapters, 2026-09-23)

@@ -11,6 +11,11 @@ finished: exit_code
 limit_regex: "usage limit reached|hit your (session|usage|.-hour) limit|.-hour limit reached|\"api_error_status\": 429"
 brief_limit_lines: 100
 cwd_flag: env
+acp_run: claude-agent-acp
+acp_version: 0.81.1
+acp_model_config: model
+acp_mode: acceptEdits
+acp_session_meta: {"claudeCode":{"options":{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true}}}}
 ---
 
 # Adapter: claude — Claude Code in the background
@@ -37,8 +42,10 @@ that is `self.md`.
 Good at anything a brief can carry. Never a substitute for `self` when the
 task needs the conversation.
 
-External ACP is unqualified; this adapter intentionally has no ACP launch
-metadata. Its legacy `run` and `readonly` paths remain authoritative.
+ACP: `acp_run: claude-agent-acp` (bridge 0.81.1) starts sessions in mode
+`acp_mode: acceptEdits`; `acp_session_meta` enables the sandbox with bash
+auto-allow, containing writes to the worktree. Effort follows the
+session's `thought_level`, so no `acp_effort_config` is declared.
 
 ## Cost
 
