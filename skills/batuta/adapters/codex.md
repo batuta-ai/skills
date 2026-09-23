@@ -44,9 +44,11 @@ open architecture decisions, security-sensitive changes, criteria that
 need the conversation — those are `self`.
 
 ACP: `acp_run: codex-acp` (bridge 1.13.1) starts sessions in mode
-`acp_mode: read-only` — the session reads the workspace but edits stay on
-the CLI path. No `acp_session_meta` is declared, and effort follows the
-session's `thought_level`, so no `acp_effort_config` either.
+`acp_mode: read-only` ("Ask for approval"): despite its name it edits and
+runs commands freely inside the worktree and asks before anything outside
+it, which the worktree permission policy rejects. No `acp_session_meta` is
+declared, and effort follows the session's `thought_level`, so no
+`acp_effort_config` either.
 
 ## Cost
 
