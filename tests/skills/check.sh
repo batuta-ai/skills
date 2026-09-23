@@ -89,13 +89,17 @@ fi
 # that promises a placeholder carries it. self.md is the conductor itself and is exempt from
 # the placeholder rules.
 adapter_findings=$(python3 - skills/batuta/adapters/*.md <<'PY'
-import re, sys
+import json, re, sys
 required = ["name", "run", "readonly", "available", "models", "finished"]
 placeholders = {"run": ["{brief}"], "run_file": ["{brief_file}"], "readonly": ["{prompt}", "{model}"], "model_flags": ["{model}"]}
-acp_keys = {"acp_run", "acp_version", "acp_model_config", "acp_effort_config"}
-acp_required = acp_keys - {"acp_effort_config"}
+acp_keys = {"acp_run", "acp_version", "acp_model_config", "acp_effort_config", "acp_mode", "acp_session_meta"}
+acp_required = acp_keys - {"acp_effort_config", "acp_mode", "acp_session_meta"}
 # This is the shipped metadata inventory, not ACP qualification evidence.
-expected_acp = {"opencode": {"acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model"}}
+expected_acp = {
+    "opencode": {"acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model"},
+    "codex": {"acp_run": "codex-acp", "acp_version": "@agentclientprotocol/codex-acp 1.13.1", "acp_model_config": "model", "acp_mode": "read-only"},
+    "claude": {"acp_run": "claude-agent-acp", "acp_version": "0.81.1", "acp_model_config": "model", "acp_mode": "acceptEdits", "acp_session_meta": '{"claudeCode":{"options":{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true}}}}'},
+}
 def acp_errors(keys):
     errors = []
     present = acp_keys & keys.keys()
@@ -104,6 +108,14 @@ def acp_errors(keys):
         errors += [f"ACP metadata '{key}' is empty" for key in sorted(present) if not keys[key]]
         if any(mark in keys.get("acp_run", "") for mark in ("{", "}", "<", ">", "|", "&", ";")):
             errors.append("acp_run must be fixed argv without placeholders or shell syntax")
+        meta = keys.get("acp_session_meta")
+        if meta:
+            try:
+                parsed = json.loads(meta)
+            except ValueError:
+                parsed = None
+            if not isinstance(parsed, dict):
+                errors.append("acp_session_meta must be a JSON object")
     name = keys.get("name")
     if name in expected_acp:
         expected = expected_acp[name]
@@ -151,7 +163,8 @@ for fixture, expect in (
     ({"name": "opencode", "acp_run": "opencode acp"}, "missing 'acp_model_config'"),
     ({"name": "opencode", "acp_run": "opencode acp {brief}", "acp_version": "1.18.31", "acp_model_config": "model"}, "fixed argv"),
     ({"name": "opencode", "acp_run": "opencode acp", "acp_version": "1.18.31", "acp_model_config": "model", "acp_effort_config": "effort"}, "unexpected ACP metadata"),
-    ({"name": "codex", "acp_run": "codex-acp", "acp_version": "1", "acp_model_config": "model"}, "not recorded"),
+    ({"name": "gemini", "acp_run": "gemini-acp", "acp_version": "1", "acp_model_config": "model"}, "not recorded"),
+    ({"name": "claude", "acp_run": "claude-agent-acp", "acp_version": "0.81.1", "acp_model_config": "model", "acp_mode": "acceptEdits", "acp_session_meta": "[1]"}, "JSON object"),
 ):
     errors = acp_errors(fixture)
     if not any(expect in error for error in errors):
