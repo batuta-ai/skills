@@ -21,7 +21,7 @@ or research with Flash on the free quota. Verified on `agy 1.1.26`.
 
 ## Invocation notes
 
-- `-p` runs one prompt. `--mode=accept-edits` approves edits; `--dangerously-skip-permissions` also approves commands needed for tests. agy is not contained outside the worktree: `--sandbox` stopped no outside write in the 2026-09-23 probe (kept by the maintainer's decision).
+- `-p` runs one prompt. `--mode=accept-edits` approves edits; `--dangerously-skip-permissions` also approves commands needed for tests. agy is not contained outside the worktree (probe 2026-09-23; kept by maintainer).
 - `--print-timeout` defaults to 5 minutes; the `run` line raises it. Raise further for long suites.
 - Run inside `{cwd}`; there is no cd flag.
 - Slugs from `agy models` already carry the reasoning level (`gemini-3.8-flash-low`, `gemini-3.1-pro-high`, `claude-opus-4-6-thinking`): the row records the slug, not the display name, and that is the whole "explicit model". `--effort low|medium|high` exists for slugs without a level; add it to the row's flags only then.
