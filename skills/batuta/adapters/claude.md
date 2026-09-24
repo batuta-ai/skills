@@ -1,8 +1,8 @@
 ---
 name: claude
 executable: claude
-run: env -u CLAUDECODE claude -p --permission-mode bypassPermissions {model_flags} "{brief}" < /dev/null
-run_file: env -u CLAUDECODE claude -p --permission-mode bypassPermissions {model_flags} "Follow the instructions in {brief_file}" < /dev/null
+run: env -u CLAUDECODE claude -p --permission-mode acceptEdits --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true},"permissions":{"allow":["Edit(./**)"]}}' {model_flags} "{brief}" < /dev/null
+run_file: env -u CLAUDECODE claude -p --permission-mode acceptEdits --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true},"permissions":{"allow":["Edit(./**)"]}}' {model_flags} "Follow the instructions in {brief_file}" < /dev/null
 model_flags: --model {model}
 readonly: env -u CLAUDECODE claude -p --model {model} --disallowedTools "Write,Edit,NotebookEdit" "{prompt}" < /dev/null
 available: command -v claude
@@ -30,7 +30,7 @@ that is `self.md`.
 - Working directory: run the command inside `{cwd}`; there is no cd flag.
 - `--output-format stream-json --verbose` gives a per-event log; then `finished` becomes the last `"type":"result"` event with `is_error: false`. Only the last one — earlier `is_error` events are tool results, not failures.
 - Model aliases (`haiku`, `sonnet`, `opus`, `fable`) are accepted; the row records the alias it confirmed.
-- `--permission-mode bypassPermissions` puts claude on the same footing as agy (`--dangerously-skip-permissions`) and cursor-agent (`--force --trust`): headless `claude -p` cannot answer a prompt, and `acceptEdits` left Bash to the host's settings, which denied tests and git on a host without an allowlist (Tempo MVP, 2026-09-21). The worktree is the sandbox, as for agy.
+- `acceptEdits` with sandbox `--settings` and `Edit(./**)` allow rule keeps the run in the worktree: free inside; edits and commands outside refused or blocked by the sandbox. It is required: without it `acceptEdits` asked on a new file and headless `claude -p` stopped. Network and writes outside the worktree, like a module download, may be refused.
 
 ## Lanes
 
