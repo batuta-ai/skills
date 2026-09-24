@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.13.0](https://github.com/batuta-ai/skills/compare/v0.12.0...v0.13.0) (2026-09-24)
+
+
+### Features
+
+* claude and cursor-agent run lines contain the executor to the ([cbd37a2](https://github.com/batuta-ai/skills/commit/cbd37a244010deb67d1c12b1bf1779a42a002e6d))
+
+
+### Bug Fixes
+
+* **adapters:** contain claude and cursor-agent CLI runs to the worktree ([7d3b6ac](https://github.com/batuta-ai/skills/commit/7d3b6ace00e4cb92530cadb5551ad08a3cece8e9))
+
 ## [0.12.0](https://github.com/batuta-ai/skills/compare/v0.11.2...v0.12.0) (2026-09-23)
 
 
