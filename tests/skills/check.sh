@@ -100,6 +100,12 @@ expected_acp = {
     "codex": {"acp_run": "codex-acp", "acp_version": "@agentclientprotocol/codex-acp 1.13.1", "acp_model_config": "model", "acp_mode": "read-only"},
     "claude": {"acp_run": "claude-agent-acp", "acp_version": "0.81.1", "acp_model_config": "model", "acp_mode": "acceptEdits", "acp_session_meta": '{"claudeCode":{"options":{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true}}}}'},
 }
+decoders = {"claude-stream-json", "codex-json", "opencode-json", "agy-stream-json", "cursor-stream-json"}
+def decoder_errors(keys):
+    decoder = keys.get("output_decoder")
+    if decoder is None or decoder in decoders:
+        return []
+    return [f"output_decoder '{decoder}' must be one of {', '.join(sorted(decoders))}"]
 def acp_errors(keys):
     errors = []
     present = acp_keys & keys.keys()
@@ -149,7 +155,7 @@ for path in sys.argv[1:]:
     for key in required:
         if key not in keys:
             print(f"{path}: frontmatter missing '{key}'")
-    for finding in acp_errors(keys):
+    for finding in acp_errors(keys) + decoder_errors(keys):
         print(f"{path}: {finding}")
     if keys.get("name") == "self":
         continue
@@ -169,6 +175,9 @@ for fixture, expect in (
     errors = acp_errors(fixture)
     if not any(expect in error for error in errors):
         print(f"ACP lint self-test missed {expect!r} for {fixture}: {errors}")
+
+if not decoder_errors({"output_decoder": "gemini-json"}) or decoder_errors({"output_decoder": "codex-json"}):
+    print("output_decoder lint self-test failed")
 PY
 )
 [ -z "$adapter_findings" ] || bad "adapter frontmatter:"$'\n'"$adapter_findings"

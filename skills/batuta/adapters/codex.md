@@ -1,14 +1,15 @@
 ---
 name: codex
 executable: codex
-run: codex exec --sandbox workspace-write {cwd_flag} {model_flags} "{brief}" < /dev/null
-run_file: codex exec --sandbox workspace-write {cwd_flag} {model_flags} "Follow the instructions in {brief_file}" < /dev/null
+run: codex exec --json --sandbox workspace-write {cwd_flag} {model_flags} "{brief}" < /dev/null
+run_file: codex exec --json --sandbox workspace-write {cwd_flag} {model_flags} "Follow the instructions in {brief_file}" < /dev/null
 model_flags: -m {model} -c model_reasoning_effort="{effort}"
 readonly: codex exec --sandbox read-only {cwd_flag} -m {model} "{prompt}" < /dev/null
 available: command -v codex && codex login status
 models: codex debug models --bundled
 finished: exit_code
-limit_regex: "rate limit reached|quota exceeded|usage limit reached|too many requests"
+output_decoder: codex-json
+limit_regex: "rate limit reached|quota exceeded|usage limit reached|too many requests|provider error: .*(429|usage_limit|rate_limit_exceeded)"
 brief_limit_lines: 100
 cwd_flag: --cd {cwd}
 acp_run: codex-acp
