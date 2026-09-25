@@ -4,7 +4,7 @@ executable: claude
 run: env -u CLAUDECODE claude -p --permission-mode acceptEdits --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true},"permissions":{"allow":["Edit(./**)"]}}' {model_flags} "{brief}" < /dev/null
 run_file: env -u CLAUDECODE claude -p --permission-mode acceptEdits --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true},"permissions":{"allow":["Edit(./**)"]}}' {model_flags} "Follow the instructions in {brief_file}" < /dev/null
 model_flags: --model {model}
-readonly: env -u CLAUDECODE claude -p --model {model} --disallowedTools "Write,Edit,NotebookEdit" "{prompt}" < /dev/null
+readonly: env -u CLAUDECODE claude -p --model {model} --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true}}' --disallowedTools=Write,Edit,NotebookEdit "{prompt}" < /dev/null
 available: command -v claude
 models: declared
 finished: exit_code
