@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1](https://github.com/batuta-ai/skills/compare/v0.13.0...v0.13.1) (2026-09-25)
+
+
+### Bug Fixes
+
+* **adapters:** claude readonly keeps its prompt and can run commands ([921c4e8](https://github.com/batuta-ai/skills/commit/921c4e8b3236b6e10a15c33f116ce5fb6223273c))
+* **adapters:** claude readonly keeps its prompt and can run commands ([eff65dc](https://github.com/batuta-ai/skills/commit/eff65dc9aeb447acd39de23277547260f7bed059))
+
 ## [0.13.0](https://github.com/batuta-ai/skills/compare/v0.12.0...v0.13.0) (2026-09-24)
 
 
