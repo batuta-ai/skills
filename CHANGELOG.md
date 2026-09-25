@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.14.0](https://github.com/batuta-ai/skills/compare/v0.13.1...v0.14.0) (2026-09-25)
+
+
+### Features
+
+* **adapters:** CLI adapters stream JSON through core's decoders ([0831382](https://github.com/batuta-ai/skills/commit/08313828b712ca2bd5831abd66bb50e8ccec9c52))
+* claude, codex, opencode and agy readonly lines emit their JSON ([6d1d54d](https://github.com/batuta-ai/skills/commit/6d1d54ddd8cc2b5c4672b854e147e1a1fc9f4cfd))
+* claude, codex, opencode and agy run lines emit JSON and declare ([a2acede](https://github.com/batuta-ai/skills/commit/a2aceded1ff9d0629a1256d4507a534340724cfc))
+
 ## [0.13.1](https://github.com/batuta-ai/skills/compare/v0.13.0...v0.13.1) (2026-09-25)
 
 
