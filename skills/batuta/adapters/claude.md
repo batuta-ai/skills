@@ -4,7 +4,7 @@ executable: claude
 run: env -u CLAUDECODE claude -p --output-format stream-json --verbose --permission-mode acceptEdits --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true},"permissions":{"allow":["Edit(./**)"]}}' {model_flags} "{brief}" < /dev/null
 run_file: env -u CLAUDECODE claude -p --output-format stream-json --verbose --permission-mode acceptEdits --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true},"permissions":{"allow":["Edit(./**)"]}}' {model_flags} "Follow the instructions in {brief_file}" < /dev/null
 model_flags: --model {model}
-readonly: env -u CLAUDECODE claude -p --model {model} --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true}}' --disallowedTools=Write,Edit,NotebookEdit "{prompt}" < /dev/null
+readonly: env -u CLAUDECODE claude -p --output-format stream-json --verbose --model {model} --settings '{"sandbox":{"enabled":true,"autoAllowBashIfSandboxed":true}}' --disallowedTools=Write,Edit,NotebookEdit "{prompt}" < /dev/null
 available: command -v claude
 models: declared
 finished: exit_code
@@ -29,9 +29,9 @@ that is `self.md`.
 - `< /dev/null` is mandatory: `claude -p` reads stdin when it is not a TTY and would consume whatever the caller is piping.
 - `env -u CLAUDECODE` removes the nested-session marker when the conductor is itself Claude Code.
 - Working directory: run the command inside `{cwd}`; there is no cd flag.
-- `--output-format stream-json --verbose` feeds core's `output_decoder`: live text, usage, `provider …` failure lines.
+- `--output-format stream-json --verbose` feeds `output_decoder`: text, usage, `provider …` failures.
 - Model aliases (`haiku`, `sonnet`, `opus`, `fable`) are accepted; the row records the alias it confirmed.
-- `acceptEdits`, sandbox `--settings` and the `Edit(./**)` rule keep the run in the worktree: free inside, blocked outside. Without the rule, headless `claude -p` stopped on a new file. Network and outside writes (a module download) may be refused.
+- `acceptEdits`, sandbox `--settings` and the `Edit(./**)` rule keep the run in the worktree: free inside, blocked outside. Without the rule, headless `claude -p` stopped on a new file. Network and outside writes may be refused.
 
 ## Lanes
 

@@ -4,7 +4,7 @@ executable: codex
 run: codex exec --json --sandbox workspace-write {cwd_flag} {model_flags} "{brief}" < /dev/null
 run_file: codex exec --json --sandbox workspace-write {cwd_flag} {model_flags} "Follow the instructions in {brief_file}" < /dev/null
 model_flags: -m {model} -c model_reasoning_effort="{effort}"
-readonly: codex exec --sandbox read-only {cwd_flag} -m {model} "{prompt}" < /dev/null
+readonly: codex exec --json --sandbox read-only {cwd_flag} -m {model} "{prompt}" < /dev/null
 available: command -v codex && codex login status
 models: codex debug models --bundled
 finished: exit_code
