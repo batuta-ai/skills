@@ -30,7 +30,7 @@ that is `self.md`.
 - Working directory: run the command inside `{cwd}`; there is no cd flag.
 - `--output-format stream-json --verbose` gives a per-event log; then `finished` becomes the last `"type":"result"` event with `is_error: false`. Only the last one — earlier `is_error` events are tool results, not failures.
 - Model aliases (`haiku`, `sonnet`, `opus`, `fable`) are accepted; the row records the alias it confirmed.
-- `acceptEdits` with sandbox `--settings` and `Edit(./**)` allow rule keeps the run in the worktree: free inside; edits and commands outside refused or blocked by the sandbox. It is required: without it `acceptEdits` asked on a new file and headless `claude -p` stopped. Network and writes outside the worktree, like a module download, may be refused.
+- `acceptEdits`, sandbox `--settings` and the `Edit(./**)` rule keep the run in the worktree: free inside, blocked outside. Without the rule, headless `claude -p` stopped on a new file. Network and outside writes (a module download) may be refused.
 
 ## Lanes
 
