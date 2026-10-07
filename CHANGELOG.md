@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.14.1](https://github.com/batuta-ai/skills/compare/v0.14.0...v0.14.1) (2026-10-07)
+
+
+### Bug Fixes
+
+* **batuta-review:** exit 4 review incomplete and review_failures.json ([7f1ef67](https://github.com/batuta-ai/skills/commit/7f1ef674d734f61f8f8ca0d538d0254b2cbdaaa4))
+* **batuta-review:** exit 4 review incomplete and review_failures.json ([f050abe](https://github.com/batuta-ai/skills/commit/f050abe2960a132fb4a5a068c9105c6c37309b61))
+
 ## [0.14.0](https://github.com/batuta-ai/skills/compare/v0.13.1...v0.14.0) (2026-09-25)
 
 
