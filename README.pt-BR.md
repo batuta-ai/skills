@@ -68,6 +68,7 @@ de tokens.
 |---|---|---|
 | `batuta` | o modelo, em qualquer tarefa delegável | o ciclo: classificar → decompor → brief → delegar → verificar → commitar |
 | `batuta-review` | o modelo, em "revisa isso" | Step 4 sobre qualquer diff, segundo revisor opcional |
+| `batuta-council` | `/batuta-council`, oferecida pela `batuta-plan` antes da aprovação | rodar o `batuta council` do core sobre um plano proposto, julgar cada achado e ajudar o mantenedor a decidir; nunca aprova o plano |
 | `batuta-init` | `/batuta-init` | onboarding e reconfiguração: perfil, lanes, modelos, mapa do projeto |
 | `batuta-plan` | `/batuta-plan` | plano aprovável de tarefas do tamanho de um commit |
 | `batuta-refine` | `/batuta-refine`, ou escolhas materiais que bloqueiam o plano | resolver decisões consequentes em rodadas limitadas; pular em trabalho claro e autorizado |
