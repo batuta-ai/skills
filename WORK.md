@@ -51,6 +51,8 @@
 - [x] claude and cursor-agent run lines contain the executor to the worktree; opencode and agy document the gap → opencode (opencode/glm-5.3-flash), commit cbd37a244010 (trail: .batuta/runs/2026-09-23-cli-worktree-containment-task-1.md, delivery cli-worktree-containment-20260923-214840, plan cli-worktree-containment, 2026-09-23)
 - [x] claude, codex, opencode and agy run lines emit JSON and declare output_decoder; limit_regex matches decoded provider lines → claude (sonnet), commit a2aceded1ff9 (trail: .batuta/runs/2026-09-25-output-decoder-task-1.md, delivery output-decoder-20260925-192430, plan output-decoder, 2026-09-25)
 - [x] claude, codex, opencode and agy readonly lines emit their JSON stream → claude (sonnet), commit 6d1d54ddd8cc (trail: .batuta/runs/2026-09-25-output-decoder-readonly-task-1.md, delivery output-decoder-readonly-20260925-193735, plan output-decoder-readonly, 2026-09-25)
+- [x] the batuta-council skill → claude (sonnet), commit 1c78e116987c (trail: .batuta/runs/2026-10-09-batuta-council-task-1.md, delivery batuta-council-20261009-114028, plan batuta-council, 2026-10-09)
+- [x] batuta-plan offers the council, batuta-init excludes the artefacts, README tables list the skill → claude (sonnet), commit e950a1d9393d (trail: .batuta/runs/2026-10-09-batuta-council-task-2.md, delivery batuta-council-20261009-114028, plan batuta-council, 2026-10-09)
 
 ## Blocked
 - [ ] claude, codex, opencode and agy run lines emit JSON and declare output_decoder; limit_regex matches decoded provider lines → claude (sonnet), aborted: submission_uncertain (trail: .batuta/runs/2026-09-25-output-decoder-task-1.md, delivery output-decoder-20260925-192240, plan output-decoder, 2026-09-25)
