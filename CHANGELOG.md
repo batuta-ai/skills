@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.15.0](https://github.com/batuta-ai/skills/compare/v0.14.1...v0.15.0) (2026-10-09)
+
+
+### Features
+
+* **batuta-council:** ask the council before approving a plan ([3750a15](https://github.com/batuta-ai/skills/commit/3750a15b436244c9bc8c49ec46db882ba0dfb817))
+* batuta-plan offers the council, batuta-init excludes the artefacts ([e950a1d](https://github.com/batuta-ai/skills/commit/e950a1d9393dda569ea94336a7c771aff069bc4e))
+* the batuta-council skill ([1c78e11](https://github.com/batuta-ai/skills/commit/1c78e116987c2a82ec32f8b4094cce87903e93a1))
+
+
+### Bug Fixes
+
+* **batuta-council:** read council.md from the --out directory when given ([ffd9ec8](https://github.com/batuta-ai/skills/commit/ffd9ec88c62a8602db4a82fbc83ad0563a43c744))
+
 ## [0.14.1](https://github.com/batuta-ai/skills/compare/v0.14.0...v0.14.1) (2026-10-07)
 
 
