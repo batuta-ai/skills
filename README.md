@@ -67,6 +67,7 @@ and functional qualification is not evidence of token savings.
 |---|---|---|
 | `batuta` | the model, on any delegable task | the cycle: classify → decompose → brief → delegate → verify → commit |
 | `batuta-review` | the model, on "review this" | Step 4 over any diff, optional second reviewer |
+| `batuta-council` | `/batuta-council`, offered by `batuta-plan` before approval | run core `batuta council` on a proposed plan, judge every finding and help the maintainer decide; it never approves the plan |
 | `batuta-init` | `/batuta-init` | onboarding and reconfiguration: profile, lanes, models, project map |
 | `batuta-plan` | `/batuta-plan` | approvable plan of atomic-commit-sized tasks |
 | `batuta-refine` | `/batuta-refine`, or material choices that block planning | resolve consequential decisions in bounded rounds; skip it for clear, authorized work |
