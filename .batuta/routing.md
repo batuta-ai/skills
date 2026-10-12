@@ -1,6 +1,6 @@
 # Routing — skills
 
-<!-- inputs: profile.md@sha256:3f3de48a1e13 -->
+<!-- inputs: profile.md@sha256:9dbfb82d3b68 -->
 
 Confirmed with the user by /batuta-init on 2026-09-09; research ladder reseated on 2026-09-19; codex removed from every row on 2026-09-20 because the ChatGPT usage limit is too low. Installed and probed: agy, claude, cursor-agent, opencode. cursor-agent runs Grok only (no Claude models there, by the user's choice). Model IDs come from `batuta inventory` and each adapter's `models` line on this machine. Reseated on 2026-09-24: opencode Zen credits ran out (`Insufficient account funds`) and the cursor-agent executable is missing, so `medium` moved to claude sonnet and `high` to codex gpt-6-sol (the account is ChatGPT Pro); agy stays on `low` by the user's choice.
 

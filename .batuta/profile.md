@@ -13,7 +13,7 @@ Template: templates/generic.md
 
 ## Conventions
 
-- Every file under `skills/` is prose an agent loads at runtime. Length is a cost: `tests/skills/check.sh` caps each `SKILL.md` body (120 lines for `batuta`, 110 for `batuta-init`, 60 for every other skill) and caps the conductor cycle packet at 9500 tokens and the executor brief overhead at 1000.
+- Every file under `skills/` is prose an agent loads at runtime. Length is a cost: `tests/skills/check.sh` caps each `SKILL.md` body (120 lines for `batuta`, 110 for `batuta-init`, 60 for every other skill) and caps the conductor cycle packet at 9500 tokens, the executor brief overhead at 1000 and this section at 1600 characters (it is pasted into every executor brief).
 - `name:` in the frontmatter must equal the directory name; `description:` is at most 300 characters.
 - Forbidden strings anywhere under `skills/`: the name of the third-party framework the QA method was distilled from, the name of the CompozyOS extension repository, and host-specific tool names (`AskUserQuestion`, `TodoWrite`, `TaskCreate`, `SlashCommand`, `run_in_background`, `Task tool`). A skill that only runs on one host is a bug.
 - Every relative reference a skill cites must exist; the linter resolves it against the citing file and the skill root.
