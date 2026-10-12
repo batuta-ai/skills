@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.15.1](https://github.com/batuta-ai/skills/compare/v0.15.0...v0.15.1) (2026-10-12)
+
+
+### Bug Fixes
+
+* **batuta-init:** state the ceiling of the profile's Conventions section ([0de90e8](https://github.com/batuta-ai/skills/commit/0de90e84e00ae0c397543a31b1fc77d3757c3d7a))
+* **batuta-init:** state the ceiling of the profile's Conventions section ([198b070](https://github.com/batuta-ai/skills/commit/198b070219546f1647c4af84ab03543c0d099d14)), closes [#75](https://github.com/batuta-ai/skills/issues/75)
+
 ## [0.15.0](https://github.com/batuta-ai/skills/compare/v0.14.1...v0.15.0) (2026-10-09)
 
 
