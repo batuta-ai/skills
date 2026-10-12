@@ -193,7 +193,12 @@ done
 # what the conductor loads across one cycle (SKILL.md, the references a
 # cycle reads, one adapter, the longest template chain), and the overhead
 # every executor brief carries (the chain's Conventions sections, the test
-# laws and the method line). Budgets are ceilings, not targets.
+# laws and the method line). Budgets are ceilings, not targets. A brief
+# also carries the project's own `## Conventions` section from
+# `.batuta/profile.md`; no project is visible from here, so that part is a
+# stated ceiling (profile_max characters, 4 per token) that batuta-init
+# passes on to the profile's author and this repository's profile obeys.
+profile_max=1600
 tokens() { cat "$@" | wc -c | awk '{print int($1/4)}'; }
 conventions() {
   # The "## Conventions for briefs" section of a template, up to the next H2.
@@ -223,9 +228,15 @@ for tmpl in skills/batuta/templates/*.md; do
     [ "$c" -gt "$cycle_max" ] && { cycle_max=$c; cycle_max_at="$name+$aname"; }
   done
 done
-printf 'cycle packet   ~%5d tokens max (%s; budget 9500)\nbrief overhead ~%5d tokens max (%s; budget 1000)\n' "$cycle_max" "$cycle_max_at" "$brief_max" "$brief_max_at"
+printf 'cycle packet   ~%5d tokens max (%s; budget 9500)\nbrief overhead ~%5d tokens max (%s; budget 1000) + profile ceiling %d = ~%d\n' "$cycle_max" "$cycle_max_at" "$brief_max" "$brief_max_at" $((profile_max / 4)) $((brief_max + profile_max / 4))
 [ "$cycle_max" -le 9500 ] || bad "conductor cycle packet ~$cycle_max tokens ($cycle_max_at) > 9500"
 [ "$brief_max" -le 1000 ] || bad "executor brief overhead ~$brief_max tokens ($brief_max_at) > 1000"
+grep -q "within $profile_max characters" skills/batuta-init/SKILL.md || bad "skills/batuta-init/SKILL.md: does not state the $profile_max-character ceiling of the profile's ## Conventions section"
+if [ -f .batuta/profile.md ]; then
+  own=$(awk '/^## Conventions[ \t]*$/{on=1; next} /^## /{on=0} on' .batuta/profile.md | wc -c | tr -d ' ')
+  [ "$own" -le "$profile_max" ] || bad ".batuta/profile.md: ## Conventions section $own characters > $profile_max"
+  printf 'profile rules   %5d/%d characters (.batuta/profile.md)\n' "$own" "$profile_max"
+fi
 
 if [ "$fail" -ne 0 ]; then note "skills check: FAILED"; exit 1; fi
 note "skills check: ok"
