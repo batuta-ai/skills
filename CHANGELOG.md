@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.0](https://github.com/batuta-ai/skills/compare/v0.15.1...v0.16.0) (2026-10-14)
+
+
+### Features
+
+* **batuta-init:** keep tools out of .batuta and ask for the worktree home ([5d4b996](https://github.com/batuta-ai/skills/commit/5d4b996b1068b0a44613b40d7d8db518177f7df9))
+* **batuta-init:** keep tools out of .batuta and ask for the worktree home ([c1ddd13](https://github.com/batuta-ai/skills/commit/c1ddd1386fe4756f4339a172d5d93a0031ae5e0e))
+
 ## [0.15.1](https://github.com/batuta-ai/skills/compare/v0.15.0...v0.15.1) (2026-10-12)
 
 
