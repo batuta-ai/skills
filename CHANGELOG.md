@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.1](https://github.com/batuta-ai/skills/compare/v0.16.0...v0.16.1) (2026-10-23)
+
+
+### Bug Fixes
+
+* **batuta-init:** align the TypeScript and Biome ignore rows with batuta doctor ([244e711](https://github.com/batuta-ai/skills/commit/244e71132e323432b468fde63457df1e5f75169b))
+* **batuta-init:** align the TypeScript and Biome ignore rows with batuta doctor ([82df26f](https://github.com/batuta-ai/skills/commit/82df26f22ffa951403b1d4648f71671b871be5bf))
+
 ## [0.16.0](https://github.com/batuta-ai/skills/compare/v0.15.1...v0.16.0) (2026-10-14)
 
 
