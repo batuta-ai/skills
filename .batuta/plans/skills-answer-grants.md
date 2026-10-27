@@ -2,7 +2,7 @@
 <!-- inputs: profile.md@sha256:9dbfb82d3b68 routing.md@sha256:a09bace33ec5 -->
 
 **Goal:** Core v1.1.0-beta.58 (core#180) lets an answer to a parked loop task carry a standing grant (`--allow-path`, `--allow-op`, `--until task`). The skills still teach the answer as text only, so a fresh executor session asks the same scope question again (Tempo finding 4.5: task 4 went back to `waiting_input` more than once after a limited grant). Teach the conductor when and how to write a grant, how to read a park under a grant, and what never to grant.
-**Created:** 2026-10-27 · **Status:** proposed
+**Created:** 2026-10-27 · **Status:** approved
 
 ## Tasks
 - [ ] 1. Grants reference and its citation from the loop skill — general/medium
