@@ -34,7 +34,7 @@ batuta loop --transport <mode> --answer <task> --allow-path 'docs/**' --allow-op
 
 The ask file and the `question_recorded` journal record carry `grant_park: <reason>`, and for `not_covered` also `beyond_grant: <items>`. The runner replies without parking when the question has no `Beyond grant:` clause or all its items are granted. A park without a grant has none of these keys. Act by reason:
 
-- `not_covered` → relay the `beyond_grant` items and, if authorized, answer with a grant that adds exactly those items.
+- `not_covered` → relay the `beyond_grant` items and, if authorized, answer with a grant that adds exactly those items. A boundary item goes back to `/batuta-plan` or gets a no, never a grant.
 - `malformed_clause` → answer restating the clause form `Beyond grant: paths: <paths>; operations: <operations>`, with no new grant.
 - `turn_cap` → 3 grant turns are used; read the questions, answer the real decision, and consider whether the task needs splitting in the plan.
 - `repeat` → the same question came back; read the questions, answer the real decision, and consider whether the task needs splitting in the plan.
