@@ -53,6 +53,8 @@
 - [x] claude, codex, opencode and agy readonly lines emit their JSON stream → claude (sonnet), commit 6d1d54ddd8cc (trail: .batuta/runs/2026-09-25-output-decoder-readonly-task-1.md, delivery output-decoder-readonly-20260925-193735, plan output-decoder-readonly, 2026-09-25)
 - [x] the batuta-council skill → claude (sonnet), commit 1c78e116987c (trail: .batuta/runs/2026-10-09-batuta-council-task-1.md, delivery batuta-council-20261009-114028, plan batuta-council, 2026-10-09)
 - [x] batuta-plan offers the council, batuta-init excludes the artefacts, README tables list the skill → claude (sonnet), commit e950a1d9393d (trail: .batuta/runs/2026-10-09-batuta-council-task-2.md, delivery batuta-council-20261009-114028, plan batuta-council, 2026-10-09)
+- [x] Grants reference and its citation from the loop skill → claude (sonnet), commit c5c8f7147093 (trail: .batuta/runs/2026-10-27-skills-answer-grants-task-1.md, delivery skills-answer-grants-20261027-124826, plan skills-answer-grants, 2026-10-27)
+- [x] Status shows the park reason, and the gate guards the grants contract → agy (gemini-3.8-flash-low), commit 30e625aee943 (trail: .batuta/runs/2026-10-27-skills-answer-grants-task-2.md, delivery skills-answer-grants-20261027-124826, plan skills-answer-grants, 2026-10-27)
 
 ## Blocked
 - [ ] claude, codex, opencode and agy run lines emit JSON and declare output_decoder; limit_regex matches decoded provider lines → claude (sonnet), aborted: submission_uncertain (trail: .batuta/runs/2026-09-25-output-decoder-task-1.md, delivery output-decoder-20260925-192240, plan output-decoder, 2026-09-25)
