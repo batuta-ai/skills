@@ -1,5 +1,9 @@
 # WORK — skills
 
+## Current status — 2026-10-28: worktree lifecycle guidance, local
+- [x] Interactive worktrees honor `Worktree-home: repository | cache`, preserve the recorded path across profile changes, and use it for create/integrate/abort. Loop and status point to a new prune reference documenting ownership, report/apply, ignored files, missing branches and process effects. Commit `11da7aa` on `fix/worktree-lifecycle`; not published or vendored.
+- Routed docs/medium to claude/sonnet; definitive provider403 before any edits, so unavailable-route escalation to codex/gpt-6-sol/high. One completed implementation attempt; independent gate passed at9499/9500 cycle tokens, and agy/gemini-3.8-flash-low cross-review returned all4 criteria DONE/no findings. Evidence: `.batuta/runs/2026-10-28-worktree-lifecycle/trail.md`.
+
 ## Current status — 2026-09-23: ACP bridge adapters
 - [ ] skills#60 merged 2026-09-22. Plan `acp-bridge-adapters` on `feat/acp-bridge-adapters`: codex and claude adapters declare the ACP bridges core qualified on 2026-09-23.
 - [ ] Next, not planned: move CLI adapters to structured output with `output_decoder` (`codex-json`, `claude-stream-json`, `cursor-stream-json`, `agy-stream-json`, `opencode-json`); cursor and agy stay on CLI JSON because their ACP sends no usage.
