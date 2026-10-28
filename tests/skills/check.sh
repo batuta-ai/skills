@@ -65,6 +65,11 @@ grep -q 'same-route CLI.*available' skills/batuta/references/dispatch.md || bad 
 grep -q 'unavailable-route policy' skills/batuta/references/dispatch.md || bad "dispatch: routing unavailable-executor policy missing"
 grep -q 'adapter.*readonly.*cheap model' skills/batuta/references/verification.md || bad "verification: cheap-model adapter readonly rule missing"
 grep -q 'no summarizing LLM' skills/batuta/references/dispatch.md || bad "dispatch: summarizing-LLM prohibition missing"
+grep -q 'references/grants\.md' skills/batuta-loop/SKILL.md || bad "batuta-loop: grants reference citation missing"
+for reason in not_covered malformed_clause turn_cap repeat deadline; do
+  grep -q "^- \`$reason\` →" skills/batuta-loop/references/grants.md || bad "grants reference: reason '$reason' missing or unanchored"
+done
+grep -q -- '--until task' skills/batuta-loop/references/grants.md || bad "grants reference: '--until task' missing"
 
 # Every relative reference cited in a skill must exist (relative to the
 # citing file, to the skill root, or under skills/ for a cross-skill path).
