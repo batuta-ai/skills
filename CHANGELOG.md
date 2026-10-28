@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.17.0](https://github.com/batuta-ai/skills/compare/v0.16.1...v0.17.0) (2026-10-28)
+
+
+### Features
+
+* **batuta-loop:** teach the conductor to write standing grants ([3ce9855](https://github.com/batuta-ai/skills/commit/3ce9855c61d3e66b607a5f7201df43a37d9f350c))
+* grants reference and its citation from the loop skill ([c5c8f71](https://github.com/batuta-ai/skills/commit/c5c8f71470936c365a2dbd4a67f24df41a9b9d76))
+* status shows the park reason, and the gate guards the grants ([30e625a](https://github.com/batuta-ai/skills/commit/30e625aee943aef43934675295177a69034c3004))
+
+
+### Bug Fixes
+
+* **batuta-loop:** route boundary items in a not_covered park to the plan ([e076ce2](https://github.com/batuta-ai/skills/commit/e076ce291b592df655324a7f83c8ecc3c1f837eb))
+
 ## [0.16.1](https://github.com/batuta-ai/skills/compare/v0.16.0...v0.16.1) (2026-10-23)
 
 
