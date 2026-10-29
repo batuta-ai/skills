@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.2](https://github.com/batuta-ai/skills/compare/v0.17.1...v0.17.2) (2026-10-29)
+
+
+### Bug Fixes
+
+* **plan:** include affected protocol fixtures before scope freezes ([267030e](https://github.com/batuta-ai/skills/commit/267030e4638413af6f0d0f2b529c74ab78d004e9))
+* **plan:** include protocol fixtures before scope freezes ([82bd5d0](https://github.com/batuta-ai/skills/commit/82bd5d079b0f75fc3db738f4ba8d2c30a5a2dad4))
+
 ## [0.17.1](https://github.com/batuta-ai/skills/compare/v0.17.0...v0.17.1) (2026-10-29)
 
 
