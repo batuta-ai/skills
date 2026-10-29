@@ -66,3 +66,5 @@
 
 ## Blocked
 - [ ] claude, codex, opencode and agy run lines emit JSON and declare output_decoder; limit_regex matches decoded provider lines → claude (sonnet), aborted: submission_uncertain (trail: .batuta/runs/2026-09-25-output-decoder-task-1.md, delivery output-decoder-20260925-192240, plan output-decoder, 2026-09-25)
+
+- [x] skills#70: planner decomposition now locates affected fake executors/protocol fixtures before Scope freezes, includes their test files, and limits fixture edits through a decision for that task. low agy/gemini-3.8-flash-low, first candidate; parent full skills gate PASS (planner51/60 lines, cycle9499/9500, brief927/1000), scope/diff PASS. No mirror test added per repository methodology. CI tracked on draft PR; integration/publication/installation remain separate. Trail `.batuta/runs/2026-10-29-issue70.md`.
