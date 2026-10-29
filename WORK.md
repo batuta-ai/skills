@@ -1,6 +1,10 @@
 # WORK — skills
 
-## Current status — 2026-10-28: worktree lifecycle guidance, local
+## Current status — 2026-10-29: published and installed
+- [x] Worktree lifecycle guidance shipped in skills v0.17.1 (`ddc8417`), skills#84 and release#85; upstream CI and release workflows passed. Host#139 vendors the exact64-file tree, and release#140 published host/plugin v0.7.11 (`d257980`). Host checks and all40 Node tests passed; core stays beta.58.
+- [x] User-authorized official v0.7.11 installer completed for detected Claude/Codex/OpenCode/Antigravity. All14 skill trees in each of shared, Codex and Claude installations match the published source, shared lock is v0.17.1, and all14 OpenCode commands match. Core PATH version beta.58 verified. Sessions must reopen to load plugins. No unrelated worktrees or routes changed.
+
+## Historical status — 2026-10-28: local implementation
 - [x] Interactive worktrees honor `Worktree-home: repository | cache`, preserve the recorded path across profile changes, and use it for create/integrate/abort. Loop and status point to a new prune reference documenting ownership, report/apply, ignored files, missing branches and process effects. Commit `11da7aa` on `fix/worktree-lifecycle`; not published or vendored.
 - Routed docs/medium to claude/sonnet; definitive provider403 before any edits, so unavailable-route escalation to codex/gpt-6-sol/high. One completed implementation attempt; independent gate passed at9499/9500 cycle tokens, and agy/gemini-3.8-flash-low cross-review returned all4 criteria DONE/no findings. Evidence: `.batuta/runs/2026-10-28-worktree-lifecycle/trail.md`.
 
