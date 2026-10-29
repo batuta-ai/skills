@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.1](https://github.com/batuta-ai/skills/compare/v0.17.0...v0.17.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **worktrees:** honor configured home and document loop pruning ([1ef588d](https://github.com/batuta-ai/skills/commit/1ef588d99f10ea7fb0c1607f1dfa59f19e28789b))
+* **worktrees:** honor configured home and document loop pruning ([11da7aa](https://github.com/batuta-ai/skills/commit/11da7aa01cb8a3be28fefcd53cbb213410098ff8))
+
 ## [0.17.0](https://github.com/batuta-ai/skills/compare/v0.16.1...v0.17.0) (2026-10-28)
 
 
